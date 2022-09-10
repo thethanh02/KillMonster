@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="6" height="8" tilewidth="32" tileheight="32" infinite="0" nextlayerid="3" nextobjectid="4">
+ <tileset firstgid="1" source="wall.tsx"/>
+ <tileset firstgid="1025" source="grass.tsx"/>
+ <tileset firstgid="1089" source="props.tsx"/>
+ <layer id="1" name="background" width="6" height="8">
+  <data encoding="csv">
+773,771,771,777,0,0,
+53,1025,1026,810,0,0,
+53,1025,1026,810,0,0,
+53,1057,1058,566,567,777,
+53,1030,1031,1057,1058,809,
+53,1030,1031,1057,1058,809,
+53,1030,1031,18,71,73,
+69,71,71,73,0,0
+</data>
+ </layer>
+ <objectgroup id="2" name="entity">
+  <object id="1" name="player" x="64" y="96" width="32" height="32"/>
+  <object id="2" name="box" x="64" y="128" width="32" height="32"/>
+  <object id="3" name="box" x="96" y="128" width="32" height="32"/>
+ </objectgroup>
+</map>
