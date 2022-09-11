@@ -39,7 +39,7 @@ public class GameScreen extends ScreenAdapter {
 		
 		this.camera = camera;
 		this.batch = new SpriteBatch();
-		this.world = new World(new Vector2(0, -25f), false); // if x = 0, y = -9.81f, we will have GRAVITY
+		this.world = new World(new Vector2(0, -9.81f), false); // if x = 0, y = -9.81f, we will have GRAVITY
 		this.box2dDebugRenderer = new Box2DDebugRenderer();
 		
 		this.tileMapHelper = new TileMapHelper(this);
@@ -55,7 +55,6 @@ public class GameScreen extends ScreenAdapter {
 	@Override
 	public void render(float delta) {
 		this.update();
-		cameraUpdate();
 		
 		Gdx.gl.glClearColor(0, 0, 0, 1);
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
@@ -75,11 +74,12 @@ public class GameScreen extends ScreenAdapter {
 		batch.end();
 		
 //		camera.combined.scl(3);
-		box2dDebugRenderer.render(world, camera.combined.scl(3));
+		box2dDebugRenderer.render(world, camera.combined.scl(1));
 	}
 
 	private void update() {
 		world.step(1/60f, 6, 2);
+		cameraUpdate();
 		
 		batch.setProjectionMatrix(camera.combined);
 		orthogonalTiledMapRenderer.setView(camera);
@@ -94,6 +94,8 @@ public class GameScreen extends ScreenAdapter {
 		Vector3 position = camera.position;
 		position.x = Math.round(player.getBody().getPosition().x + PPM * 10) / 10f + 100;
 		position.y = Math.round(player.getBody().getPosition().y + PPM * 10) / 10f + 200;
+//		position.x = player.getBody().getPosition().x;
+//		position.y = 400;
 		camera.position.set(position);
 		camera.update();
 	}

@@ -29,18 +29,18 @@ public class Player extends Entity {
 	
 	public Player(float width, float height, Body body) {
 		super(width, height, body);
-		this.speed = 50f;
+		this.speed = 15f;
 		this.jumpCounter = 0;
 		
 //		textureAtlas = new TextureAtlas(Gdx.files.internal("maps/unnamed.atlas"));
 //		animation = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("tile")); 
 //		animation.setFrameDuration(FRAME_TIME);
 		
-		Texture texture = new Texture("light_atk.png");
+		Texture texture = new Texture("Run-Sheet.png");
 		TextureRegion[][] tmpFrames = TextureRegion.split(texture, 80, 80);
-		animationFrames = new TextureRegion[2080/80];
+		animationFrames = new TextureRegion[640/80];
 		int index = 0;
-		for (int i = 0; i < 2080/80; i++) {
+		for (int i = 0; i < 640/80; i++) {
 				animationFrames[index++] = tmpFrames[0][i];
 		}
 		animation = new Animation<>(FRAME_TIME, animationFrames);
@@ -76,7 +76,7 @@ public class Player extends Entity {
 		
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && jumpCounter < 2) {
 			jumpCounter++;
-			float force = body.getMass() * 50;
+			float force = body.getMass() * 25;
 			body.setLinearVelocity(body.getLinearVelocity().x, 0);
 			body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
 		}
@@ -86,6 +86,6 @@ public class Player extends Entity {
 		}
 		
 //		body.setLinearVelocity(velX * speed, velY * speed);
-		body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 50 ? body.getLinearVelocity().y : 50);
+		body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 25 ? body.getLinearVelocity().y : 25);
 	}
 }

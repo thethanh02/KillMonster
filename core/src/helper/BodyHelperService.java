@@ -17,7 +17,7 @@ public class BodyHelperService {
 		Body body = world.createBody(bodyDef);
 		
 		PolygonShape polygonShape = new PolygonShape();
-		polygonShape.setAsBox(width / 2, height / 2);
+		polygonShape.setAsBox(width / 2 / PPM, height / 2 / PPM);
 		
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = polygonShape;

@@ -30,7 +30,7 @@ public class TileMapHelper {
 	}
 	
 	public OrthogonalTiledMapRenderer setupMap() {
-		tiledMap = new TmxMapLoader().load("maps/level0.tmx");
+		tiledMap = new TmxMapLoader().load("maps/map_level0.tmx");
 		parseMapObjects(tiledMap.getLayers().get("entity").getObjects());
 		return new OrthogonalTiledMapRenderer(tiledMap);
 	}
@@ -57,17 +57,17 @@ public class TileMapHelper {
 					gameScreen.setPlayer(new Player(rectangle.getWidth() + 1, rectangle.getHeight() + 1, body));
 				}
 				
-				else if (rectangleName.equals("box")) {
-					Body body = BodyHelperService.createBody(
-							rectangle.getX() + rectangle.getWidth() / 2, 
-							rectangle.getY() + rectangle.getHeight() / 2, 
-							rectangle.getWidth() - 1, 
-							rectangle.getHeight() - 1, 
-							false, 
-							gameScreen.getWorld());
-
-					gameScreen.setBox(new Box(rectangle.getWidth(), rectangle.getHeight(), body));
-				}
+//				else if (rectangleName.equals("box")) {
+//					Body body = BodyHelperService.createBody(
+//							rectangle.getX() + rectangle.getWidth() / 2, 
+//							rectangle.getY() + rectangle.getHeight() / 2, 
+//							rectangle.getWidth() - 1, 
+//							rectangle.getHeight() - 1, 
+//							false, 
+//							gameScreen.getWorld());
+//
+//					gameScreen.setBox(new Box(rectangle.getWidth(), rectangle.getHeight(), body));
+//				}
 			}
 		}
 	}
@@ -85,7 +85,7 @@ public class TileMapHelper {
 		float[] vertices = polygonMapObject.getPolygon().getTransformedVertices();
 		Vector2[] worldVertices = new Vector2[vertices.length / 2];
 		for (int i = 0; i < vertices.length / 2; i++) {
-			Vector2 current = new Vector2(vertices[i * 2] / 1, vertices[i * 2 + 1] / 1);
+			Vector2 current = new Vector2(vertices[i * 2] / PPM, vertices[i * 2 + 1] / PPM);
 			worldVertices[i] = current;
 		}
 		
