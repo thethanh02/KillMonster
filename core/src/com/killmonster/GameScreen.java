@@ -39,7 +39,7 @@ public class GameScreen extends ScreenAdapter {
 		
 		this.camera = camera;
 		this.batch = new SpriteBatch();
-		this.world = new World(new Vector2(0, -9.81f), false); // if x = 0, y = -9.81f, we will have GRAVITY
+		this.world = new World(new Vector2(0, -25f), false); // if x = 0, y = -9.81f, we will have GRAVITY
 		this.box2dDebugRenderer = new Box2DDebugRenderer();
 		
 		this.tileMapHelper = new TileMapHelper(this);
@@ -67,6 +67,7 @@ public class GameScreen extends ScreenAdapter {
 		
 		for (Entity entity : entityList)
 			entity.update();
+		
 		orthogonalTiledMapRenderer.render();
 		for (Entity entity : entityList)
 			entity.render(batch);
@@ -74,7 +75,7 @@ public class GameScreen extends ScreenAdapter {
 		batch.end();
 		
 //		camera.combined.scl(3);
-		box2dDebugRenderer.render(world, camera.combined.scl(1));
+		box2dDebugRenderer.render(world, camera.combined.scl(PPM));
 	}
 
 	private void update() {
@@ -92,10 +93,10 @@ public class GameScreen extends ScreenAdapter {
 	
 	private void cameraUpdate() {
 		Vector3 position = camera.position;
-		position.x = Math.round(player.getBody().getPosition().x + PPM * 10) / 10f + 100;
-		position.y = Math.round(player.getBody().getPosition().y + PPM * 10) / 10f + 200;
+		position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f + 100;
+//		position.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f + 200;
 //		position.x = player.getBody().getPosition().x;
-//		position.y = 400;
+		position.y = 250;
 		camera.position.set(position);
 		camera.update();
 	}

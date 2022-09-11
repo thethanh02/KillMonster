@@ -10,6 +10,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.killmonster.*;
@@ -47,14 +48,26 @@ public class TileMapHelper {
 				
 				if (rectangleName.equals("player")) {
 					Body body = BodyHelperService.createBody(
-							rectangle.getX() + rectangle.getWidth() / 2, 
-							rectangle.getY() + rectangle.getHeight() / 2, 
-							rectangle.getWidth() - 12, 
-							rectangle.getHeight() - 12, 
+							rectangle.getX() + rectangle.getWidth(), 
+							rectangle.getY() + rectangle.getHeight(), 
+							rectangle.getWidth() / 2.5f, 
+							rectangle.getHeight() / 1.5f, 
 							false, 
 							gameScreen.getWorld());
-
-					gameScreen.setPlayer(new Player(rectangle.getWidth() + 1, rectangle.getHeight() + 1, body));
+					
+//					PolygonShape polygonShape = new PolygonShape();
+//					polygonShape.setAsBox(
+//							rectangle.getWidth() / PPM / 2, 
+//							rectangle.getHeight() / PPM / 2, 
+//							new Vector2((body.getPosition().x + 58)/ PPM, (body.getPosition().y + 32)/ PPM), 
+//							0);
+					
+//					FixtureDef fixtureDef = new FixtureDef();
+//					fixtureDef.shape = polygonShape;
+//					body.createFixture(fixtureDef);
+//					body.getFixtureList().get(0).setSensor(true);
+					
+					gameScreen.setPlayer(new Player(rectangle.getWidth() + 100, rectangle.getHeight() + 1, body));
 				}
 				
 //				else if (rectangleName.equals("box")) {

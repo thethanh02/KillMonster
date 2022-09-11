@@ -11,7 +11,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("TiledMapGame");
 		config.useVsync(true);
-		config.setWindowedMode(1280, 800);;
+		config.setWindowedMode(26*16*3, 14*16*3);;
 		new Lwjgl3Application(new KillMonster(), config);
 	}
 }
