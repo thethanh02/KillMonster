@@ -48,26 +48,26 @@ public class TileMapHelper {
 				
 				if (rectangleName.equals("player")) {
 					Body body = BodyHelperService.createBody(
-							rectangle.getX() + rectangle.getWidth(), 
-							rectangle.getY() + rectangle.getHeight(), 
-							rectangle.getWidth() / 2.5f, 
-							rectangle.getHeight() / 1.5f, 
+							rectangle.getX() - rectangle.getWidth()/2, 
+							rectangle.getY() - rectangle.getHeight()/2, 
+							rectangle.getWidth() / 4, 
+							rectangle.getHeight() / 1.5f + 1, 
 							false, 
 							gameScreen.getWorld());
 					
 //					PolygonShape polygonShape = new PolygonShape();
 //					polygonShape.setAsBox(
-//							rectangle.getWidth() / PPM / 2, 
-//							rectangle.getHeight() / PPM / 2, 
-//							new Vector2((body.getPosition().x + 58)/ PPM, (body.getPosition().y + 32)/ PPM), 
+//							rectangle.getWidth() / PPM / 5, 
+//							rectangle.getHeight() / PPM / 2.5f, 
+//							new Vector2((body.getPosition().x + 32)/ PPM, (body.getPosition().y )/ PPM), 
 //							0);
-					
+//					
 //					FixtureDef fixtureDef = new FixtureDef();
 //					fixtureDef.shape = polygonShape;
 //					body.createFixture(fixtureDef);
-//					body.getFixtureList().get(0).setSensor(true);
-					
-					gameScreen.setPlayer(new Player(rectangle.getWidth() + 100, rectangle.getHeight() + 1, body));
+//					body.getFixtureList().get(1).setSensor(true);
+
+					gameScreen.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body));
 				}
 				
 //				else if (rectangleName.equals("box")) {
