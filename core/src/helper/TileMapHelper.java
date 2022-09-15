@@ -31,7 +31,7 @@ public class TileMapHelper {
 	}
 	
 	public OrthogonalTiledMapRenderer setupMap() {
-		tiledMap = new TmxMapLoader().load("maps/map_level0.tmx");
+		tiledMap = new TmxMapLoader().load("res/level0.tmx");
 		parseMapObjects(tiledMap.getLayers().get("entity").getObjects());
 		return new OrthogonalTiledMapRenderer(tiledMap);
 	}
@@ -48,13 +48,12 @@ public class TileMapHelper {
 				
 				if (rectangleName.equals("player")) {
 					Body body = BodyHelperService.createBody(
-							rectangle.getX() - rectangle.getWidth()/2, 
-							rectangle.getY() - rectangle.getHeight()/2, 
-							rectangle.getWidth() / 4, 
-							rectangle.getHeight() / 1.5f + 1, 
+							rectangle.getX(), 
+							rectangle.getY(), 
+							20.1f, 
+							27,
 							false, 
 							gameScreen.getWorld());
-					
 //					PolygonShape polygonShape = new PolygonShape();
 //					polygonShape.setAsBox(
 //							rectangle.getWidth() / PPM / 5, 

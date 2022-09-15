@@ -74,7 +74,7 @@ public class GameScreen extends ScreenAdapter {
 		
 		batch.end();
 		
-//		camera.combined.scl(3);
+//		camera.combined.scl(2);
 		box2dDebugRenderer.render(world, camera.combined.scl(PPM));
 	}
 
@@ -95,8 +95,7 @@ public class GameScreen extends ScreenAdapter {
 		Vector3 position = camera.position;
 		position.x = Math.round(player.getBody().getPosition().x * PPM * 10) / 10f + 100;
 //		position.y = Math.round(player.getBody().getPosition().y * PPM * 10) / 10f + 200;
-//		position.x = player.getBody().getPosition().x;
-		position.y = 250;
+		position.y = 224;
 		camera.position.set(position);
 		camera.update();
 	}

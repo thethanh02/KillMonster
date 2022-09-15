@@ -9,7 +9,7 @@ public class DesktopLauncher {
 	public static void main (String[] arg) {
 		Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
 		config.setForegroundFPS(60);
-		config.setTitle("TiledMapGame");
+		config.setTitle("KillMonster");
 		config.useVsync(true);
 		config.setWindowedMode(26*16*3, 14*16*3);;
 		new Lwjgl3Application(new KillMonster(), config);

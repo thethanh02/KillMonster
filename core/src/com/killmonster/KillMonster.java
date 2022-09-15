@@ -18,7 +18,7 @@ public class KillMonster extends Game {
 		this.widthScreen = Gdx.graphics.getWidth();
 		this.heightScreen = Gdx.graphics.getHeight();
 		this.orthographicCamera = new OrthographicCamera();
-		this.orthographicCamera.setToOrtho(false, widthScreen, heightScreen);
+		this.orthographicCamera.setToOrtho(false, widthScreen / 1.5f, heightScreen / 1.5f);
 		setScreen(new GameScreen(orthographicCamera));
 	}
 

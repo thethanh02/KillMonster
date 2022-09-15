@@ -22,6 +22,7 @@ public class BodyHelperService {
 		FixtureDef fixtureDef = new FixtureDef();
 		fixtureDef.shape = polygonShape;
 		fixtureDef.density = 1000;
+		fixtureDef.friction = 0;
 		body.createFixture(fixtureDef);
 		polygonShape.dispose();
 		return body;
