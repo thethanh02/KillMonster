@@ -10,12 +10,11 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
 import com.killmonster.*;
 
-import objects.players.Box;
+import objects.players.Enemy;
 import objects.players.Player;
 
 import com.badlogic.gdx.math.Rectangle;
@@ -39,57 +38,49 @@ public class TileMapHelper {
 	public void parseMapObjects(MapObjects mapObjects) {
 		for (MapObject mapObject : mapObjects) {
 			if (mapObject instanceof PolygonMapObject) {
-				createStaticBody((PolygonMapObject) mapObject);
+				String name = mapObject.getName();
+				if (name.equals("isNotFloor"))
+					createStaticBody((PolygonMapObject) mapObject, true, "isNotFloor");
+				else 
+					createStaticBody((PolygonMapObject) mapObject, false, "ground");
 			}
 			
 			if (mapObject instanceof RectangleMapObject) {
 				Rectangle rectangle = ((RectangleMapObject) mapObject).getRectangle();
-				String rectangleName = mapObject.getName();
-				
-				if (rectangleName.equals("player")) {
+				String name = mapObject.getName();
+				if (name.equals("player")) {
 					Body body = BodyHelperService.createBody(
 							rectangle.getX(), 
 							rectangle.getY(), 
 							20.1f, 
 							27,
 							false, 
-							gameScreen.getWorld());
-//					PolygonShape polygonShape = new PolygonShape();
-//					polygonShape.setAsBox(
-//							rectangle.getWidth() / PPM / 5, 
-//							rectangle.getHeight() / PPM / 2.5f, 
-//							new Vector2((body.getPosition().x + 32)/ PPM, (body.getPosition().y )/ PPM), 
-//							0);
-//					
-//					FixtureDef fixtureDef = new FixtureDef();
-//					fixtureDef.shape = polygonShape;
-//					body.createFixture(fixtureDef);
-//					body.getFixtureList().get(1).setSensor(true);
-
+							gameScreen.getWorld(),
+							"player");
 					gameScreen.setPlayer(new Player(rectangle.getWidth(), rectangle.getHeight(), body));
+				} else if (name.equals("enemy")) {
+					Body body = BodyHelperService.createBody(
+							rectangle.getX(), 
+							rectangle.getY(), 
+							23, 
+							25,
+							false, 
+							gameScreen.getWorld(),
+							"enemy");
+					gameScreen.setEnemy(new Enemy(rectangle.getWidth(), rectangle.getHeight(), body));
 				}
-				
-//				else if (rectangleName.equals("box")) {
-//					Body body = BodyHelperService.createBody(
-//							rectangle.getX() + rectangle.getWidth() / 2, 
-//							rectangle.getY() + rectangle.getHeight() / 2, 
-//							rectangle.getWidth() - 1, 
-//							rectangle.getHeight() - 1, 
-//							false, 
-//							gameScreen.getWorld());
-//
-//					gameScreen.setBox(new Box(rectangle.getWidth(), rectangle.getHeight(), body));
-//				}
-			}
+			} 
 		}
 	}
 	
-	private void createStaticBody(PolygonMapObject polygonMapObject) {
+	private void createStaticBody(PolygonMapObject polygonMapObject, boolean setSensor, String name) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = BodyDef.BodyType.StaticBody;
 		Body body = gameScreen.getWorld().createBody(bodyDef);
 		Shape shape = createPolygonShape(polygonMapObject);
 		body.createFixture(shape, 1000);
+		body.getFixtureList().get(0).setSensor(setSensor);
+		body.getFixtureList().get(0).setUserData(name);
 		shape.dispose();
 	}
 
@@ -104,5 +95,13 @@ public class TileMapHelper {
 		PolygonShape shape = new PolygonShape();
 		shape.set(worldVertices);
 		return shape;
+	}
+	
+	public int getMapWidth() {
+		return tiledMap.getProperties().get("width", Integer.class);
+	}
+	
+	public int getMapHeight() {
+		return tiledMap.getProperties().get("height", Integer.class);
 	}
 }

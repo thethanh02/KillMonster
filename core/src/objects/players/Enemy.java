@@ -17,7 +17,7 @@ import static helper.Constants.*;
 
 import java.util.HashMap;
 
-public class Player extends Entity {
+public class Enemy extends Entity {
 	
 	private float flipX = 0, flipW = 1;
 	private boolean loop = true;
@@ -32,16 +32,23 @@ public class Player extends Entity {
 	TextureRegion currentFrame;
 	
 	private float xAttackHitBox, yAttackHitBox;
+	private float xStart;
+	private float xLeftBound, xRightBound;
 	
-	public Player(float width, float height, Body body) {
+	public Enemy(float width, float height, Body body) {
 		super(width / PPM, height / PPM, body);
 		
 		body.getFixtureList().get(0).setUserData(this);
 		
 		xAttackHitBox = body.getPosition().x / PPM;
 		yAttackHitBox = body.getPosition().y / PPM;
+		xStart = body.getPosition().x * PPM;
+		xLeftBound = xStart - 100;
+		xRightBound = xStart + 100;
 		
-		speed = 3.5f;
+		
+		speed = 1f;
+		velX = 1;
 		flipX = 0;
 		animation = new HashMap<>();
 		
@@ -54,12 +61,10 @@ public class Player extends Entity {
 //		animation = new Animation<TextureRegion>(FRAME_TIME, textureAtlas.findRegions("tile")); 
 //		animation.setFrameDuration(FRAME_TIME);
 		
-		animation.put(Character.State.IDLE, loadAnimation("res/player_sprites.png", 64, 40, 0, 5, 5f/Constants.PPM));
-		animation.put(Character.State.RUNNING, loadAnimation("res/player_sprites.png", 64, 40, 1, 6, 6f/Constants.PPM));
-		animation.put(Character.State.ATTACKING, loadAnimation("res/player_sprites.png", 64, 40, 4, 3, 6f/Constants.PPM));
-		animation.put(Character.State.JUMPING, loadAnimation("res/player_sprites.png", 64, 40, 2, 3, 15f/Constants.PPM));
-		animation.put(Character.State.JUMP_FALLING, loadAnimation("res/player_sprites.png", 64, 40, 4, 1, 32f/Constants.PPM));
-		updateAttackBox(1f);
+		animation.put(Character.State.IDLE, loadAnimation("res/crabby_sprite.png", 72, 32, 0, 9, 5f/Constants.PPM));
+		animation.put(Character.State.RUNNING, loadAnimation("res/crabby_sprite.png", 72, 32, 1, 6, 6f/Constants.PPM));
+		animation.put(Character.State.ATTACKING, loadAnimation("res/crabby_sprite.png", 72, 32, 3, 3, 6f/Constants.PPM));
+		updateAttackBox(-1f);
 	}
 	
 	
@@ -68,6 +73,7 @@ public class Player extends Entity {
 		x = body.getPosition().x * PPM;
 		y = body.getPosition().y * PPM;
 		
+		body.setLinearDamping(8);
 		checkUserInput();
 		updateFrame();
 	}
@@ -76,47 +82,48 @@ public class Player extends Entity {
 	public void render(SpriteBatch batch) {
 		batch.draw(
 				currentFrame, 
-				this.x - 21.5f * 1.5f + flipX * currentFrame.getRegionWidth(), 
-				this.y - 14 * 1.5f,
+				this.x - 25f * 1.5f + flipX * currentFrame.getRegionWidth(), 
+				this.y - 11f * 1.5f,
 				currentFrame.getRegionWidth() * flipW, 
 				currentFrame.getRegionHeight());
 		
 	}
 	
 	public void checkUserInput() {
-		if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !isAttacking) {
-			isAttacking = true;
-			loop = false;
-			return;
-		}
+//		if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT) && !isAttacking) {
+//			isAttacking = true;
+//			loop = false;
+//			return;
+//		}
+//		
+		if (x > xRightBound && velX == 1) 
+			velX = -1;
 		
-		velX = 0;
-		if (!isAttacking) {
-			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) && !isJumping()) {
-                loop = false;
-                float force = body.getMass() * 12;
-    			body.setLinearVelocity(body.getLinearVelocity().x, 0);
-    			body.applyLinearImpulse(new Vector2(0, force), body.getPosition(), true);
-            } else if ((Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D))) {
-            	loop = true;
-            	velX = 1;
-    			flipX = 0;
-    			flipW = 1;
-    			updateAttackBox(1f);
-            } else if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A))) {
-                loop = true;
-                velX = -1;
-    			flipX = 1;
-    			flipW = -1;
-    			updateAttackBox(-1f);
-            }
-//            } else isMoving = false;
-		}
-		body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 8.5f ? body.getLinearVelocity().y : 8.5f);
+		else if (x < xLeftBound && velX == -1) 
+			velX = 1;
 		
-		if (isAttacking && stateTime >= animation.get(Character.State.ATTACKING).getAnimationDuration()) {
-			isAttacking = false;
-		}
+		
+//		if (!isAttacking) {
+//			if (body.getLinearVelocity().x <= 0.5 * Constants.PPM) {
+//            	loop = true;
+//            	velX = 1;
+//    			flipX = 0;
+//    			flipW = 1;
+//    			updateAttackBox(1f);
+//            } else if ((Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) && body.getLinearVelocity().x >= -0.5 * Constants.PPM) {
+//                loop = true;
+//                velX = -1;
+//    			flipX = 1;
+//    			flipW = -1;
+//    			updateAttackBox(-1f);
+//            }
+////            } else isMoving = false;
+//		}
+		body.setLinearVelocity(velX * speed, body.getLinearVelocity().y < 9 ? body.getLinearVelocity().y : 9);
+		
+//		if (isAttacking && stateTime >= 0.49f) {
+//			isAttacking = false;
+//		}
 	}
 	
 	public void updateFrame() {
@@ -129,10 +136,6 @@ public class Player extends Entity {
 	public Character.State getState() {
 		if (isAttacking) {
             return Character.State.ATTACKING;
-        } else if (body.getLinearVelocity().y > 0) {
-            return Character.State.JUMPING;
-        } else if (body.getLinearVelocity().y < 0) {
-            return Character.State.JUMP_FALLING;
         } else if (body.getLinearVelocity().x != 0) {
             return Character.State.RUNNING;
         } else {
@@ -171,5 +174,9 @@ public class Player extends Entity {
 	
 	public boolean isJumping() {
 		return body.getLinearVelocity().y != 0;
+	}
+	
+	public void rotateVelX() {
+		velX *= -1;
 	}
 }

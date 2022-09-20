@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.World;
 import static helper.Constants.*;
 
 public class BodyHelperService {
-	public static Body createBody(float x, float y, float width, float height, boolean isStatic, World world) {
+	public static Body createBody(float x, float y, float width, float height, boolean isStatic, World world, String name) {
 		BodyDef bodyDef = new BodyDef();
 		bodyDef.type = isStatic ? BodyDef.BodyType.StaticBody : BodyDef.BodyType.DynamicBody;
 		bodyDef.position.set(x / PPM, y / PPM);
@@ -24,6 +24,7 @@ public class BodyHelperService {
 		fixtureDef.density = 1000;
 		fixtureDef.friction = 0;
 		body.createFixture(fixtureDef);
+		body.getFixtureList().get(0).setUserData(name);
 		polygonShape.dispose();
 		return body;
 	}
