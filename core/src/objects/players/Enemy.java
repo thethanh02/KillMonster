@@ -31,7 +31,6 @@ public class Enemy extends Entity {
 	private HashMap<Character.State, Animation<TextureRegion>> animation;
 	TextureRegion currentFrame;
 	
-	private float xAttackHitBox, yAttackHitBox;
 	private float xStart;
 	private float xLeftBound, xRightBound;
 	
@@ -40,8 +39,6 @@ public class Enemy extends Entity {
 		
 		body.getFixtureList().get(0).setUserData(this);
 		
-		xAttackHitBox = body.getPosition().x / PPM;
-		yAttackHitBox = body.getPosition().y / PPM;
 		xStart = body.getPosition().x * PPM;
 		xLeftBound = xStart - 100;
 		xRightBound = xStart + 100;
@@ -151,7 +148,7 @@ public class Enemy extends Entity {
 		polygonShape.setAsBox(
 				10 / PPM, 
 				4.8f / PPM, 
-				new Vector2((xAttackHitBox / PPM + 0.48f * changeDir), (yAttackHitBox / PPM - 0.13f)), 
+				new Vector2(0.48f * changeDir, -0.13f), 
 				0);
 		
 		FixtureDef fixtureDef = new FixtureDef();

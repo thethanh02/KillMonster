@@ -31,15 +31,10 @@ public class Player extends Entity {
 	private HashMap<Character.State, Animation<TextureRegion>> animation;
 	TextureRegion currentFrame;
 	
-	private float xAttackHitBox, yAttackHitBox;
-	
 	public Player(float width, float height, Body body) {
 		super(width / PPM, height / PPM, body);
 		
 		body.getFixtureList().get(0).setUserData(this);
-		
-		xAttackHitBox = body.getPosition().x / PPM;
-		yAttackHitBox = body.getPosition().y / PPM;
 		
 		speed = 3.5f;
 		flipX = 0;
@@ -148,7 +143,7 @@ public class Player extends Entity {
 		polygonShape.setAsBox(
 				10 / PPM, 
 				4.8f / PPM, 
-				new Vector2((xAttackHitBox / PPM + 0.48f * changeDir), (yAttackHitBox / PPM - 0.13f)), 
+				new Vector2(0.48f * changeDir, - 0.13f), 
 				0);
 		
 		FixtureDef fixtureDef = new FixtureDef();
