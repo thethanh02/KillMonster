@@ -1,0 +1,110 @@
+
+GothicVaniaTown.png
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+houses
+  rotate: false
+  xy: 0, 558
+  size: 688, 272
+  orig: 688, 272
+  offset: 0, 0
+  index: -1
+tileset
+  rotate: false
+  xy: 0, 366
+  size: 592, 192
+  orig: 592, 192
+  offset: 0, 0
+  index: -1
+background
+  rotate: false
+  xy: 0, 78
+  size: 384, 288
+  orig: 384, 288
+  offset: 0, 0
+  index: -1
+middleground
+  rotate: false
+  xy: 384, 78
+  size: 384, 288
+  orig: 384, 288
+  offset: 0, 0
+  index: -1
+props
+  rotate: false
+  xy: 592, 366
+  size: 352, 192
+  orig: 352, 192
+  offset: 0, 0
+  index: -1
+house-b
+  rotate: false
+  xy: 688, 586
+  size: 210, 244
+  orig: 210, 244
+  offset: 0, 0
+  index: -1
+house-c
+  rotate: false
+  xy: 768, 183
+  size: 221, 183
+  orig: 221, 183
+  offset: 0, 0
+  index: -1
+house-a
+  rotate: false
+  xy: 768, 0
+  size: 168, 183
+  orig: 168, 183
+  offset: 0, 0
+  index: -1
+wagon
+  rotate: false
+  xy: 898, 755
+  size: 93, 75
+  orig: 93, 75
+  offset: 0, 0
+  index: -1
+street-lamp
+  rotate: false
+  xy: 936, 75
+  size: 35, 108
+  orig: 35, 108
+  offset: 0, 0
+  index: -1
+crate-stack
+  rotate: false
+  xy: 0, 10
+  size: 73, 68
+  orig: 73, 68
+  offset: 0, 0
+  index: -1
+well
+  rotate: false
+  xy: 898, 690
+  size: 65, 65
+  orig: 65, 65
+  offset: 0, 0
+  index: -1
+sign
+  rotate: false
+  xy: 73, 33
+  size: 37, 45
+  orig: 37, 45
+  offset: 0, 0
+  index: -1
+crate
+  rotate: false
+  xy: 898, 655
+  size: 39, 35
+  orig: 39, 35
+  offset: 0, 0
+  index: -1
+barrel
+  rotate: false
+  xy: 936, 45
+  size: 24, 30
+  orig: 24, 30
+  offset: 0, 0
+  index: -1

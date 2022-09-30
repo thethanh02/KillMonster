@@ -1,49 +1,107 @@
 package com.killmonster;
 
+import com.killmonster.screens.AbstractScreen;
+import com.killmonster.screens.Screens;
+import com.killmonster.util.Font;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
-public class KillMonster extends Game {
-	public static KillMonster INSTANCE;
-	private int widthScreen, heightScreen;
-	private OrthographicCamera orthographicCamera;
-	
-	public KillMonster() {
-		INSTANCE = this;
-	}
-	
-	@Override
-	public void create () {
-		this.widthScreen = Gdx.graphics.getWidth();
-		this.heightScreen = Gdx.graphics.getHeight();
-		this.orthographicCamera = new OrthographicCamera();
-		this.orthographicCamera.setToOrtho(false, widthScreen / 1.5f, heightScreen / 1.5f);
-		setScreen(new GameScreen(orthographicCamera));
-	}
+public class KillMonster extends Game implements GameStateManager {
+    
+    private SpriteBatch batch;
+    private AssetManager assets;
+    private Font font;
+    
+    @Override
+    public void create () {
+        this.batch = new SpriteBatch();
+        this.assets = new AssetManager();
+        this.font = new Font(this);
+        
+        assets.load("interface/skin/medievania_skin.json", Skin.class);
+        assets.load("interface/mainmenu_bg.png", Texture.class);
+        assets.load("interface/hud/hud.png", Texture.class);
+        assets.load("character/player/Player.png", Texture.class);
+        assets.load("character/crabby/Crabby.png", Texture.class);
+        assets.finishLoading();
+        
+        showScreen(Screens.MAIN_MENU);
+    }
+    
+    
+    /**
+     * Shows the specified Screen.
+     * @param s screens to show.
+     */
+    @Override
+    public void showScreen(Screens s) {
+        // Get current screens to dispose it
+        Screen currentScreen = getScreen();
+ 
+        // Show new screens
+        AbstractScreen newScreen = s.newScreen(this);
+        setScreen(newScreen);
+ 
+        // Dispose previous screens
+        if (currentScreen != null) {
+            currentScreen.dispose();
+        }
+    }
+    
+    /**
+     * Clears the screens with pure black.
+     */
+    @Override
+    public void clearScreen() {
+        Gdx.gl.glClearColor(0, 0, 0, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    }
+    
+    
+    /**
+     * Gets the SpriteBatch.
+     * @return sprite batch.
+     */
+    @Override
+    public SpriteBatch getBatch() {
+        return batch;
+    }
+    
+    /**
+     * Gets the AssetManager.
+     * @return asset managers.
+     */
+    @Override
+    public AssetManager getAssets() {
+        return assets;
+    }
 
-	@Override
-	public void render () {
-		super.render();
-	}
-	
-	@Override
-	public void resize(int width, int height) {
-		super.resize(width, height);
-	}
-	
-	@Override
-	public void pause() {
-		super.pause();
-	}
-	
-	@Override
-	public void resume() {
-		super.resume();
-	}
-	
-	@Override
-	public void dispose () {
-	}
-	
+    /**
+     * Gets the default font.
+     * @return default font.
+     */
+    @Override
+    public Font getFont() {
+        return font;
+    }
+    
+    
+    @Override
+    public void render () {
+        super.render();
+        assets.update();
+    }
+    
+    @Override
+    public void dispose () {
+        assets.dispose();
+        batch.dispose();
+    }
+    
 }
