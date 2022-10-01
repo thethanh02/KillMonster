@@ -151,14 +151,6 @@ public abstract class Character extends Sprite implements Disposable {
 	            shape.setPosition(new Vector2(attackRange / Constants.PPM, 0));
 	        } 
         } else {
-//        	if (!facingRight && !textureRegion.isFlipX()) {
-//	            textureRegion.flip(true, false);
-//	            PolygonShape shape = (PolygonShape) meleeWeaponFixture.getShape();
-//	            shape.setPosition(new Vector2(-attackRange / Constants.PPM, 0));
-//	        } else if (facingRight && textureRegion.isFlipX()) {
-//	            textureRegion.flip(true, false);
-//	            PolygonShape shape = (PolygonShape) meleeWeaponFixture.getShape();
-//	            shape.setPosition(new Vector2(attackRange / Constants.PPM, 0));
         }
         
         stateTimer = (currentState != previousState) ? 0 : stateTimer + delta;

@@ -1,0 +1,23 @@
+{
+
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	play: {
+		up: play
+		down: play-down
+		checked: play-checked
+	}
+
+	options: {
+		up: options
+		down: options-down
+		checked: options-checked
+	}
+
+	quit: {
+		up: quit
+		down: quit-down
+		checked: quit-checked
+	}
+}
+
+}

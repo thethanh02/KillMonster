@@ -7,7 +7,6 @@ public class CategoryBits {
     public static final short FEET = 4;
     public static final short WALL = 8;
     public static final short CLIFF_MARKER = 16;
-//    public static final short PORTAL = 32;
     
     public static final short PLAYER = 64;
     public static final short ENEMY = 128;

@@ -53,7 +53,7 @@ public class Utils {
      * @return Extracted animation.
      */
     public static Animation<TextureRegion> createAnimation(Texture texture, float frameDuration,
-            int firstFrameCount, int lastFrameCount, int offsetX, int offsetY, int width, int height) {
+    		int firstFrameCount, int lastFrameCount, int offsetX, int offsetY, int width, int height) {
         frames.clear();
         
         for (int i = firstFrameCount; i <= lastFrameCount; i++) {

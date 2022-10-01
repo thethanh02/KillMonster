@@ -24,6 +24,7 @@ public class KillMonster extends Game implements GameStateManager {
         this.assets = new AssetManager();
         this.font = new Font(this);
         
+        assets.load("res/button_atlas.json", Skin.class);
         assets.load("interface/skin/medievania_skin.json", Skin.class);
         assets.load("interface/mainmenu_bg.png", Texture.class);
         assets.load("interface/hud/hud.png", Texture.class);
