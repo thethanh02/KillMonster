@@ -43,8 +43,8 @@ public class MainMenuScreen extends AbstractScreen {
         
         handleInput();
         tableButton.add(playButton).row();
-        tableButton.add(optionsButton).padTop(5f).row();
-        tableButton.add(quitButton).padTop(5f).row();
+        tableButton.add(optionsButton).padTop(10f).row();
+        tableButton.add(quitButton).padTop(10f).row();
         
         addActor(tableButton);
     }
@@ -65,9 +65,7 @@ public class MainMenuScreen extends AbstractScreen {
     	backgroundImage.addListener(new ClickListener() {
     		@Override
     		public boolean mouseMoved(InputEvent event, float x, float y) {
-    			playButton.setChecked(false);
-    			optionsButton.setChecked(false);
-    			quitButton.setChecked(false);
+    			resetButtonChecked(false, false, false);
     			return super.mouseMoved(event, x, y);
     		}
     	});
@@ -80,7 +78,7 @@ public class MainMenuScreen extends AbstractScreen {
         	
         	@Override
         	public boolean mouseMoved(InputEvent event, float x, float y) {
-        		playButton.setChecked(true);
+        		resetButtonChecked(true, false, false);
         		return super.mouseMoved(event, x, y);
         	}
         });
@@ -92,7 +90,7 @@ public class MainMenuScreen extends AbstractScreen {
         	
         	@Override
         	public boolean mouseMoved(InputEvent event, float x, float y) {
-        		optionsButton.setChecked(true);
+        		resetButtonChecked(false, true, false);
         		return super.mouseMoved(event, x, y);
         	}
         });
@@ -106,11 +104,17 @@ public class MainMenuScreen extends AbstractScreen {
         	
         	@Override
         	public boolean mouseMoved(InputEvent event, float x, float y) {
-        		quitButton.setChecked(true);
+        		resetButtonChecked(false, false, true);
         		return super.mouseMoved(event, x, y);
         	}
         });
         
+    }
+    
+    void resetButtonChecked(boolean play, boolean options, boolean quit) {
+    	playButton.setChecked(play);
+		optionsButton.setChecked(options);
+		quitButton.setChecked(quit);
     }
     
     @Override
