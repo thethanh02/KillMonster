@@ -157,19 +157,19 @@ public abstract class Character extends Sprite implements Disposable {
         return textureRegion;
     }
     
-    private Character.State getState() {
+    private State getState() {
         if (setToKill) {
-            return Character.State.KILLED;
+            return State.KILLED;
         } else if (isAttacking) {
-            return Character.State.ATTACKING;
+            return State.ATTACKING;
         } else if (isJumping && b2body.getLinearVelocity().y < -.01f) {
-            return Character.State.FALLING;
+            return State.FALLING;
         } else if (b2body.getLinearVelocity().y > .01f) {
-            return Character.State.JUMPING;
+            return State.JUMPING;
         } else if (b2body.getLinearVelocity().x > .01f || b2body.getLinearVelocity().x < -.01f) {
-            return Character.State.RUNNING;
+            return State.RUNNING;
         } else {
-            return Character.State.IDLE;
+            return State.IDLE;
         }
     }
 
