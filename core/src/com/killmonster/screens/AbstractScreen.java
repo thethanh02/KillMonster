@@ -18,8 +18,7 @@ public abstract class AbstractScreen extends Stage implements Screen {
         this.gsm = gsm;
         Gdx.input.setInputProcessor(this);
     }
-
-
+    
     @Override
     public void resize(int width, int height) {
         getViewport().update(width, height, true);

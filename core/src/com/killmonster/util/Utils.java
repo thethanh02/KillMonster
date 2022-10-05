@@ -17,8 +17,7 @@ public class Utils {
         Pixmap pixmap;
         try {
             pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
-        }catch (GdxRuntimeException e)
-        {
+        } catch (GdxRuntimeException e) {
             pixmap = new Pixmap(1,1, Pixmap.Format.RGB565);
         }
         pixmap.setColor(Color.BLACK);

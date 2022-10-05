@@ -38,7 +38,7 @@ public class Player extends Character {
         
         // Create animations by extracting frames from the spritesheet.
         animation = new HashMap<>();
-        animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 14f / Constants.PPM,  0, 4,  0, 0 * 40,  64, 40));
+        animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 14f / Constants.PPM, 0, 4,  0, 0 * 40,  64, 40));
         animation.put(State.RUNNING, 	Utils.createAnimation(getTexture(), 9f / Constants.PPM,  0, 5,  0, 1 * 40,  64, 40));
         animation.put(State.JUMPING, 	Utils.createAnimation(getTexture(), 10f / Constants.PPM, 0, 2,  0, 2 * 40,  64, 40));
         animation.put(State.FALLING, 	Utils.createAnimation(getTexture(), 10f / Constants.PPM, 0, 0,  0, 3 * 40,  64, 40));

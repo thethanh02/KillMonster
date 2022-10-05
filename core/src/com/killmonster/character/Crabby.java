@@ -38,7 +38,7 @@ public class Crabby extends Enemy {
         animation.put(State.RUNNING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 5, 0, 1 * 32, 72, 32));
         animation.put(State.JUMPING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 5, 7, 0, 0 * 32, 72, 32));
         animation.put(State.FALLING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 7, 7, 0, 0 * 32, 72, 32));
-        animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 16f / Constants.PPM, 0, 6, 0, 2 * 32, 72, 32));
+        animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 20f / Constants.PPM, 0, 6, 0, 2 * 32, 72, 32));
         animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 4, 0, 4 * 32, 72, 32));
         
         defineBody();

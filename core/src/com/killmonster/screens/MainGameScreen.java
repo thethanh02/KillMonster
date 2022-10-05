@@ -11,6 +11,7 @@ import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
@@ -37,6 +38,9 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 
     private final Player player;
     private Array<Character> enemies;
+    
+    private PauseOverlay pauseOverlay;
+    private ShapeRenderer shapeRenderer;
     
     public MainGameScreen(GameStateManager gsm) {
         super(gsm);
@@ -68,6 +72,9 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
         damageIndicator = new DamageIndicator(gsm, getCamera(), 1.5f);
         messageArea = new MessageArea(gsm, 6, 3f);
         hud = new HUD(gsm, player);
+        
+        pauseOverlay = new PauseOverlay(gsm);
+        shapeRenderer = new ShapeRenderer();
     }
 
 
@@ -75,9 +82,17 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
         if (player.isSetToKill()) {
             return;
         }
-
+        
+        if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+        	Constants.PAUSE = !Constants.PAUSE;
+    	}
+        if (Constants.PAUSE) {
+        	pauseOverlay.handleInput();
+        	return;
+        }
+        
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
-            Constants.DEBUG = (Constants.DEBUG) ? false : true;
+            Constants.DEBUG = !Constants.DEBUG;
         }
 
         
@@ -100,30 +115,31 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 
     public void update(float delta) {
         handleInput(delta);
-
-        world.step(1/60f, 6, 2);
-
-        enemies.forEach((Character c) -> c.update(delta));
-        player.update(delta);
-        hud.update(delta);
-        messageArea.update(delta);
-        damageIndicator.update(delta);
-
-        if (CameraShake.getShakeTimeLeft() > 0){
-            CameraShake.update(Gdx.graphics.getDeltaTime());
-            getCamera().translate(CameraShake.getPos());
-        } else {
-            CameraUtils.lerpToTarget(getCamera(), player.getB2Body().getPosition());
-        }
-
-        // Make sure to bound the camera within the TiledMap.
-        CameraUtils.boundCamera(getCamera(), getCurrentMap());
-
-        // Tell our renderer to draw only what our camera can see.
-        renderer.setView((OrthographicCamera) getCamera());
-
-        // Update all actors in this stage.
-        this.act(delta);
+        if (!Constants.PAUSE) {
+	        world.step(1/60f, 6, 2);
+	
+	        enemies.forEach((Character c) -> c.update(delta));
+	        player.update(delta);
+	        hud.update(delta);
+	        messageArea.update(delta);
+	        damageIndicator.update(delta);
+	
+	        if (CameraShake.getShakeTimeLeft() > 0){
+	            CameraShake.update(Gdx.graphics.getDeltaTime());
+	            getCamera().translate(CameraShake.getPos());
+	        } else {
+	            CameraUtils.lerpToTarget(getCamera(), player.getB2Body().getPosition());
+	        }
+	
+	        // Make sure to bound the camera within the TiledMap.
+	        CameraUtils.boundCamera(getCamera(), getCurrentMap());
+	
+	        // Tell our renderer to draw only what our camera can see.
+	        renderer.setView((OrthographicCamera) getCamera());
+	
+	        // Update all actors in this stage.
+	        this.act(delta);
+    	}
     }
 
     @Override
@@ -134,19 +150,17 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
         // Render game map.
         renderer.render();
 //        getCamera().combined.scl(1.5f);
-        if (Constants.DEBUG == true) b2dr.render(world, getCamera().combined);
+        if (Constants.DEBUG) b2dr.render(world, getCamera().combined);
 
         // Render characters.
         getBatch().setProjectionMatrix(getCamera().combined);
+//        getBatch().enableBlending();
         getBatch().begin();
         enemies.forEach((Character c) -> c.draw(getBatch()));
+//        player.setAlpha(0.1f);
         player.draw(getBatch());
         getBatch().end();
         
-//        batch.begin();
-//        player.render(batch);
-//        batch.end();
-
         getBatch().setProjectionMatrix(damageIndicator.getCamera().combined);
         damageIndicator.draw();
 
@@ -156,8 +170,12 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
         // Set our batch to now draw what the Hud camera sees.
         getBatch().setProjectionMatrix(hud.getCamera().combined);
         hud.draw();
+        
+        
+        if (Constants.PAUSE) 
+         	pauseOverlay.draw();
 
-        // Draw all actors on this stage.
+     	// Draw all actors on this stage.
         this.draw();
     }
 
@@ -177,6 +195,9 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
         world.dispose();
         player.dispose();
         enemies.forEach((Character c) -> c.dispose());
+        
+        pauseOverlay.dispose();
+        shapeRenderer.dispose();
     }
 
 
