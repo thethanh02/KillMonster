@@ -1,0 +1,15 @@
+{
+
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	button: {
+		up: button
+		down: button-down
+		checked: button-checked
+	}
+	bar: {
+		up: bar
+		down: bar
+	}
+}
+
+}

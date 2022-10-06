@@ -1,0 +1,18 @@
+{
+
+com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+	music: {
+		up: music
+		down: music-down
+		checked: music-checked
+	}
+
+	sfx: {
+		up: sfx
+		down: sfx-down
+		checked: sfx-checked
+	}
+
+}
+
+}

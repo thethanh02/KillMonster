@@ -1,0 +1,48 @@
+
+sound_button.png
+size: 126, 84
+format: RGBA8888
+filter: Linear,Linear
+repeat: none
+music
+  rotate: false
+  xy: 0, 0
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+music-checked
+  rotate: false
+  xy: 42, 0
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+music-down
+  rotate: false
+  xy: 84, 0
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+sfx
+  rotate: false
+  xy: 0, 42
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+sfx-checked
+  rotate: false
+  xy: 42, 42
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1
+sfx-down
+  rotate: false
+  xy: 84, 42
+  size: 42, 42
+  orig: 42, 42
+  offset: 0, 0
+  index: -1

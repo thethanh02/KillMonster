@@ -15,34 +15,37 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 
 public class PauseOverlay extends Stage {
 	
 	private GameStateManager gsm;
 	
-	private static final String SKIN_FILE = "res/button_atlas.json";
+	private static final String SOUND_SKIN_FILE = "res/sound_button.json";
+	private static final String URM_SKIN_FILE = "res/urm_button.json";
+	private static final String VOLUME_SKIN_FILE = "res/volume_button.json";
     private static final String TEXTURE_FILE = "res/pause_menu.png";
     
-    private Button playButton, quitButton;
+    private Button resumeButton, backButton, homeButton;
+    private Button volumeButton, volumeBar;
+    private Button musicButton, sfxButton;
     Image transparentImage, background;
-    
-    private Table tableTransparent;
-    private Table tablePause;
-    private Table tableButton;
     
     public PauseOverlay(GameStateManager gsm) {
     	this.gsm = gsm;
         Gdx.input.setInputProcessor(this);
         
         Texture texture = gsm.getAssets().get(TEXTURE_FILE);
-        Skin skin = gsm.getAssets().get(SKIN_FILE);
+        Skin soundSkin = gsm.getAssets().get(SOUND_SKIN_FILE);
+        Skin urmSkin = gsm.getAssets().get(URM_SKIN_FILE);
+        Skin volumeSkin = gsm.getAssets().get(VOLUME_SKIN_FILE);
         
         // Define transparent image
         transparentImage = new Image(new TextureRegion(texture, 95, 0, 100, 100));
         transparentImage.setScale(Constants.V_WIDTH, Constants.V_HEIGHT);
         transparentImage.setColor(0, 0, 0, .6f);;
         
-        tableTransparent = new Table();
+        Table tableTransparent = new Table();
         tableTransparent.setFillParent(true);
         tableTransparent.bottom().left();
         tableTransparent.add(transparentImage);
@@ -50,26 +53,53 @@ public class PauseOverlay extends Stage {
         // Define pause menu
         background = new Image(new TextureRegion(texture));
         
-        tablePause = new Table();
+        Table tablePause = new Table();
         tablePause.setFillParent(true);
         tablePause.add(background);
         
         // Define button
-        playButton = new Button(skin, "play");
-        quitButton = new Button(skin, "quit");
+        volumeBar = new Button(volumeSkin, "bar");
+        volumeButton = new Button(volumeSkin, "button");
         
-        tableButton = new Table();
-        tableButton.setFillParent(true);
-        tableButton.padTop(250f);
+        resumeButton = new Button(urmSkin, "resume");
+        backButton = new Button(urmSkin, "back");
+        homeButton = new Button(urmSkin, "home");
         
+        musicButton = new Button(soundSkin, "music");
+        sfxButton = new Button(soundSkin, "sfx");
         handleInput();
-        tableButton.add(playButton).row();
-        tableButton.add(quitButton).padTop(12f).row();
         
+        Table tableUrmButton = new Table();
+        tableUrmButton.setFillParent(true);
+        tableUrmButton.padTop(270f);
+        
+        tableUrmButton.add(homeButton);
+        tableUrmButton.add(backButton).padLeft(12f);
+        tableUrmButton.add(resumeButton).padLeft(12f);
+        
+        Table tableVolumeBar = new Table();
+        tableVolumeBar.setFillParent(true);
+        tableVolumeBar.padTop(160f);
+        tableVolumeBar.add(volumeBar);
+        
+        Table tableVolumeButton = new Table();
+        tableVolumeButton.setFillParent(true);
+        tableVolumeButton.padTop(160f);
+        tableVolumeButton.add(volumeButton);
+        
+        Table tableSoundButton = new Table();
+        tableSoundButton.setFillParent(true);
+        tableSoundButton.padTop(-65f).padLeft(110f);
+        
+        tableSoundButton.add(musicButton).row();
+        tableSoundButton.add(sfxButton).padTop(6f);
         
 		addActor(tableTransparent);
 		addActor(tablePause);
-        addActor(tableButton);
+        addActor(tableUrmButton);
+        addActor(tableVolumeBar);
+        addActor(tableVolumeButton);
+        addActor(tableSoundButton);
     }
     
     public void handleInput() {
@@ -77,7 +107,7 @@ public class PauseOverlay extends Stage {
     	transparentImage.addListener(new ClickListener() {
     		@Override
     		public boolean mouseMoved(InputEvent event, float x, float y) {
-    			resetButtonChecked(false, false, false);
+    			resetButtonChecked("");
     			return super.mouseMoved(event, x, y);
     		}
     	});
@@ -85,12 +115,12 @@ public class PauseOverlay extends Stage {
     	background.addListener(new ClickListener() {
     		@Override
     		public boolean mouseMoved(InputEvent event, float x, float y) {
-    			resetButtonChecked(false, false, false);
+    			resetButtonChecked("");
     			return super.mouseMoved(event, x, y);
     		}
     	});
     	
-        playButton.addListener(new ClickListener() {
+        resumeButton.addListener(new ClickListener() {
         	@Override
         	public void clicked(InputEvent event, float x, float y) {
         		Constants.PAUSE = false;
@@ -98,30 +128,78 @@ public class PauseOverlay extends Stage {
         	
         	@Override
         	public boolean mouseMoved(InputEvent event, float x, float y) {
-        		resetButtonChecked(true, false, false);
+        		resetButtonChecked("resumeButton");
         		return super.mouseMoved(event, x, y);
         	}
         });
         
-        quitButton.addListener(new ClickListener() {
+        backButton.addListener(new ClickListener() {
         	@Override
-        	public void clicked(InputEvent event, float x, float y) {
-        		gsm.showScreen(Screens.GAME);
-        		Gdx.app.exit();
+        	public boolean mouseMoved(InputEvent event, float x, float y) {
+        		resetButtonChecked("backButton");
+        		return super.mouseMoved(event, x, y);
+        	}
+        });
+        
+        musicButton.addListener(new ClickListener() {
+        	@Override
+        	public boolean mouseMoved(InputEvent event, float x, float y) {
+        		resetButtonChecked("musicButton");
+        		return super.mouseMoved(event, x, y);
+        	}
+        });
+        
+       	sfxButton.addListener(new ClickListener() {
+        	@Override
+        	public boolean mouseMoved(InputEvent event, float x, float y) {
+        		resetButtonChecked("sfxButton");
+        		return super.mouseMoved(event, x, y);
+        	}
+        });
+        
+        backButton.addListener(new ClickListener() {
+        	@Override
+        	public boolean mouseMoved(InputEvent event, float x, float y) {
+        		resetButtonChecked("backButton");
+        		return super.mouseMoved(event, x, y);
+        	}
+        });
+        
+        volumeButton.addListener(new ClickListener() {
+        	@Override
+        	public void touchDragged(InputEvent event, float x, float y, int pointer) {
+//        		System.out.println(volumeButton.getX() + " " + x + " " + y + " " + pointer);
+        		if (volumeButton.getX() < 525) {
+        			volumeButton.setX(525);
+        		} else if (volumeButton.getX() > 695) {
+        			volumeButton.setX(695);
+        		}
+        		else if (event.getStageX() >= 525 && event.getStageX() <= 695)
+        			volumeButton.setX(event.getStageX());
         	}
         	
         	@Override
         	public boolean mouseMoved(InputEvent event, float x, float y) {
-        		resetButtonChecked(false, false, true);
+        		resetButtonChecked("volumeButton");
         		return super.mouseMoved(event, x, y);
         	}
         });
         
     }
     
-    void resetButtonChecked(boolean play, boolean options, boolean quit) {
-    	playButton.setChecked(play);
-		quitButton.setChecked(quit);
+    void resetButtonChecked(String check) {
+    	homeButton.setChecked(false);
+    	backButton.setChecked(false);
+		resumeButton.setChecked(false);
+		volumeButton.setChecked(false);
+		musicButton.setChecked(false);
+		sfxButton.setChecked(false);
+		if (check.equals("homeButton")) homeButton.setChecked(true);
+		else if (check.equals("backButton")) backButton.setChecked(true);
+		else if (check.equals("resumeButton")) resumeButton.setChecked(true);
+		else if (check.equals("volumeButton")) volumeButton.setChecked(true);
+		else if (check.equals("musicButton")) musicButton.setChecked(true);
+		else if (check.equals("sfxButton")) sfxButton.setChecked(true);
     }
     
     @Override
