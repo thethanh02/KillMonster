@@ -168,13 +168,12 @@ public class PauseOverlay extends Stage {
         volumeButton.addListener(new ClickListener() {
         	@Override
         	public void touchDragged(InputEvent event, float x, float y, int pointer) {
-//        		System.out.println(volumeButton.getX() + " " + x + " " + y + " " + pointer);
-        		if (volumeButton.getX() < 525) {
-        			volumeButton.setX(525);
-        		} else if (volumeButton.getX() > 695) {
-        			volumeButton.setX(695);
+        		if (volumeButton.getX() < 524) {
+        			volumeButton.setX(524);
+        		} else if (volumeButton.getX() > 696) {
+        			volumeButton.setX(696);
         		}
-        		else if (event.getStageX() >= 525 && event.getStageX() <= 695)
+        		else if (event.getStageX() >= 524 && event.getStageX() <= 696)
         			volumeButton.setX(event.getStageX());
         	}
         	

@@ -112,6 +112,13 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
             }
 //        }
     }
+    
+    public boolean isAllEnemiesKilled() {
+    	for (Character character : enemies)
+        	if (!character.isKilled())
+        		return false;
+    	return true;
+    }
 
     public void update(float delta) {
         handleInput(delta);
