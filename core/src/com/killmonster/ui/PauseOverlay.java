@@ -186,11 +186,10 @@ public class PauseOverlay extends Stage {
         });
         
     }
-    
     void resetButtonChecked(String check) {
     	homeButton.setChecked(false);
     	backButton.setChecked(false);
-		resumeButton.setChecked(false);
+			resumeButton.setChecked(false);
 		volumeButton.setChecked(false);
 		musicButton.setChecked(false);
 		sfxButton.setChecked(false);

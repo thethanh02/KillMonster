@@ -40,6 +40,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
     private Array<Character> enemies;
     
     private PauseOverlay pauseOverlay;
+    private LevelCompletedOverlay levelCompletedOverlay;
     private ShapeRenderer shapeRenderer;
     
     public MainGameScreen(GameStateManager gsm) {
@@ -74,6 +75,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
         hud = new HUD(gsm, player);
         
         pauseOverlay = new PauseOverlay(gsm);
+        levelCompletedOverlay = new LevelCompletedOverlay(gsm) ;
         shapeRenderer = new ShapeRenderer();
     }
 
@@ -83,14 +85,21 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
             return;
         }
         
+     	if(isAllEnemiesKilled()) {
+     	    Constants.COMPLETED = true ;
+     		
+    		levelCompletedOverlay.handleInput();
+
+    		return ;
+    	}
+        
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
         	Constants.PAUSE = !Constants.PAUSE;
-    	}
+    	}   
         if (Constants.PAUSE) {
         	pauseOverlay.handleInput();
         	return;
         }
-        
         if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
             Constants.DEBUG = !Constants.DEBUG;
         }
@@ -103,7 +112,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 
         // When player is attacking, movement is disabled.
 //        if (!player.isAttacking()) {
-            if (Gdx.input.isKeyJustPressed(Input.Keys.ALT_LEFT)) {
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
                 player.jump();
             } else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
                 player.moveRight();
@@ -111,6 +120,12 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
                 player.moveLeft();
             }
 //        }
+    }
+    public boolean isAllEnemiesKilled() {
+    	for(Character character : enemies)
+    		if(!character.isKilled())
+    			return false;
+        return true ;
     }
 
     public void update(float delta) {
@@ -140,6 +155,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	        // Update all actors in this stage.
 	        this.act(delta);
     	}
+        
     }
 
     @Override
@@ -173,7 +189,10 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
         
         
         if (Constants.PAUSE) 
-         	pauseOverlay.draw();
+         	pauseOverlay.draw();;
+//        
+        if (Constants.COMPLETED) 
+         	levelCompletedOverlay.draw();
 
      	// Draw all actors on this stage.
         this.draw();
@@ -197,6 +216,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
         enemies.forEach((Character c) -> c.dispose());
         
         pauseOverlay.dispose();
+        levelCompletedOverlay.dispose();
         shapeRenderer.dispose();
     }
 
