@@ -2,7 +2,6 @@ package com.killmonster.character;
 
 import com.killmonster.util.Constants;
 import com.killmonster.util.Utils;
-import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.World;
 

@@ -1,11 +1,8 @@
 package com.killmonster.ui;
 
 import com.killmonster.GameStateManager;
-import com.killmonster.KillMonster;
-import com.killmonster.screens.Screens;
 import com.killmonster.util.Constants;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -15,7 +12,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.Align;
 
 public class PauseOverlay extends Stage {
 	
@@ -24,7 +20,7 @@ public class PauseOverlay extends Stage {
 	private static final String SOUND_SKIN_FILE = "res/sound_button.json";
 	private static final String URM_SKIN_FILE = "res/urm_button.json";
 	private static final String VOLUME_SKIN_FILE = "res/volume_button.json";
-    private static final String TEXTURE_FILE = "res/pause_menu.png";
+	private static final String TEXTURE_FILE = "res/pause_menu.png";
     
     private Button resumeButton, backButton, homeButton;
     private Button volumeButton, volumeBar;
