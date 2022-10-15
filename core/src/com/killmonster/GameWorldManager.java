@@ -11,16 +11,16 @@ import com.badlogic.gdx.utils.Disposable;
 
 public interface GameWorldManager extends Disposable {
 
-    public void setGameMap(String gameMapFile);
-
-    public World getWorld();
-    public AssetManager getAssets();
-    public TmxMapLoader getMapLoader();
-
-    public MessageArea getMessageArea();
-    public DamageIndicator getDamageIndicator();
-
-    public GameMap getCurrentMap();
-    public Player getPlayer();
+	public void setGameMap(String gameMapFile);
+	
+	public World getWorld();
+	public AssetManager getAssets();
+	public TmxMapLoader getMapLoader();
+	
+	public MessageArea getMessageArea();
+	public DamageIndicator getDamageIndicator();
+	
+	public GameMap getCurrentMap();
+	public Player getPlayer();
 
 }
