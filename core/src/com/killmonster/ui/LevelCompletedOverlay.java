@@ -1,4 +1,5 @@
 package com.killmonster.ui;
+
 import com.killmonster.GameStateManager;
 import com.killmonster.util.Constants;
 import com.badlogic.gdx.Gdx;
@@ -19,15 +20,12 @@ public class LevelCompletedOverlay extends Stage{
     private static final String TEXTURE_FILE = "res/completed_sprite.png";
     
     private Button resumeButton, homeButton;
-
-    Image transparentImage, background;
+    private Image transparentImage, background;
     
     public LevelCompletedOverlay(GameStateManager gsm) {
     	this.gsm = gsm;
-        Gdx.input.setInputProcessor(this);
         
         Texture texture = gsm.getAssets().get(TEXTURE_FILE);
-   
         Skin urmSkin = gsm.getAssets().get(URM_SKIN_FILE);
     
         
@@ -41,17 +39,14 @@ public class LevelCompletedOverlay extends Stage{
         tableTransparent.bottom().left();
         tableTransparent.add(transparentImage);
         
-        // Define pause menu
+        // Define completed menu
         background = new Image(new TextureRegion(texture));
-        
-        Table tablePause = new Table();
-        tablePause.setFillParent(true);
-        tablePause.add(background);
+        Table tableBackground = new Table();
+        tableBackground.setFillParent(true);
+        tableBackground.add(background);
         
         // Define button
-        
         resumeButton = new Button(urmSkin, "resume");
-
         homeButton = new Button(urmSkin, "home");
         
 
@@ -62,32 +57,31 @@ public class LevelCompletedOverlay extends Stage{
         tableUrmButton.padTop(100f);
         
         tableUrmButton.add(homeButton);
-
-        tableUrmButton.add(resumeButton).padLeft(50f);
+        tableUrmButton.add(resumeButton).padLeft(40f);
 
 
 		addActor(tableTransparent);
-		addActor(tablePause);
+		addActor(tableBackground);
         addActor(tableUrmButton);
     }
     
     public void handleInput() {
+        Gdx.input.setInputProcessor(this);
+    	transparentImage.addListener(new ClickListener() {
+    		@Override
+    		public boolean mouseMoved(InputEvent event, float x, float y) {
+    			resetButtonChecked("");
+    			return super.mouseMoved(event, x, y);
+    		}
+    	});
     	
-//    	transparentImage.addListener(new ClickListener() {
-//    		@Override
-//    		public boolean mouseMoved(InputEvent event, float x, float y) {
-//    			resetButtonChecked("");
-//    			return super.mouseMoved(event, x, y);
-//    		}
-//    	});
-    	
-//    	background.addListener(new ClickListener() {
-//    		@Override
-//    		public boolean mouseMoved(InputEvent event, float x, float y) {
-//    			resetButtonChecked("");
-//    			return super.mouseMoved(event, x, y);
-//    		}
-//    	});
+    	background.addListener(new ClickListener() {
+    		@Override
+    		public boolean mouseMoved(InputEvent event, float x, float y) {
+    			resetButtonChecked("");
+    			return super.mouseMoved(event, x, y);
+    		}
+    	});
     	
         resumeButton.addListener(new ClickListener() {
         	@Override
@@ -100,10 +94,18 @@ public class LevelCompletedOverlay extends Stage{
         		resetButtonChecked("resumeButton");
         		return super.mouseMoved(event, x, y);
         	}
-        });              
+        });
+        
+        homeButton.addListener(new ClickListener() {
+        	@Override
+        	public boolean mouseMoved(InputEvent event, float x, float y) {
+        		resetButtonChecked("homeButton");
+        		return super.mouseMoved(event, x, y);
+        	}
+        });  
     }
     
-    void resetButtonChecked(String check) {
+    private void resetButtonChecked(String check) {
     	homeButton.setChecked(false);
 		resumeButton.setChecked(false);
 		if (check.equals("homeButton")) homeButton.setChecked(true);

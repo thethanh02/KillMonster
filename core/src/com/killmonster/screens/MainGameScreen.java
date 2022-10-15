@@ -75,7 +75,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
         hud = new HUD(gsm, player);
         
         pauseOverlay = new PauseOverlay(gsm);
-        levelCompletedOverlay = new LevelCompletedOverlay(gsm) ;
+        levelCompletedOverlay = new LevelCompletedOverlay(gsm);
         shapeRenderer = new ShapeRenderer();
     }
 
@@ -125,7 +125,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 
     public void update(float delta) {
         handleInput(delta);
-        if (!Constants.PAUSE) {
+        if (!Constants.COMPLETED && !Constants.PAUSE) {
 	        world.step(1/60f, 6, 2);
 	
 	        enemies.forEach((Character c) -> c.update(delta));
@@ -160,15 +160,12 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 
         // Render game map.
         renderer.render();
-//        getCamera().combined.scl(1.5f);
         if (Constants.DEBUG) b2dr.render(world, getCamera().combined);
 
         // Render characters.
         getBatch().setProjectionMatrix(getCamera().combined);
-//        getBatch().enableBlending();
         getBatch().begin();
         enemies.forEach((Character c) -> c.draw(getBatch()));
-//        player.setAlpha(0.1f);
         player.draw(getBatch());
         getBatch().end();
         
@@ -182,11 +179,12 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
         getBatch().setProjectionMatrix(hud.getCamera().combined);
         hud.draw();
         
+        if (Constants.COMPLETED) 
+         	levelCompletedOverlay.draw();
         
         if (Constants.PAUSE) 
          	pauseOverlay.draw();;
-        if (Constants.COMPLETED) 
-         	levelCompletedOverlay.draw();
+        
 
      	// Draw all actors on this stage.
         this.draw();
@@ -230,8 +228,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
             Array<Body> bodies = new Array<>();
             world.getBodies(bodies);
 
-            for(int i = 0; i < bodies.size; i++)
-            {
+            for(int i = 0; i < bodies.size; i++) {
                 if (!bodies.get(i).equals(player.getB2Body())) {
                     world.destroyBody(bodies.get(i));
                 }

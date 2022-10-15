@@ -25,11 +25,10 @@ public class PauseOverlay extends Stage {
     private Button resumeButton, backButton, homeButton;
     private Button volumeButton, volumeBar;
     private Button musicButton, sfxButton;
-    Image transparentImage, background;
+    private Image transparentImage, background;
     
     public PauseOverlay(GameStateManager gsm) {
     	this.gsm = gsm;
-        Gdx.input.setInputProcessor(this);
         
         Texture texture = gsm.getAssets().get(TEXTURE_FILE);
         Skin soundSkin = gsm.getAssets().get(SOUND_SKIN_FILE);
@@ -99,7 +98,7 @@ public class PauseOverlay extends Stage {
     }
     
     public void handleInput() {
-    	
+        Gdx.input.setInputProcessor(this);
     	transparentImage.addListener(new ClickListener() {
     		@Override
     		public boolean mouseMoved(InputEvent event, float x, float y) {
@@ -128,8 +127,8 @@ public class PauseOverlay extends Stage {
         		return super.mouseMoved(event, x, y);
         	}
         });
-        
-        backButton.addListener(new ClickListener() {
+    	
+    	backButton.addListener(new ClickListener() {
         	@Override
         	public boolean mouseMoved(InputEvent event, float x, float y) {
         		resetButtonChecked("backButton");
@@ -149,14 +148,6 @@ public class PauseOverlay extends Stage {
         	@Override
         	public boolean mouseMoved(InputEvent event, float x, float y) {
         		resetButtonChecked("sfxButton");
-        		return super.mouseMoved(event, x, y);
-        	}
-        });
-        
-        backButton.addListener(new ClickListener() {
-        	@Override
-        	public boolean mouseMoved(InputEvent event, float x, float y) {
-        		resetButtonChecked("backButton");
         		return super.mouseMoved(event, x, y);
         	}
         });
@@ -181,10 +172,10 @@ public class PauseOverlay extends Stage {
         });
         
     }
-    void resetButtonChecked(String check) {
+    private void resetButtonChecked(String check) {
     	homeButton.setChecked(false);
     	backButton.setChecked(false);
-			resumeButton.setChecked(false);
+		resumeButton.setChecked(false);
 		volumeButton.setChecked(false);
 		musicButton.setChecked(false);
 		sfxButton.setChecked(false);
