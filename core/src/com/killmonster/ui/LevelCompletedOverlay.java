@@ -1,6 +1,7 @@
 package com.killmonster.ui;
 
 import com.killmonster.GameStateManager;
+import com.killmonster.screens.MainGameScreen;
 import com.killmonster.util.Constants;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -87,6 +88,7 @@ public class LevelCompletedOverlay extends Stage{
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Constants.COMPLETED = false;
+				MainGameScreen.isNextLevel = true;
 			}
 			
 			@Override

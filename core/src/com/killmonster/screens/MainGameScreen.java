@@ -36,12 +36,16 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private World world;
 	private GameMap currentMap;
 	
-	private final Player player;
+	private Player player;
 	private Array<Character> enemies;
 	
 	private PauseOverlay pauseOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
 	private ShapeRenderer shapeRenderer;
+	
+	public static boolean isNextLevel;
+	public static int currentLevel = 0;
+	private String gameMapFile;
 	
 	public MainGameScreen(GameStateManager gsm) {
 		super(gsm);
@@ -66,7 +70,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		mapLoader = new TmxMapLoader();
 		
 		// Load the map and spawn player.
-		setGameMap("res/level0.tmx");
+		gameMapFile = "res/level" + currentLevel + ".tmx";
+		setGameMap(gameMapFile);
 		player = currentMap.spawnPlayer();
 		
 		// Initialize HUD.
@@ -124,6 +129,15 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	}
 
 	public void update(float delta) {
+		if (isNextLevel) {
+			if (currentLevel < 2) currentLevel++;
+			gameMapFile = "res/level" + currentLevel + ".tmx";
+			setGameMap(gameMapFile);
+			world.destroyBody(player.getB2Body());
+			
+			player = currentMap.spawnPlayer();
+			isNextLevel = false;
+		}
 		handleInput(delta);
 		if (!Constants.COMPLETED && !Constants.PAUSE) {
 			world.step(1/60f, 6, 2);

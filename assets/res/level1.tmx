@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="89">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="22" nextobjectid="88">
  <properties>
   <property name="backgroundMusic" value="sfx/environment/water_dripping.mp3"/>
   <property name="brightness" value="0.8"/>
@@ -21,9 +21,9 @@
   </object>
  </objectgroup>
  <objectgroup id="2" name="Platform">
-  <object id="81" x="544" y="160.043" width="32" height="4.04348"/>
-  <object id="82" x="608" y="192" width="32" height="4.2253"/>
-  <object id="83" x="480" y="224" width="32" height="3.95257"/>
+  <object id="81" x="544" y="160.043" width="32" height="1.04348"/>
+  <object id="82" x="608" y="192" width="32" height="1.04348"/>
+  <object id="83" x="480" y="224" width="32" height="1.04348"/>
  </objectgroup>
  <objectgroup id="3" name="Wall">
   <object id="66" x="32" y="96">
@@ -69,7 +69,7 @@
   <object id="62" x="274.5" y="99" width="7" height="5.5"/>
  </objectgroup>
  <objectgroup id="7" name="Player">
-  <object id="60" x="652.5" y="263.5" width="27" height="26.5"/>
+  <object id="60" x="427.833" y="260.833" width="27" height="26.5"/>
  </objectgroup>
  <objectgroup id="8" name="NPCS">
   <object id="57" x="97.5" y="271" width="27" height="26.5"/>
@@ -87,7 +87,7 @@
  </layer>
  <layer id="11" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJztkTEKACAMA6vOKvr/x+pYMzhosQg5uK1D0ogQQgghtoRpVCbfOMfkaVFW3zhbmqw/13ZZe+At7oP7vbRciPvgfr/IHvYOQrAItw==
+   eJxjYBgFo2AUjIJRMAqoB3hw4KEIhpI/BIGYCQdmZkD1AyMWeWSALk9PzIcH86P5gxeLPDJAlx8seNQf9McAr9QItA==
   </data>
  </layer>
  <layer id="12" name="Ground - upper" width="50" height="14">
