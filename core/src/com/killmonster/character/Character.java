@@ -18,7 +18,7 @@ import com.badlogic.gdx.utils.Queue;
 
 public abstract class Character extends Sprite implements Disposable {
 
-	public enum State { IDLE, RUNNING, JUMPING, FALLING, CROUCHING, ATTACKING, KILLED };
+	public enum State { IDLE, RUNNING, JUMPING, FALLING, ATTACKING, KILLED };
 	
 	protected Map<State, Animation<TextureRegion>> animation;
 	

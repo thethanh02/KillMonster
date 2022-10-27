@@ -34,9 +34,6 @@ public class GameMap implements Disposable {
 		assert tileWidth == tileHeight;
 		mapTileSize = tileWidth;
 		
-		
-		// Update brightness according to this map.
-		
 		// Create bodies in the world according to each map layer.
 		TiledObjectUtils.parseLayers(gameWorldManager.getWorld(), this);
 	}

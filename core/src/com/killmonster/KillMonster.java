@@ -89,16 +89,6 @@ public class KillMonster extends Game implements GameStateManager {
 		return assets;
 	}
 
-	/**
-	 * Gets the default font.
-	 * @return default font.
-	 */
-	@Override
-	public Font getFont() {
-		return font;
-	}
-    
-    
 	@Override
 	public void render () {
 		super.render();
@@ -109,6 +99,12 @@ public class KillMonster extends Game implements GameStateManager {
 	public void dispose () {
 		assets.dispose();
 		batch.dispose();
+	}
+
+
+	@Override
+	public Font getFont() {
+		return font;
 	}
     
 }

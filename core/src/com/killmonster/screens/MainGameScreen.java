@@ -2,10 +2,16 @@ package com.killmonster.screens;
 
 import com.killmonster.character.Character;
 import com.killmonster.character.Player;
+import com.killmonster.event.GameEventManager;
+import com.killmonster.event.MainGameScreenResizeEvent;
+import com.killmonster.event.MapChangedEvent;
 import com.killmonster.*;
 import com.killmonster.map.*;
+import com.killmonster.system.Box2DDebugRendererSystem;
+import com.killmonster.system.TiledMapRendererSystem;
 import com.killmonster.ui.*;
 import com.killmonster.util.*;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
@@ -22,10 +28,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 
 public class MainGameScreen extends AbstractScreen implements GameWorldManager {
-
+	
+	private PooledEngine engine;
+	private GameEventManager gameEventManager;
+	
 	private final AssetManager assets;
-	private final OrthogonalTiledMapRenderer renderer;
-	private final Box2DDebugRenderer b2dr;
 	private final TmxMapLoader mapLoader;
 	
 	private final DamageIndicator damageIndicator;
@@ -57,6 +64,12 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		world = new World(new Vector2(0, Constants.GRAVITY), true);
 		world.setContactListener(new WorldContactListener());
 		
+		engine = new PooledEngine();
+		engine.addSystem(new TiledMapRendererSystem((OrthographicCamera) getCamera()));
+		engine.addSystem(new Box2DDebugRendererSystem(world, getCamera()));
+
+		gameEventManager = GameEventManager.getINSTANCE();
+		
 		// Initialize shade to provide fade in/out effects later.
 		// The shade is drawn atop everything, with only its transparency being adjusted.
 		shade = new Image(new TextureRegion(Utils.getTexture()));
@@ -65,8 +78,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		addActor(shade);
 		
 		// Initialize the OrthogonalTiledMapRenderer to render our map.
-		renderer = new OrthogonalTiledMapRenderer(null, 1 / Constants.PPM);
-		b2dr = new Box2DDebugRenderer();
 		mapLoader = new TmxMapLoader();
 		
 		// Load the map and spawn player.
@@ -158,9 +169,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			// Make sure to bound the camera within the TiledMap.
 			CameraUtils.boundCamera(getCamera(), getCurrentMap());
 			
-			// Tell our renderer to draw only what our camera can see.
-			renderer.setView((OrthographicCamera) getCamera());
-			
 			// Update all actors in this stage.
 			this.act(delta);
 		}
@@ -172,8 +180,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		gsm.clearScreen();
 		
 		// Render game map.
-		renderer.render();
-		if (Constants.DEBUG) b2dr.render(world, getCamera().combined);
+		engine.update(delta);
 		
 		// Render characters.
 		getBatch().setProjectionMatrix(getCamera().combined);
@@ -206,13 +213,18 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	@Override
 	public void resize(int width, int height) {
 		super.resize(width, height);
+		
 		damageIndicator.getViewport().update(width, height);
+		
+		int viewportX = getViewport().getScreenX();
+		int viewportY = getViewport().getScreenY();
+		int viewportWidth = getViewport().getScreenWidth();
+		int viewportHeight = getViewport().getScreenHeight();
+		gameEventManager.fireEvent(new MainGameScreenResizeEvent(viewportX, viewportY, viewportWidth, viewportHeight));
 	}
 
 	@Override
 	public void dispose() {
-		renderer.dispose();
-		b2dr.dispose();
 		hud.dispose();
 		currentMap.dispose();
 		world.dispose();
@@ -251,7 +263,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		currentMap = new GameMap(this, gameMapFile);
 		
 		// Sets the OrthogonalTiledMapRenderer to show our new map.
-		renderer.setMap(currentMap.getTiledMap());
+		gameEventManager.fireEvent(new MapChangedEvent(currentMap));
 		
 		// Update shade size to make fade out/in work correctly.
 		shade.setSize(getCurrentMap().getMapWidth(), getCurrentMap().getMapHeight());
