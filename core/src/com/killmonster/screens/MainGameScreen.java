@@ -1,14 +1,12 @@
 package com.killmonster.screens;
 
-import com.killmonster.character.Character;
 import com.killmonster.character.Player;
-import com.killmonster.event.GameEventManager;
-import com.killmonster.event.MainGameScreenResizeEvent;
-import com.killmonster.event.MapChangedEvent;
+import com.killmonster.character.Character;
+import com.killmonster.event.*;
 import com.killmonster.*;
 import com.killmonster.map.*;
-import com.killmonster.system.Box2DDebugRendererSystem;
-import com.killmonster.system.TiledMapRendererSystem;
+import com.killmonster.system.*;
+import com.killmonster.system.ui.*;
 import com.killmonster.ui.*;
 import com.killmonster.util.*;
 import com.badlogic.ashley.core.PooledEngine;
@@ -16,29 +14,24 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 
 public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	
-	private PooledEngine engine;
-	private GameEventManager gameEventManager;
+	private final PooledEngine engine;
+	private final GameEventManager gameEventManager;
+	
+	private final DamageIndicator damageIndicator;
+	private final NotificationArea notificationArea;
+	private final HUD hud;
 	
 	private final AssetManager assets;
 	private final TmxMapLoader mapLoader;
-	
-	private final DamageIndicator damageIndicator;
-	private final MessageArea messageArea;
-	private final HUD hud;
-	private final Image shade;
 	
 	private World world;
 	private GameMap currentMap;
@@ -57,42 +50,43 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	public MainGameScreen(GameStateManager gsm) {
 		super(gsm);
 		assets = gsm.getAssets();
+		
 		// Since we will be rendering TiledMaps, we should scale the viewport with PPM.
 		getViewport().setWorldSize(Constants.V_WIDTH / Constants.PPM, Constants.V_HEIGHT / Constants.PPM);
+		
+		// Initialize the GameEventManager
+		gameEventManager = GameEventManager.getINSTANCE();
 		
 		// Initialize the world, and register the world contact listener.
 		world = new World(new Vector2(0, Constants.GRAVITY), true);
 		world.setContactListener(new WorldContactListener());
+
+		// Initialize HUD.
+		damageIndicator = new DamageIndicator(getBatch(), gsm.getFont().getDefaultFont(), getCamera(), 1.5f);
+		notificationArea = new NotificationArea(gsm, 6, 3f);
+		hud = new HUD(gsm);
 		
+		// Initialize PooledEngine and Systems
 		engine = new PooledEngine();
 		engine.addSystem(new TiledMapRendererSystem((OrthographicCamera) getCamera()));
 		engine.addSystem(new Box2DDebugRendererSystem(world, getCamera()));
-
-		gameEventManager = GameEventManager.getINSTANCE();
-		
-		// Initialize shade to provide fade in/out effects later.
-		// The shade is drawn atop everything, with only its transparency being adjusted.
-		shade = new Image(new TextureRegion(Utils.getTexture()));
-		shade.setSize(getViewport().getScreenWidth(), getViewport().getScreenHeight());
-		shade.setColor(0, 0, 0, 0);
-		addActor(shade);
-		
-		// Initialize the OrthogonalTiledMapRenderer to render our map.
-		mapLoader = new TmxMapLoader();
+		engine.addSystem(new DamageIndicatorSystem(getBatch(), damageIndicator));
+		engine.addSystem(new NotificationSystem(getBatch(), notificationArea));
+		engine.addSystem(new HUDSystem(getBatch(), hud));
+		engine.addSystem(new ScreenFadeSystem(this));
 		
 		// Load the map and spawn player.
+		mapLoader = new TmxMapLoader();
 		gameMapFile = "res/level" + currentLevel + ".tmx";
 		setGameMap(gameMapFile);
 		player = currentMap.spawnPlayer();
 		
-		// Initialize HUD.
-		damageIndicator = new DamageIndicator(gsm, getCamera(), 1.5f);
-		messageArea = new MessageArea(gsm, 6, 3f);
-		hud = new HUD(gsm, player);
-		
+		// Initialize OverlayScreen
 		pauseOverlay = new PauseOverlay(gsm);
 		levelCompletedOverlay = new LevelCompletedOverlay(gsm);
 		shapeRenderer = new ShapeRenderer();
+		hud.setPlayer(player);
+		
 	}
 
 
@@ -144,20 +138,35 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			if (currentLevel < 2) currentLevel++;
 			gameMapFile = "res/level" + currentLevel + ".tmx";
 			setGameMap(gameMapFile);
-			world.destroyBody(player.getB2Body());
 			
+			// set ScreenFadeSystem again when next map
+			engine.addSystem(new ScreenFadeSystem(this));
+			
+			world.destroyBody(player.getB2Body());
 			player = currentMap.spawnPlayer();
+			
+			// Test
+//			gameEventManager.fireEvent(new MapCompletedEvent());
+//			Timer.schedule(new Timer.Task() {
+//				@Override
+//				public void run() {
+//					setGameMap(gameMapFile);
+//					
+//					// player.reposition
+//					world.destroyBody(player.getB2Body());
+//					player = currentMap.spawnPlayer();
+//				}
+//			}, ScreenFadeSystem.FADEIN_DURATION);
+			
 			isNextLevel = false;
 		}
+		
 		handleInput(delta);
 		if (!Constants.COMPLETED && !Constants.PAUSE) {
 			world.step(1/60f, 6, 2);
 			
 			enemies.forEach((Character c) -> c.update(delta));
 			player.update(delta);
-			hud.update(delta);
-			messageArea.update(delta);
-			damageIndicator.update(delta);
 			
 			if (CameraShake.getShakeTimeLeft() > 0){
 				CameraShake.update(Gdx.graphics.getDeltaTime());
@@ -189,16 +198,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		player.draw(getBatch());
 		getBatch().end();
 		
-		getBatch().setProjectionMatrix(damageIndicator.getCamera().combined);
-		damageIndicator.draw();
-		
-		getBatch().setProjectionMatrix(messageArea.getCamera().combined);
-		messageArea.draw();
-		
-		// Set our batch to now draw what the Hud camera sees.
-		getBatch().setProjectionMatrix(hud.getCamera().combined);
-		hud.draw();
-		
 		if (Constants.COMPLETED) 
 			levelCompletedOverlay.draw();
 		
@@ -214,8 +213,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	public void resize(int width, int height) {
 		super.resize(width, height);
 		
-		damageIndicator.getViewport().update(width, height);
-		
 		int viewportX = getViewport().getScreenX();
 		int viewportY = getViewport().getScreenY();
 		int viewportWidth = getViewport().getScreenWidth();
@@ -225,7 +222,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 
 	@Override
 	public void dispose() {
-		hud.dispose();
 		currentMap.dispose();
 		world.dispose();
 		player.dispose();
@@ -265,9 +261,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		// Sets the OrthogonalTiledMapRenderer to show our new map.
 		gameEventManager.fireEvent(new MapChangedEvent(currentMap));
 		
-		// Update shade size to make fade out/in work correctly.
-		shade.setSize(getCurrentMap().getMapWidth(), getCurrentMap().getMapHeight());
-		
 		// TODO: Don't respawn enemies whenever a map loads.
 		enemies = currentMap.spawnNPCs();
 	}
@@ -288,8 +281,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	}
 	
 	@Override
-	public MessageArea getMessageArea() {
-		return messageArea;
+	public NotificationArea getNotificationArea() {
+		return notificationArea;
 	}
 	
 	@Override

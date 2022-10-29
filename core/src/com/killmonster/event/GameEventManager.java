@@ -2,7 +2,6 @@ package com.killmonster.event;
 
 import java.util.HashMap;
 
-import com.badlogic.gdx.maps.Map;
 import com.badlogic.gdx.utils.Array;
 
 public class GameEventManager {
@@ -15,6 +14,7 @@ public class GameEventManager {
 		listeners = new HashMap<>();
 		
 		listeners.put(GameEventType.MAP_CHANGED, new Array<>());
+		listeners.put(GameEventType.MAP_COMPLETED, new Array<>());
 		listeners.put(GameEventType.MAINGAME_SCREEN_RESIZED, new Array<>());
 		
 	}

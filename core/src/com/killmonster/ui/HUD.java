@@ -31,10 +31,13 @@ public class HUD extends Stage {
 	    
 	private Table hudTable;
 	private Table barTable;
+	
+	public HUD(GameStateManager gsm) {
+		this(gsm, null);
+	}
 	    
 	public HUD(GameStateManager gsm, Player player) {
 		super(new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT), gsm.getBatch());
-		this.gsm = gsm;
 		this.player = player;
 		
 		skin = gsm.getAssets().get(SKIN_FILE);
@@ -73,7 +76,10 @@ public class HUD extends Stage {
 		addActor(barTable);
 	}
     
-    
+    public void setPlayer(Player player) {
+		this.player = player;
+	}
+	
 	public void update(float delta) {
 		healthBarImage.setScaleX(healthLength * player.getHealth() / 100f); // 100 is only temporary (player's full heatlh is 100)
 	}

@@ -3,7 +3,7 @@ package com.killmonster;
 import com.killmonster.character.Player;
 import com.killmonster.map.GameMap;
 import com.killmonster.ui.DamageIndicator;
-import com.killmonster.ui.MessageArea;
+import com.killmonster.ui.NotificationArea;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.physics.box2d.World;
@@ -17,7 +17,7 @@ public interface GameWorldManager extends Disposable {
 	public AssetManager getAssets();
 	public TmxMapLoader getMapLoader();
 	
-	public MessageArea getMessageArea();
+	public NotificationArea getNotificationArea();
 	public DamageIndicator getDamageIndicator();
 	
 	public GameMap getCurrentMap();

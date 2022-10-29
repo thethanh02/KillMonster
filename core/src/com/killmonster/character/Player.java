@@ -106,16 +106,16 @@ public class Player extends Character {
 	public void inflictDamage(Character c, int damage) {
 		if ((this.facingRight && c.facingRight()) || (!this.facingRight && !c.facingRight())) {
 			damage *= 2;
-			gameWorldManager.getMessageArea().show("Critical hit!");
+			gameWorldManager.getNotificationArea().show("Critical hit!");
 		}
 		
 		super.inflictDamage(c, damage);
 		gameWorldManager.getDamageIndicator().show(c, damage);
-		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
+		gameWorldManager.getNotificationArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
 		CameraShake.shake(8 / Constants.PPM, .1f);
 		
 		if (c.isSetToKill()) {
-			gameWorldManager.getMessageArea().show(String.format("You earned 10 exp."));
+			gameWorldManager.getNotificationArea().show(String.format("You earned 10 exp."));
 		}
 	}
     

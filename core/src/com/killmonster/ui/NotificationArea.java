@@ -9,13 +9,13 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class MessageArea extends Stage {
+public class NotificationArea extends Stage {
 
 	private GameStateManager gsm;
 	private int messageQueueSize;
 	private float messageLifetime;
 	
-	public MessageArea(GameStateManager gsm, int messageQueueSize, float messageLifetime) {
+	public NotificationArea(GameStateManager gsm, int messageQueueSize, float messageLifetime) {
 		super(new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT), gsm.getBatch());
 		this.gsm = gsm;
 		
