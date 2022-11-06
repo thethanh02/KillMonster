@@ -1,0 +1,252 @@
+{
+    "Player": {
+      "class": "com.aesophor.vigilante.component.character.CharacterDataComponent",
+      "atlas": "Texture/Character/Player/player.atlas",
+      "spriteOffsetX": 0.0,
+      "spriteOffsetY": 4.0,
+      "spriteScaleX": 1.32,
+      "spriteScaleY": 1.32,
+      "frameWidth": 80,
+      "frameHeight": 80,
+      "animationData": {
+        "IDLE_SHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 11.0,
+          "lastFrameCount": 5
+        },
+        "IDLE_UNSHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 11.0,
+          "lastFrameCount": 5
+        },
+        "RUNNING_SHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 8.5,
+          "lastFrameCount": 7
+        },
+        "RUNNING_UNSHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 8.5,
+          "lastFrameCount": 7
+        },
+        "WEAPON_UNSHEATHING": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 13.0,
+          "lastFrameCount": 5
+        },
+        "WEAPON_SHEATHING": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 13.0,
+          "lastFrameCount": 5
+        },
+        "JUMPING_SHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 5.0,
+          "lastFrameCount": 4
+        },
+        "JUMPING_UNSHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 5.0,
+          "lastFrameCount": 4
+        },
+        "FALLING_SHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 5.0,
+          "lastFrameCount": 0
+        },
+        "FALLING_UNSHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 5.0,
+          "lastFrameCount": 0
+        },
+        "CROUCHING_SHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 5.0,
+          "lastFrameCount": 1
+        },
+        "CROUCHING_UNSHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 5.0,
+          "lastFrameCount": 1
+        },
+        "ATTACKING": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 6.5,
+          "lastFrameCount": 7
+        },
+        "SKILL": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 15.0,
+          "lastFrameCount": 0
+        },
+        "KILLED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 15.0,
+          "lastFrameCount": 5
+        }
+      },
+      "soundData": {
+        "JUMP": "Sfx/Player/jump.wav",
+        "HURT": "Sfx/Player/hurt.wav",
+        "KILLED": "Sfx/Player/death.mp3",
+        "WEAPON_SWING": "Sfx/Player/weapon_swing.ogg",
+        "WEAPON_HIT": "Sfx/Player/weapon_hit.ogg",
+        "ITEM_PICKEDUP": "Sfx/Player/pickup_item.mp3",
+        "EQUIPMENT_CHANGED": "Sfx/Player/equip.wav"
+      },
+      "stats": {
+        "class": "com.aesophor.vigilante.component.character.CharacterStatsComponent",
+        "name": "Aesophor",
+        "level": 1,
+        "exp": 0,
+        "fullHealth": 100,
+        "fullStamina": 100,
+        "fullMagicka": 100,
+        "_str": 5,
+        "_dex": 5,
+        "_int": 5,
+        "_luk": 5,
+        "bodyHeight": 34,
+        "bodyWidth": 10,
+        "movementSpeed": 0.3,
+        "jumpHeight": 3.0,
+        "attackForce": 1.0,
+        "attackTime": 0.6,
+        "attackRange": 15,
+        "basePhysicalDamage": 50
+      },
+      "statsRegen": {
+        "class": "com.aesophor.vigilante.component.character.CharacterStatsRegenComponent",
+        "healthRegenRate": 1,
+        "staminaRegenRate": 5,
+        "magickaRegenRate": 5
+      }
+    },
+  
+    "Castle Guard": {
+      "class": "com.aesophor.vigilante.component.character.CharacterDataComponent",
+      "atlas": "Texture/Character/Knight/knight.atlas",
+      "spriteOffsetX": 0.0,
+      "spriteOffsetY": 0.0,
+      "spriteScaleX": 1.19,
+      "spriteScaleY": 1.13,
+      "frameWidth": 42,
+      "frameHeight": 44,
+      "animationData": {
+        "IDLE_SHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 15.0,
+          "lastFrameCount": 3
+        },
+        "IDLE_UNSHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 15.0,
+          "lastFrameCount": 3
+        },
+        "RUNNING_SHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 12.0,
+          "lastFrameCount": 7
+        },
+        "RUNNING_UNSHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 12.0,
+          "lastFrameCount": 7
+        },
+        "WEAPON_UNSHEATHING": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 8.5,
+          "lastFrameCount": 5
+        },
+        "WEAPON_SHEATHING": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 8.5,
+          "lastFrameCount": 5
+        },
+        "JUMPING_SHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 6.0,
+          "lastFrameCount": 7
+        },
+        "JUMPING_UNSHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 6.0,
+          "lastFrameCount": 7
+        },
+        "FALLING_SHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 6.0,
+          "lastFrameCount": 7
+        },
+        "FALLING_UNSHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 6.0,
+          "lastFrameCount": 7
+        },
+        "CROUCHING_SHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 6.0,
+          "lastFrameCount": 7
+        },
+        "CROUCHING_UNSHEATHED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 6.0,
+          "lastFrameCount": 7
+        },
+        "ATTACKING": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 12.0,
+          "lastFrameCount": 9
+        },
+        "SKILL": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 15.0,
+          "lastFrameCount": 5
+        },
+        "KILLED": {
+          "class": "com.aesophor.vigilante.component.character.CharacterDataComponent$AnimationData",
+          "frameDuration": 16.0,
+          "lastFrameCount": 8
+        }
+      },
+      "soundData": {
+        "JUMP": "Sfx/Player/jump.wav",
+        "HURT": "Sfx/Player/hurt.wav",
+        "KILLED": "Sfx/Player/death.mp3",
+        "WEAPON_SWING": "Sfx/Player/weapon_swing.ogg",
+        "WEAPON_HIT": "Sfx/Player/weapon_hit.ogg",
+        "ITEM_PICKEDUP": "Sfx/Player/pickup_item.mp3",
+        "EQUIPMENT_CHANGED": "Sfx/Player/equip.wav"
+      },
+      "stats": {
+        "class": "com.aesophor.vigilante.component.character.CharacterStatsComponent",
+        "name": "Castle Guard",
+        "level": 1,
+        "exp": 10,
+        "fullHealth": 90,
+        "fullStamina": 100,
+        "fullMagicka": 100,
+        "_str": 15,
+        "_dex": 8,
+        "_int": 5,
+        "_luk": 6,
+        "bodyHeight": 34,
+        "bodyWidth": 10,
+        "movementSpeed": 0.15,
+        "jumpHeight": 3.5,
+        "attackForce": 1.2,
+        "attackTime": 1.2,
+        "attackRange": 14,
+        "basePhysicalDamage": 10
+      },
+      "statsRegen": {
+        "class": "com.aesophor.vigilante.component.character.CharacterStatsRegenComponent",
+        "healthRegenRate": 1,
+        "staminaRegenRate": 5,
+        "magickaRegenRate": 5
+      },
+      "items": {
+        "Rusty Axe": 1
+      }
+    }
+  }

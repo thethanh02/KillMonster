@@ -86,7 +86,7 @@ public class WorldContactListener implements ContactListener {
 			// When a character leaves the ground, make following changes.
 			case CategoryBits.FEET | CategoryBits.GROUND:
 				character = (Character) getTargetFixture(CategoryBits.FEET, fixtureA, fixtureB).getUserData();
-				if (character.getB2Body().getLinearVelocity().y > .5f) {
+				if (character.getBody().getLinearVelocity().y > .5f) {
 					character.setIsJumping(true);
 				}
 				break;
@@ -94,7 +94,7 @@ public class WorldContactListener implements ContactListener {
 			// When a character leaves the platform, make following changes.
 			case CategoryBits.FEET | CategoryBits.PLATFORM:
 				character = (Character) getTargetFixture(CategoryBits.FEET, fixtureA, fixtureB).getUserData();
-				if (character.getB2Body().getLinearVelocity().y < -.5f) {
+				if (character.getBody().getLinearVelocity().y < -.5f) {
 					character.setIsJumping(true);
 					character.setIsOnPlatform(false);
 				}

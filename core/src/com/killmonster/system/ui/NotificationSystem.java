@@ -6,7 +6,7 @@ import com.killmonster.ui.NotificationArea;
 
 public class NotificationSystem extends EntitySystem {
 	
-	private Batch batch;
+	private final Batch batch;
 	private final NotificationArea notificationArea;
 	
 	public NotificationSystem(Batch batch, NotificationArea notificationArea) {

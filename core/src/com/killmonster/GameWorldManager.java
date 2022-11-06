@@ -4,6 +4,7 @@ import com.killmonster.character.Player;
 import com.killmonster.map.GameMap;
 import com.killmonster.ui.DamageIndicator;
 import com.killmonster.ui.NotificationArea;
+import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.physics.box2d.World;

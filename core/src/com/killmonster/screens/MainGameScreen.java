@@ -11,7 +11,6 @@ import com.killmonster.ui.*;
 import com.killmonster.util.*;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -62,13 +61,16 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		world.setContactListener(new WorldContactListener());
 
 		// Initialize HUD.
-		damageIndicator = new DamageIndicator(getBatch(), gsm.getFont().getDefaultFont(), getCamera(), 1.5f);
-		notificationArea = new NotificationArea(gsm, 6, 3f);
 		hud = new HUD(gsm);
+		damageIndicator = new DamageIndicator(getBatch(), gsm.getFont().getDefaultFont(), getCamera(), 1.5f);
+		notificationArea = new NotificationArea(gsm, 6, 4f);
 		
 		// Initialize PooledEngine and Systems
 		engine = new PooledEngine();
 		engine.addSystem(new TiledMapRendererSystem((OrthographicCamera) getCamera()));
+		engine.addSystem(new CharacterRendererSystem(getBatch(), getCamera(), world));
+		engine.addSystem(new CharacterAISystem());
+		engine.addSystem(new PlayerControlSystem(engine));
 		engine.addSystem(new Box2DDebugRendererSystem(world, getCamera()));
 		engine.addSystem(new DamageIndicatorSystem(getBatch(), damageIndicator));
 		engine.addSystem(new NotificationSystem(getBatch(), notificationArea));
@@ -80,6 +82,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		gameMapFile = "res/level" + currentLevel + ".tmx";
 		setGameMap(gameMapFile);
 		player = currentMap.spawnPlayer();
+		engine.addEntity(player);
 		
 		// Initialize OverlayScreen
 		pauseOverlay = new PauseOverlay(gsm);
@@ -91,44 +94,20 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 
 
 	public void handleInput(float delta) {
-		if (player.isSetToKill()) {
-			return;
-		}
-        
 		if(isAllEnemiesKilled()) {
 			Constants.COMPLETED = true;
 			levelCompletedOverlay.handleInput();
 			return;
 		}
-		
-		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
-			Constants.PAUSE = !Constants.PAUSE;
-		}   
 		if (Constants.PAUSE) {
 			pauseOverlay.handleInput();
 			return;
-		}
-		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
-			Constants.DEBUG = !Constants.DEBUG;
-		}
-		
-		
-		if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
-			player.swingWeapon();
-		}
-		
-		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-			player.jump();
-		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
-			player.moveRight();
-		} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
-			player.moveLeft();
 		}
 	}
     
 	public boolean isAllEnemiesKilled() {
 		for (Character character : enemies)
-			if (!character.isKilled())
+			if (!character.getStateIsKilled())
 				return false;
 		return true;
 	}
@@ -142,21 +121,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			// set ScreenFadeSystem again when next map
 			engine.addSystem(new ScreenFadeSystem(this));
 			
-			world.destroyBody(player.getB2Body());
+			world.destroyBody(player.getBody());
 			player = currentMap.spawnPlayer();
-			
-			// Test
-//			gameEventManager.fireEvent(new MapCompletedEvent());
-//			Timer.schedule(new Timer.Task() {
-//				@Override
-//				public void run() {
-//					setGameMap(gameMapFile);
-//					
-//					// player.reposition
-//					world.destroyBody(player.getB2Body());
-//					player = currentMap.spawnPlayer();
-//				}
-//			}, ScreenFadeSystem.FADEIN_DURATION);
 			
 			isNextLevel = false;
 		}
@@ -165,21 +131,15 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		if (!Constants.COMPLETED && !Constants.PAUSE) {
 			world.step(1/60f, 6, 2);
 			
-			enemies.forEach((Character c) -> c.update(delta));
-			player.update(delta);
-			
 			if (CameraShake.getShakeTimeLeft() > 0){
 				CameraShake.update(Gdx.graphics.getDeltaTime());
 				getCamera().translate(CameraShake.getPos());
 			} else {
-				CameraUtils.lerpToTarget(getCamera(), player.getB2Body().getPosition());
+				CameraUtils.lerpToTarget(getCamera(), player.getBody().getPosition());
 			}
 			
 			// Make sure to bound the camera within the TiledMap.
 			CameraUtils.boundCamera(getCamera(), getCurrentMap());
-			
-			// Update all actors in this stage.
-			this.act(delta);
 		}
 	}
 
@@ -187,26 +147,12 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	public void render(float delta) {
 		update(delta);
 		gsm.clearScreen();
-		
-		// Render game map.
 		engine.update(delta);
-		
-		// Render characters.
-		getBatch().setProjectionMatrix(getCamera().combined);
-		getBatch().begin();
-		enemies.forEach((Character c) -> c.draw(getBatch()));
-		player.draw(getBatch());
-		getBatch().end();
-		
 		if (Constants.COMPLETED) 
 			levelCompletedOverlay.draw();
 		
 		if (Constants.PAUSE) 
-			pauseOverlay.draw();;
-		
-		
-		// Draw all actors on this stage.
-		this.draw();
+			pauseOverlay.draw();
 	}
 
 	@Override
@@ -249,7 +195,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			world.getBodies(bodies);
 			
 			for(int i = 0; i < bodies.size; i++) {
-				if (!bodies.get(i).equals(player.getB2Body())) {
+				if (!bodies.get(i).equals(player.getBody())) {
 					world.destroyBody(bodies.get(i));
 				}
 			}
@@ -263,6 +209,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		
 		// TODO: Don't respawn enemies whenever a map loads.
 		enemies = currentMap.spawnNPCs();
+		enemies.forEach(e -> engine.addEntity(e));
 	}
 
 	@Override

@@ -1,8 +1,7 @@
 package com.killmonster.character;
 
+import com.killmonster.component.CharacterState;
 import com.killmonster.util.*;
-
-import java.util.HashMap;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
@@ -16,37 +15,35 @@ public class Crabby extends Enemy {
 	public Crabby(AssetManager assets, World world, float x, float y) {
 		super(assets.get(TEXTURE_FILE), world, x, y);
 		
-		name = "Crabby";
-		bodyWidth = 10;
-		bodyHeight = 34;
-		offsetX = .357f;
-		offsetY = .158f;
+		stats.name = "Crabby";
+		stats.bodyWidth = 10;
+		stats.bodyHeight = 34;
+		stats.offsetX = .357f;
+		stats.offsetY = .158f;
 		
-		health = 100;
-		movementSpeed = .25f;
-		jumpHeight = 4.5f;
-		attackForce = 1.2f;
-		attackTime = 1.2f;
-		attackRange = 14;
-		attackDamage = 25;
+		stats.health = 100;
+		stats.movementSpeed = .25f;
+		stats.jumpHeight = 4.5f;
+		stats.attackForce = 1.2f;
+		stats.attackTime = 1.2f;
+		stats.attackRange = 14;
+		stats.attackDamage = 25;
 		
-		typeFixtureShape = "PolygonShape";
+		stats.typeFixtureShape = "PolygonShape";
 		
 		// Knight stand animation.
-		animation = new HashMap<>();
-		animation.put(State.IDLE, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 8, 0, 0 * 32, 72, 32));
-		animation.put(State.RUNNING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 5, 0, 1 * 32, 72, 32));
-		animation.put(State.JUMPING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 5, 7, 0, 0 * 32, 72, 32));
-		animation.put(State.FALLING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 7, 7, 0, 0 * 32, 72, 32));
-		animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 20f / Constants.PPM, 0, 6, 0, 2 * 32, 72, 32));
-		animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 4, 0, 4 * 32, 72, 32));
+		animations.put(CharacterState.IDLE, 	Utils.createAnimation(sprite.sprite.getTexture(), 12f / Constants.PPM, 0, 8, 0, 0 * 32, 72, 32));
+		animations.put(CharacterState.RUNNING, 	Utils.createAnimation(sprite.sprite.getTexture(), 12f / Constants.PPM, 0, 5, 0, 1 * 32, 72, 32));
+		animations.put(CharacterState.JUMPING, 	Utils.createAnimation(sprite.sprite.getTexture(), 12f / Constants.PPM, 5, 7, 0, 0 * 32, 72, 32));
+		animations.put(CharacterState.FALLING, 	Utils.createAnimation(sprite.sprite.getTexture(), 12f / Constants.PPM, 7, 7, 0, 0 * 32, 72, 32));
+		animations.put(CharacterState.ATTACKING, Utils.createAnimation(sprite.sprite.getTexture(), 20f / Constants.PPM, 0, 6, 0, 2 * 32, 72, 32));
+		animations.put(CharacterState.KILLED, 	Utils.createAnimation(sprite.sprite.getTexture(), 24f / Constants.PPM, 0, 4, 0, 4 * 32, 72, 32));
 		
 		defineBody();
 		
-		setBounds(0, 0, 72 / Constants.PPM, 32 / Constants.PPM);
-		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));
+		sprite.sprite.setBounds(0, 0, 72 / Constants.PPM, 32 / Constants.PPM);
 		
-		facingRight = false;
+		state.facingRight = false;
 	}
     
 	public void defineBody() {
@@ -55,9 +52,9 @@ public class Crabby extends Enemy {
 		short feetMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM;
 		short weaponMaskBits = CategoryBits.PLAYER | CategoryBits.OBJECT;
 		
-		b2body = bodyBuilder
+		body.body = body.bodyBuilder
 				.type(BodyDef.BodyType.DynamicBody)
-				.position(getX(), getY(), Constants.PPM)
+				.position(sprite.sprite.getX(), sprite.sprite.getY(), Constants.PPM)
 				.buildBody();
 
 		createBodyFixture(bodyCategoryBits, bodyMaskBits);
@@ -66,8 +63,8 @@ public class Crabby extends Enemy {
 	}
     
 	public void createBodyFixture(short categoryBits, short maskBits) {
-		bodyFixture = bodyBuilder
-				.newRectangleFixture(b2body.getPosition(), 12.3f, 11.5f, Constants.PPM)
+		body.bodyFixture = body.bodyBuilder
+				.newRectangleFixture(body.body.getPosition(), 12.3f, 11.5f, Constants.PPM)
 				.categoryBits(categoryBits)
 				.maskBits(maskBits)
 				.setUserData(this)
@@ -76,12 +73,12 @@ public class Crabby extends Enemy {
     
 	public void createFeetFixture(short maskBits) {
 		Vector2[] feetPolyVertices = new Vector2[4];
-		feetPolyVertices[0] =  new Vector2(-bodyWidth / 2 + 1, -bodyHeight / 2 + 3);
-		feetPolyVertices[1] =  new Vector2(bodyWidth / 2 - 1, -bodyHeight / 2 + 3);
-		feetPolyVertices[2] =  new Vector2(-bodyWidth / 2 + 1, -bodyHeight / 2 + 2);
-		feetPolyVertices[3] =  new Vector2(bodyWidth / 2 - 1, -bodyHeight / 2 + 2);
+		feetPolyVertices[0] =  new Vector2(-stats.bodyWidth / 2 + 1, -stats.bodyHeight / 2 + 3);
+		feetPolyVertices[1] =  new Vector2(stats.bodyWidth / 2 - 1, -stats.bodyHeight / 2 + 3);
+		feetPolyVertices[2] =  new Vector2(-stats.bodyWidth / 2 + 1, -stats.bodyHeight / 2 + 2);
+		feetPolyVertices[3] =  new Vector2(stats.bodyWidth / 2 - 1, -stats.bodyHeight / 2 + 2);
 		
-		feetFixture = bodyBuilder
+		body.feetFixture = body.bodyBuilder
 				.newPolygonFixture(feetPolyVertices, Constants.PPM)
 				.categoryBits(CategoryBits.FEET)
 				.maskBits(maskBits)
@@ -90,11 +87,11 @@ public class Crabby extends Enemy {
 				.buildFixture();
 	}
 
-	protected void createMeleeWeaponFixture(short maskBits) {
+	public void createMeleeWeaponFixture(short maskBits) {
 		// Vector2 meleeAttackFixturePosition = new Vector2(attackRange, 0);
 
-		meleeWeaponFixture = bodyBuilder
-				.newRectangleFixture(b2body.getPosition(), 32f, 4f, Constants.PPM)
+		body.meleeWeaponFixture = body.bodyBuilder
+				.newRectangleFixture(body.body.getPosition(), 32f, 4f, Constants.PPM)
 				.categoryBits(CategoryBits.MELEE_WEAPON)
 				.maskBits(maskBits)
 				.isSensor(true)
