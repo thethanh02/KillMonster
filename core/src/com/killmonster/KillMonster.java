@@ -5,7 +5,6 @@ import com.killmonster.screens.Screens;
 import com.killmonster.util.Font;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
@@ -36,9 +35,11 @@ public class KillMonster extends Game implements GameStateManager {
 		assets.load("interface/hud/hud.png", Texture.class);
 		assets.load("character/player/Player.png", Texture.class);
 		assets.load("character/crabby/Crabby.png", Texture.class);
+		assets.load("objects/blue_potion.png", Texture.class);
+		assets.load("objects/objects_sprites.png", Texture.class);
 		assets.finishLoading();
 		
-		showScreen(Screens.GAME);
+		showScreen(Screens.MAIN_MENU);
 	}
     
     
@@ -49,16 +50,17 @@ public class KillMonster extends Game implements GameStateManager {
 	@Override
 	public void showScreen(Screens s) {
 		// Get current screens to dispose it
-		Screen currentScreen = getScreen();
+//		Screen currentScreen = getScreen();
  
 		// Show new screens
 		AbstractScreen newScreen = s.newScreen(this);
 		setScreen(newScreen);
  
+//		Will be Error White Console if MainGame dispose
 		// Dispose previous screens
-		if (currentScreen != null) {
-			currentScreen.dispose();
-		}
+//		if (currentScreen != null) {
+//			currentScreen.dispose();
+//		}
 	}
     
 	/**

@@ -56,7 +56,6 @@ public class Utils {
         
 		for (int i = firstFrameCount; i <= lastFrameCount; i++) {
 			TextureRegion textureRegion = new TextureRegion(texture, i * width + offsetX, offsetY, width, height);
-			// textureRegion.flip(true, false);
 			frames.add(textureRegion);
 		}
         

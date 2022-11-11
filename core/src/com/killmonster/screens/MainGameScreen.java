@@ -4,6 +4,7 @@ import com.killmonster.character.Character;
 import com.killmonster.character.Player;
 import com.killmonster.*;
 import com.killmonster.map.*;
+import com.killmonster.objects.*;
 import com.killmonster.ui.*;
 import com.killmonster.util.*;
 import com.badlogic.gdx.Gdx;
@@ -18,6 +19,8 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 
@@ -38,6 +41,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	
 	private Player player;
 	private Array<Character> enemies;
+	private Array<Potion> potions;
+	private Array<Box> boxes;
 	
 	private PauseOverlay pauseOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
@@ -87,6 +92,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 
 	public void handleInput(float delta) {
 		if (player.isSetToKill()) {
+			gsm.showScreen(Screens.GAME_OVER);
 			return;
 		}
         
@@ -107,16 +113,16 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			Constants.DEBUG = !Constants.DEBUG;
 		}
 		
-		
+		if (player.isHitted()) return;
 		if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 			player.swingWeapon();
 		}
 		
 		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 			player.jump();
-		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT)) {
+		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
 			player.moveRight();
-		} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT)) {
+		} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
 			player.moveLeft();
 		}
 	}
@@ -129,21 +135,43 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	}
 
 	public void update(float delta) {
+//		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+//			if (currentLevel < 1) currentLevel++;
+//			gameMapFile = "res/level" + currentLevel + ".tmx";
+//			shade.addAction(Actions.sequence(Actions.fadeIn(.3f), new RunnableAction() {
+//				@Override
+//				public void run() {
+//					setGameMap(gameMapFile);
+//					world.destroyBody(player.getBody());
+//					
+//					player = currentMap.spawnPlayer();
+//				}
+//				
+//			}, Actions.fadeOut(.8f)));
+//			isNextLevel = false;
+//		}
+		
 		if (isNextLevel) {
-			if (currentLevel < 2) currentLevel++;
+			if (currentLevel < 1) currentLevel++;
 			gameMapFile = "res/level" + currentLevel + ".tmx";
 			setGameMap(gameMapFile);
-			world.destroyBody(player.getB2Body());
+			world.destroyBody(player.getBody());
 			
 			player = currentMap.spawnPlayer();
 			isNextLevel = false;
 		}
+		
 		handleInput(delta);
 		if (!Constants.COMPLETED && !Constants.PAUSE) {
 			world.step(1/60f, 6, 2);
 			
-			enemies.forEach((Character c) -> c.update(delta));
+			// entities update
+			boxes.forEach((Box x) -> x.update(delta));
+			potions.forEach((Potion x) -> x.update(delta));
+			enemies.forEach((Character x) -> x.update(delta));
 			player.update(delta);
+			
+			// ui update
 			hud.update(delta);
 			messageArea.update(delta);
 			damageIndicator.update(delta);
@@ -152,7 +180,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 				CameraShake.update(Gdx.graphics.getDeltaTime());
 				getCamera().translate(CameraShake.getPos());
 			} else {
-				CameraUtils.lerpToTarget(getCamera(), player.getB2Body().getPosition());
+				CameraUtils.lerpToTarget(getCamera(), player.getBody().getPosition());
 			}
 			
 			// Make sure to bound the camera within the TiledMap.
@@ -178,10 +206,19 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		// Render characters.
 		getBatch().setProjectionMatrix(getCamera().combined);
 		getBatch().begin();
-		enemies.forEach((Character c) -> c.draw(getBatch()));
+		
+		// entities render
+		boxes.forEach((Box x) -> x.draw(getBatch()));
+		for (Potion x : potions) {
+			if (!x.isPickedUp()) x.draw(getBatch());
+		}
+		for (Character x : enemies) {
+			if (!x.isKilled()) x.draw(getBatch());
+		}
 		player.draw(getBatch());
 		getBatch().end();
 		
+		// ui render
 		getBatch().setProjectionMatrix(damageIndicator.getCamera().combined);
 		damageIndicator.draw();
 		
@@ -216,8 +253,12 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		hud.dispose();
 		currentMap.dispose();
 		world.dispose();
+		
+		boxes.forEach((Box x) -> x.dispose());
+		enemies.forEach((Character x) -> x.dispose());
+		potions.forEach((Potion x) -> x.dispose());
 		player.dispose();
-		enemies.forEach((Character c) -> c.dispose());
+
 		
 		pauseOverlay.dispose();
 		levelCompletedOverlay.dispose();
@@ -241,7 +282,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			world.getBodies(bodies);
 			
 			for(int i = 0; i < bodies.size; i++) {
-				if (!bodies.get(i).equals(player.getB2Body())) {
+				if (!bodies.get(i).equals(player.getBody())) {
 					world.destroyBody(bodies.get(i));
 				}
 			}
@@ -258,6 +299,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		
 		// TODO: Don't respawn enemies whenever a map loads.
 		enemies = currentMap.spawnNPCs();
+		potions = currentMap.spawnPotions();
+		boxes = currentMap.spawnBoxes();
 	}
 
 	@Override

@@ -18,19 +18,20 @@ import com.badlogic.gdx.utils.Queue;
 
 public abstract class Character extends Sprite implements Disposable {
 
-	public enum State { IDLE, RUNNING, JUMPING, FALLING, CROUCHING, ATTACKING, KILLED };
+	public enum State { IDLE, RUNNING, JUMPING, FALLING, HIT, ATTACKING, KILLED };
 	
 	protected Map<State, Animation<TextureRegion>> animation;
 	
-	protected Character.State currentState;
-	protected Character.State previousState;
+	protected State currentState;
+	protected State previousState;
 	
 	protected World currentWorld;
 	protected BodyBuilder bodyBuilder;
-	protected Body b2body;
+	protected Body body;
 	protected Fixture bodyFixture;
 	protected Fixture meleeWeaponFixture;
 	protected Fixture feetFixture;
+	protected String typeMeleeShape;
 	
 	protected float stateTimer;
 	protected boolean isAlerted;
@@ -41,6 +42,7 @@ public abstract class Character extends Sprite implements Disposable {
 	protected boolean isInvincible;
 	protected boolean isKilled;
 	protected boolean setToKill;
+	protected boolean isHitted;
 	
 	protected String name;
 	protected int level;
@@ -53,12 +55,10 @@ public abstract class Character extends Sprite implements Disposable {
 	protected float bodyWidth;
 	protected float offsetX;
 	protected float offsetY;
-	protected String typeFixtureShape;
 	
 	protected float movementSpeed;
 	protected float jumpHeight;
 	protected float attackForce;
-	protected float attackTime;
 	protected int attackRange;
 	protected int attackDamage;
 	
@@ -91,14 +91,22 @@ public abstract class Character extends Sprite implements Disposable {
 			// it means that the killedAnimation is not fully played.
 			// So here we'll play it until it's finished.
 			if (setToKill) {
-				setRegion(getFrame(delta, typeFixtureShape));
+				setRegion(getFrame(delta));
 				// Set killed to true to prevent further rendering updates.
 				if (animation.get(State.KILLED).isAnimationFinished(stateTimer)) {
-					currentWorld.destroyBody(b2body);
+					currentWorld.destroyBody(body);
 					isKilled = true;
 				}
+			} else if (isHitted) {
+				setRegion(getFrame(delta));
+				
+				// Set isHitted back to false, implying hit has complete.
+				if (animation.get(State.HIT).isAnimationFinished(stateTimer)) {
+					isHitted = false;
+					stateTimer = 0;
+				}
 			} else {
-				setRegion(getFrame(delta, typeFixtureShape));
+				setRegion(getFrame(delta));
 				
 				// Set isAttacking back to false, implying attack has complete.
 				if (animation.get(State.ATTACKING).isAnimationFinished(stateTimer)) {
@@ -107,13 +115,13 @@ public abstract class Character extends Sprite implements Disposable {
 				}
 			}
 
-			float textureX = b2body.getPosition().x - offsetX;
-			float textureY = b2body.getPosition().y - offsetY;
+			float textureX = body.getPosition().x - offsetX;
+			float textureY = body.getPosition().y - offsetY;
 			setPosition(textureX, textureY);
 		}
 	}
     
-	private TextureRegion getFrame(float delta, String type) {
+	private TextureRegion getFrame(float delta) {
 		previousState = currentState;
 		currentState = getState();
 		
@@ -130,16 +138,20 @@ public abstract class Character extends Sprite implements Disposable {
 			case ATTACKING:
 				textureRegion = animation.get(State.ATTACKING).getKeyFrame(stateTimer, false);
 				break;
+			case HIT:
+				textureRegion = animation.get(State.HIT).getKeyFrame(stateTimer, false);
+				break;
 			case KILLED:
 				textureRegion = animation.get(State.KILLED).getKeyFrame(stateTimer, false);
 				break;
 			case IDLE:
 			default:
-				textureRegion = animation.get(State.IDLE).getKeyFrame(stateTimer, true);;
+				textureRegion = animation.get(State.IDLE).getKeyFrame(stateTimer, true);
 				break;
 		}
         
-		if (type.equals("CircleShape")) {
+//		fix later
+		if (typeMeleeShape.equals("CircleShape")) {
 			if (!facingRight && !textureRegion.isFlipX()) {
 				textureRegion.flip(true, false);
 				CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
@@ -159,13 +171,15 @@ public abstract class Character extends Sprite implements Disposable {
 	private State getState() {
 		if (setToKill) {
 			return State.KILLED;
+		} else if (isHitted) {
+			return State.HIT;
 		} else if (isAttacking) {
 			return State.ATTACKING;
-		} else if (isJumping && b2body.getLinearVelocity().y < -.01f) {
+		} else if (isJumping && body.getLinearVelocity().y < -.01f) {
 			return State.FALLING;
-		} else if (b2body.getLinearVelocity().y > .01f) {
+		} else if (body.getLinearVelocity().y > .01f) {
 			return State.JUMPING;
-		} else if (b2body.getLinearVelocity().x > .01f || b2body.getLinearVelocity().x < -.01f) {
+		} else if (body.getLinearVelocity().x > .01f || body.getLinearVelocity().x < -.01f) {
 			return State.RUNNING;
 		} else {
 			return State.IDLE;
@@ -173,7 +187,7 @@ public abstract class Character extends Sprite implements Disposable {
 	}
 
 	protected void defineBody(BodyDef.BodyType type, short bodyCategoryBits, short bodyMaskBits, short feetMaskBits, short meleeWeaponMaskBits) {
-		b2body = bodyBuilder.type(type)
+		body = bodyBuilder.type(type)
 				.position(getX(), getY(), Constants.PPM)
 				.buildBody();
 
@@ -184,7 +198,7 @@ public abstract class Character extends Sprite implements Disposable {
 
 	protected void createBodyFixture(short categoryBits, short maskBits) {
 		bodyFixture = bodyBuilder
-				.newRectangleFixture(b2body.getPosition(), bodyWidth / 2, bodyHeight / 2, Constants.PPM)
+				.newRectangleFixture(body.getPosition(), bodyWidth / 2, bodyHeight / 2, Constants.PPM)
 				.categoryBits(categoryBits)
 				.maskBits(maskBits)
 				.setUserData(this)
@@ -223,16 +237,16 @@ public abstract class Character extends Sprite implements Disposable {
 	public void moveLeft() {
 		facingRight = false;
 
-		if (b2body.getLinearVelocity().x >= -movementSpeed * 2) {
-			b2body.applyLinearImpulse(new Vector2(-movementSpeed, 0), b2body.getWorldCenter(), true);
+		if (body.getLinearVelocity().x >= -movementSpeed * 2) {
+			body.applyLinearImpulse(new Vector2(-movementSpeed, 0), body.getWorldCenter(), true);
 		}
 	}
     
 	public void moveRight() {
 		facingRight = true;
 
-		if (b2body.getLinearVelocity().x <= movementSpeed * 2) {
-			b2body.applyLinearImpulse(new Vector2(movementSpeed, 0), b2body.getWorldCenter(), true);
+		if (body.getLinearVelocity().x <= movementSpeed * 2) {
+			body.applyLinearImpulse(new Vector2(movementSpeed, 0), body.getWorldCenter(), true);
 		}
 	}
     
@@ -240,24 +254,24 @@ public abstract class Character extends Sprite implements Disposable {
 		if (!isJumping) {
 			isJumping = true;
 
-			getB2Body().applyLinearImpulse(new Vector2(0, jumpHeight), b2body.getWorldCenter(), true);
+			getBody().applyLinearImpulse(new Vector2(0, jumpHeight), body.getWorldCenter(), true);
 		}
 	}
 
 	public void jumpDown() {
 		if (isOnPlatform) {
 			isOnPlatform = false;
-			b2body.setTransform(b2body.getPosition().x, b2body.getPosition().y - 8f / Constants.PPM, 0);
+			body.setTransform(body.getPosition().x, body.getPosition().y - 8f / Constants.PPM, 0);
 		}
 	}
 
 	public void swingWeapon() {
-		if (!isAttacking()) {
-			setIsAttacking(true);
+		if (!isAttacking) {
+			isAttacking = true;
 
-			if (hasInRangeTarget() && !inRangeTarget.isInvincible() && !inRangeTarget.isSetToKill()) {
-				setLockedOnTarget(inRangeTarget);
-				inRangeTarget.setLockedOnTarget(this);
+			if (hasInRangeTarget() && !inRangeTarget.isInvincible && !inRangeTarget.setToKill) {
+				this.lockedOnTarget = inRangeTarget;
+				inRangeTarget.lockedOnTarget = this;
 
 				inflictDamage(inRangeTarget, attackDamage);
 			}
@@ -268,7 +282,23 @@ public abstract class Character extends Sprite implements Disposable {
 
 	public void inflictDamage(Character c, int damage) {
 		c.receiveDamage(damage);
-		c.knockedBack((facingRight) ? attackForce : -attackForce);
+		if (facingRight) {
+			c.knockedBack(attackForce);
+//			c.facingRight = true;
+//			if (!facingRight && !textureRegion.isFlipX()) {
+//				textureRegion.flip(true, false);
+//			} else if (facingRight && textureRegion.isFlipX()) {
+//				textureRegion.flip(true, false);
+//			} 
+		} else {
+			c.knockedBack(-attackForce);
+//			c.facingRight = false;
+//			if (!c.facingRight && !c.textureRegion.isFlipX()) {
+//				c.textureRegion.flip(true, false);
+//			} else if (c.facingRight && c.textureRegion.isFlipX()) {
+//				c.textureRegion.flip(true, false);
+//			}
+		}
 	}
 
 	public void receiveDamage(int damage) {
@@ -279,12 +309,13 @@ public abstract class Character extends Sprite implements Disposable {
 				setCategoryBits(bodyFixture, CategoryBits.DESTROYED);
 				setToKill = true;
 			} else {
+				isHitted = true;
 			}
 		}
 	}
 
 	public void knockedBack(float force) {
-		b2body.applyLinearImpulse(new Vector2(force, 1f), b2body.getWorldCenter(), true);
+		body.applyLinearImpulse(new Vector2(force, 1f), body.getWorldCenter(), true);
 	}
 
 	public static void setCategoryBits(Fixture f, short bits) {
@@ -293,32 +324,14 @@ public abstract class Character extends Sprite implements Disposable {
 		f.setFilterData(filter);
 	}
 
-
-	// Review the code below.
-	public Body getB2Body() {
-		return b2body;
+	public Body getBody() {
+		return body;
 	}
-
-	public Fixture getBodyFixture() {
-		return bodyFixture;
-	}
-
-	public String getName() {
-		return name;
-	}
-    
-	public boolean isAttacking() {
-		return isAttacking;
-	}
-
-	public boolean isInvincible() {
-		return isInvincible;
-	}
-
+	
 	public int getHealth() {
 		return health;
 	}
-    
+	
 	public boolean isSetToKill() {
 		return setToKill;
 	}
@@ -326,28 +339,19 @@ public abstract class Character extends Sprite implements Disposable {
 	public boolean isKilled() {
 		return isKilled;
 	}
-    
-	public boolean isJumping() {
-		return isJumping;
+	
+	public boolean isHitted() {
+		return isHitted;
 	}
     
 	public void setIsJumping(boolean isJumping) {
 		this.isJumping = isJumping;
 	}
 
-	public boolean isOnPlatform() {
-		return isOnPlatform;
-	}
-
 	public void setIsOnPlatform(boolean isOnPlatform) {
 		this.isOnPlatform = isOnPlatform;
 	}
     
-	public void setIsAttacking(boolean isAttacking) {
-		this.isAttacking = isAttacking;
-	}
-
-
 	public boolean hasLockedOnTarget() {
 		return lockedOnTarget != null;
 	}
@@ -356,25 +360,8 @@ public abstract class Character extends Sprite implements Disposable {
 		return inRangeTarget != null;
 	}
     
-	public Character getLockedOnTarget() {
-		return lockedOnTarget;
-	}
-	
-	public Character getInRangeTarget() {
-		return inRangeTarget;
-	}
-	
-	public void setLockedOnTarget(Character enemy) {
-		lockedOnTarget = enemy;
-	}
-	
 	public void setInRangeTarget(Character enemy) {
 		inRangeTarget = enemy;
-	}
-	
-	
-	public boolean facingRight() {
-		return facingRight;
 	}
 	
 	public BehavioralModel getBehavioralModel() {
@@ -383,6 +370,10 @@ public abstract class Character extends Sprite implements Disposable {
 	
 	public Queue<Actor> getDamageIndicators() {
 		return damageIndicators;
+	}
+	
+	public void flipXTextureRegion() {
+		textureRegion.flip(true, false);
 	}
 	
 	@Override

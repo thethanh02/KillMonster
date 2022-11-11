@@ -34,7 +34,7 @@ public class BehavioralModel {
 	 * @param c the target character to move to.
 	 */
 	public void moveTowardTarget(Character c) {
-		if (character.getB2Body().getPosition().x > c.getB2Body().getPosition().x) {
+		if (character.getBody().getPosition().x > c.getBody().getPosition().x) {
 			character.moveLeft();
 		} else {
 			character.moveRight();
@@ -101,8 +101,8 @@ public class BehavioralModel {
 	 */
 	public void jumpIfStucked(float delta, float checkInterval) {
 		if (calculateDistanceTimer > checkInterval) {
-			lastTraveledDistance = Utils.getDistance(character.getB2Body().getPosition().x, lastStoppedPosition.x);
-			lastStoppedPosition.set(character.getB2Body().getPosition());
+			lastTraveledDistance = Utils.getDistance(character.getBody().getPosition().x, lastStoppedPosition.x);
+			lastStoppedPosition.set(character.getBody().getPosition());
 			
 			if (lastTraveledDistance == 0) {
 				character.jump();

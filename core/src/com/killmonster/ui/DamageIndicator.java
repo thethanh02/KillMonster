@@ -44,7 +44,7 @@ public class DamageIndicator extends Stage {
 		Message indicator = new Message(Integer.toString(damage), new Label.LabelStyle(gsm.getFont().getDefaultFont(), Color.WHITE), damageTextLifetime);
 		
 		// Convert the coordinate from world to screens.
-		Vector3 worldCoordinates = new Vector3(c.getB2Body().getPosition().x, c.getB2Body().getPosition().y, 0);
+		Vector3 worldCoordinates = new Vector3(c.getBody().getPosition().x, c.getBody().getPosition().y, 0);
 		gameScreenCamera.project(worldCoordinates);
 		
 		indicator.setPosition(worldCoordinates.x * Constants.V_WIDTH / getViewport().getScreenWidth(), worldCoordinates.y * Constants.V_HEIGHT / getViewport().getScreenHeight());

@@ -3,6 +3,7 @@ package com.killmonster.map;
 import com.killmonster.*;
 import com.killmonster.character.*;
 import com.killmonster.character.Character;
+import com.killmonster.objects.*;
 import com.killmonster.util.box2d.TiledObjectUtils;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
@@ -49,16 +50,37 @@ public class GameMap implements Disposable {
 	}
 	
 	public Array<Character> spawnNPCs() {
-		Array<Character> knights = new Array<>();
+		Array<Character> npcs = new Array<>();
 		
 		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.NPCS.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			knights.add(new Crabby(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX(), rect.getY()));
+			npcs.add(new Crabby(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX(), rect.getY()));
 		}
         
-		return knights;
+		return npcs;
 	}
     
+	public Array<Potion> spawnPotions() {
+		Array<Potion> potions = new Array<>();
+
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.POTION.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			potions.add(new Potion(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX(), rect.getY()));
+		}
+        
+		return potions;
+	}
+	
+	public Array<Box> spawnBoxes() {
+		Array<Box> box = new Array<>();
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.BOX.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			box.add(new Box(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2));
+		}
+        
+		return box;
+	}
     
 	public TiledMap getTiledMap() {
 		return tiledMap;

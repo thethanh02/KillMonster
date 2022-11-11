@@ -14,8 +14,8 @@ public abstract class Enemy extends Character {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		if (isSetToKill()) return;
-
+		if (setToKill || isHitted) return;
+		
 		if (isAlerted && hasLockedOnTarget()) {
 			// Is the target within melee attack range?
 			if (hasInRangeTarget()) {
@@ -23,20 +23,20 @@ public abstract class Enemy extends Character {
 				swingWeapon();
 
 				// If the target's heath reaches zero, unset lockedOnTarget and it will stop attacking.
-				if (lockedOnTarget.isSetToKill()) {
+				if (lockedOnTarget.setToKill) {
 					lockedOnTarget = null;
 				}
 			} else {
 				// If the target isn't within melee attack range, move toward it until it can be attacked.
-				if (Utils.getDistance(b2body.getPosition().x, lockedOnTarget.b2body.getPosition().x) >= attackRange * 2 / Constants.PPM) {
-					getBehavioralModel().moveTowardTarget(lockedOnTarget);
+				if (Utils.getDistance(body.getPosition().x, lockedOnTarget.body.getPosition().x) >= attackRange * 2 / Constants.PPM) {
+					behavioralModel.moveTowardTarget(lockedOnTarget);
 
 					// Jump if it gets stucked while moving toward the lockedOnTarget.
-					getBehavioralModel().jumpIfStucked(delta, .1f);
+					behavioralModel.jumpIfStucked(delta, .1f);
 				}
 			}
 		} else {
-			getBehavioralModel().moveRandomly(delta, 0, 5, 0, 5);
+			behavioralModel.moveRandomly(delta, 0, 5, 0, 5);
 		}
 	}
 

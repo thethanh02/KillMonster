@@ -2,6 +2,7 @@ package com.killmonster.map;
 
 import com.killmonster.character.*;
 import com.killmonster.character.Character;
+import com.killmonster.objects.*;
 import com.killmonster.util.CategoryBits;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -20,6 +21,8 @@ public class WorldContactListener implements ContactListener {
 		Character character;
 		Player player;
 		Enemy enemy;
+		Potion potion;
+		Box box;
 		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
@@ -66,6 +69,18 @@ public class WorldContactListener implements ContactListener {
 				enemy.setInRangeTarget(player);
 				break;
 			    
+//			case CategoryBits.MELEE_WEAPON | CategoryBits.BOX:
+//				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
+//				box = (Box) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
+//				player.setInRangeTarget(box);
+//				break;
+				
+			case CategoryBits.PLAYER | CategoryBits.OBJECT:
+				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
+				potion = (Potion) getTargetFixture(CategoryBits.OBJECT, fixtureA, fixtureB).getUserData();
+				potion.setIsPickedUp(true);
+				potion.healing(player);
+				break;
 			default:
 				break;
 		}
@@ -86,7 +101,7 @@ public class WorldContactListener implements ContactListener {
 			// When a character leaves the ground, make following changes.
 			case CategoryBits.FEET | CategoryBits.GROUND:
 				character = (Character) getTargetFixture(CategoryBits.FEET, fixtureA, fixtureB).getUserData();
-				if (character.getB2Body().getLinearVelocity().y > .5f) {
+				if (character.getBody().getLinearVelocity().y > .5f) {
 					character.setIsJumping(true);
 				}
 				break;
@@ -94,7 +109,7 @@ public class WorldContactListener implements ContactListener {
 			// When a character leaves the platform, make following changes.
 			case CategoryBits.FEET | CategoryBits.PLATFORM:
 				character = (Character) getTargetFixture(CategoryBits.FEET, fixtureA, fixtureB).getUserData();
-				if (character.getB2Body().getLinearVelocity().y < -.5f) {
+				if (character.getBody().getLinearVelocity().y < -.5f) {
 					character.setIsJumping(true);
 					character.setIsOnPlatform(false);
 				}
@@ -112,6 +127,11 @@ public class WorldContactListener implements ContactListener {
 				enemy.setInRangeTarget(null);
 				break;
 			    
+			case CategoryBits.MELEE_WEAPON | CategoryBits.BOX:
+				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
+				player.setInRangeTarget(null);
+				break;
+				
 			default:
 				break;
 		}
