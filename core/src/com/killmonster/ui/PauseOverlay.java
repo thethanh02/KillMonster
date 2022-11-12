@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class PauseOverlay extends Stage {
 	
-	private GameStateManager gsm;
 	
 	private static final String SOUND_SKIN_FILE = "res/sound_button.json";
 	private static final String URM_SKIN_FILE = "res/urm_button.json";
@@ -28,7 +27,6 @@ public class PauseOverlay extends Stage {
 	private Image transparentImage, background;
     
 	public PauseOverlay(GameStateManager gsm) {
-		this.gsm = gsm;
 		
 		Texture texture = gsm.getAssets().get(TEXTURE_FILE);
 		Skin soundSkin = gsm.getAssets().get(SOUND_SKIN_FILE);

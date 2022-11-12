@@ -52,7 +52,7 @@ public class GameMap implements Disposable {
 	public Array<Character> spawnNPCs() {
 		Array<Character> npcs = new Array<>();
 		
-		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.NPCS.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.ENEMIES.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			npcs.add(new Crabby(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2));
 		}
@@ -60,12 +60,12 @@ public class GameMap implements Disposable {
 		return npcs;
 	}
     
-	public Array<Potion> spawnPotions() {
-		Array<Potion> potions = new Array<>();
+	public Array<BluePotion> spawnPotions() {
+		Array<BluePotion> potions = new Array<>();
 
 		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.POTION.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			potions.add(new Potion(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2));
+			potions.add(new BluePotion(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2));
 		}
         
 		return potions;

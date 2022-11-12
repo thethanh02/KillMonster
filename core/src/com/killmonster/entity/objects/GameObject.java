@@ -9,7 +9,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.killmonster.entity.Entity;
 
-public class GameObject extends Entity {
+public abstract class GameObject extends Entity {
 
 	public enum State { IDLE, HIT, DESTROYED };
 	

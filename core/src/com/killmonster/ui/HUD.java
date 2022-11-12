@@ -17,7 +17,6 @@ public class HUD extends Stage {
 	private static int healthLength = 150; // pixel
 	private static int powerLength = 104; // pixel
     
-	private GameStateManager gsm;
 	private Player player;
 	private Skin skin;
 	    
@@ -34,7 +33,6 @@ public class HUD extends Stage {
 	    
 	public HUD(GameStateManager gsm, Player player) {
 		super(new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT), gsm.getBatch());
-		this.gsm = gsm;
 		this.player = player;
 		
 		skin = gsm.getAssets().get(SKIN_FILE);

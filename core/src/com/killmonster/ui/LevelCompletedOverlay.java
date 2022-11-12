@@ -15,7 +15,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 
 public class LevelCompletedOverlay extends Stage{
-	private GameStateManager gsm;
 	
 	private static final String URM_SKIN_FILE = "res/urm_button.json";
 	private static final String TEXTURE_FILE = "res/completed_sprite.png";
@@ -24,7 +23,6 @@ public class LevelCompletedOverlay extends Stage{
 	private Image transparentImage, background;
 	
 	public LevelCompletedOverlay(GameStateManager gsm) {
-		this.gsm = gsm;
 		
 		Texture texture = gsm.getAssets().get(TEXTURE_FILE);
 		Skin urmSkin = gsm.getAssets().get(URM_SKIN_FILE);

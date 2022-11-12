@@ -14,10 +14,8 @@ public class Font {
 	private static final String FONT_FILE = "interface/font/Vormgevers.ttf";
 	private static BitmapFont defaultFont;
 	
-	private GameStateManager gsm;
 	
 	public Font(GameStateManager gsm) {
-		this.gsm = gsm;
 		
 		FileHandleResolver resolver = new InternalFileHandleResolver();
 		gsm.getAssets().setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(resolver));

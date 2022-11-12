@@ -14,7 +14,6 @@ public class InventoryWindow extends Stage {
     
 	private static int barLength = 50; // pixel
 	
-	private GameStateManager gameStateManager;
 	private Player player;
 	
 	private Texture hudTexture;
@@ -32,7 +31,6 @@ public class InventoryWindow extends Stage {
 	
 	public InventoryWindow(GameStateManager gameStateManager, Player player) {
 		super(new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT), gameStateManager.getBatch());
-		this.gameStateManager = gameStateManager;
 		this.player = player;
 		
 		// Initializes player hud Texture and TextureRegions.

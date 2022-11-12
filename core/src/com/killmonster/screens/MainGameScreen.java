@@ -7,6 +7,9 @@ import com.killmonster.*;
 import com.killmonster.map.*;
 import com.killmonster.ui.*;
 import com.killmonster.util.*;
+
+import java.util.Random;
+
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.assets.AssetManager;
@@ -168,9 +171,16 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			for (Box x : boxes) {
 				x.update(delta);
 				if (x.isKilled()) {
-					if (!x.isDropped()) 
-						potions.add(new Potion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
-					
+					if (!x.isDropped()) {
+						Random generator = new Random();
+						int rnd = generator.nextInt(3);
+						// if random == 0 -> Box is blank
+						if (rnd == 1)
+							potions.add(new BluePotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
+
+						else if (rnd == 2)
+							potions.add(new RedPotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
+					}
 					x.setDropped(true);
 				}
 			}

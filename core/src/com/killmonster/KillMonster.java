@@ -36,6 +36,7 @@ public class KillMonster extends Game implements GameStateManager {
 		assets.load("character/player/Player.png", Texture.class);
 		assets.load("character/crabby/Crabby.png", Texture.class);
 		assets.load("objects/blue_potion.png", Texture.class);
+		assets.load("objects/red_potion.png", Texture.class);
 		assets.load("objects/objects_sprites.png", Texture.class);
 		assets.finishLoading();
 		
