@@ -1,10 +1,10 @@
 package com.killmonster.screens;
 
-import com.killmonster.character.Character;
-import com.killmonster.character.Player;
+import com.killmonster.entity.character.Character;
+import com.killmonster.entity.character.Player;
+import com.killmonster.entity.objects.*;
 import com.killmonster.*;
 import com.killmonster.map.*;
-import com.killmonster.objects.*;
 import com.killmonster.ui.*;
 import com.killmonster.util.*;
 import com.badlogic.gdx.Gdx;
@@ -19,8 +19,6 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
-import com.badlogic.gdx.scenes.scene2d.actions.Actions;
-import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 
@@ -41,8 +39,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	
 	private Player player;
 	private Array<Character> enemies;
-	private Array<Potion> potions;
 	private Array<Box> boxes;
+	private Array<Potion> potions;
 	
 	private PauseOverlay pauseOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
@@ -78,6 +76,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		gameMapFile = "res/level" + currentLevel + ".tmx";
 		setGameMap(gameMapFile);
 		player = currentMap.spawnPlayer();
+		potions = new Array<>();
 		
 		// Initialize HUD.
 		damageIndicator = new DamageIndicator(gsm, getCamera(), 1.5f);
@@ -166,7 +165,15 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			world.step(1/60f, 6, 2);
 			
 			// entities update
-			boxes.forEach((Box x) -> x.update(delta));
+			for (Box x : boxes) {
+				x.update(delta);
+				if (x.isKilled()) {
+					if (!x.isDropped()) 
+						potions.add(new Potion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
+					
+					x.setDropped(true);
+				}
+			}
 			potions.forEach((Potion x) -> x.update(delta));
 			enemies.forEach((Character x) -> x.update(delta));
 			player.update(delta);
@@ -208,13 +215,15 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		getBatch().begin();
 		
 		// entities render
-		boxes.forEach((Box x) -> x.draw(getBatch()));
-		for (Potion x : potions) {
-			if (!x.isPickedUp()) x.draw(getBatch());
-		}
-		for (Character x : enemies) {
+		for (Box x : boxes) 
 			if (!x.isKilled()) x.draw(getBatch());
-		}
+		
+		for (Potion x : potions) 
+			if (!x.isKilled()) x.draw(getBatch());
+		
+		for (Character x : enemies) 
+			if (!x.isKilled()) x.draw(getBatch());
+		
 		player.draw(getBatch());
 		getBatch().end();
 		
@@ -255,8 +264,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		world.dispose();
 		
 		boxes.forEach((Box x) -> x.dispose());
-		enemies.forEach((Character x) -> x.dispose());
 		potions.forEach((Potion x) -> x.dispose());
+		enemies.forEach((Character x) -> x.dispose());
 		player.dispose();
 
 		
@@ -281,7 +290,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			Array<Body> bodies = new Array<>();
 			world.getBodies(bodies);
 			
-			for(int i = 0; i < bodies.size; i++) {
+			for (int i = 0; i < bodies.size; i++) {
 				if (!bodies.get(i).equals(player.getBody())) {
 					world.destroyBody(bodies.get(i));
 				}
@@ -299,7 +308,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		
 		// TODO: Don't respawn enemies whenever a map loads.
 		enemies = currentMap.spawnNPCs();
-		potions = currentMap.spawnPotions();
+//		potions = currentMap.spawnPotions();
 		boxes = currentMap.spawnBoxes();
 	}
 
@@ -336,5 +345,5 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	public Player getPlayer() {
 		return player;
 	}
-
+	
 }

@@ -1,4 +1,4 @@
-package com.killmonster.character;
+package com.killmonster.entity.character;
 
 import java.util.concurrent.ThreadLocalRandom;
 import com.killmonster.util.Utils;

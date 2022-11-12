@@ -1,6 +1,7 @@
-package com.killmonster.character;
+package com.killmonster.entity.character;
 
 import com.killmonster.GameWorldManager;
+import com.killmonster.entity.Entity;
 import com.killmonster.util.*;
 
 import java.util.HashMap;
@@ -55,9 +56,9 @@ public class Player extends Character {
 
 	public void defineBody() {
 		short bodyCategoryBits = CategoryBits.PLAYER;
-		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.ENEMY | CategoryBits.MELEE_WEAPON | CategoryBits.OBJECT;
+		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.ENEMY | CategoryBits.MELEE_WEAPON | CategoryBits.POTION;
 		short feetMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM;
-		short weaponMaskBits = CategoryBits.ENEMY;
+		short weaponMaskBits = CategoryBits.ENEMY | CategoryBits.BOX;
 		
 		super.defineBody(BodyDef.BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits, feetMaskBits, weaponMaskBits);
 	}
@@ -71,18 +72,18 @@ public class Player extends Character {
 	}
 
 	@Override
-	public void inflictDamage(Character c, int damage) {
-		if ((this.facingRight && c.facingRight) || (!this.facingRight && !c.facingRight)) {
+	public void inflictDamage(Entity c, int damage) {
+		if ((this.facingRight && c.isFacingRight()) || (!this.facingRight && !c.isFacingRight())) {
 			damage *= 2;
 			gameWorldManager.getMessageArea().show("Critical hit!");
 		}
 		
 		super.inflictDamage(c, damage);
 		gameWorldManager.getDamageIndicator().show(c, damage);
-		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.name));
-		CameraShake.shake(8 / Constants.PPM, .1f);
+		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
+//		CameraShake.shake(8 / Constants.PPM, .1f);
 		
-		if (c.setToKill) {
+		if (c instanceof Enemy && c.isSetToKill()) {
 			gameWorldManager.getMessageArea().show(String.format("You earned 10 exp."));
 		}
 	}
@@ -99,7 +100,7 @@ public class Player extends Character {
 			Timer.schedule(new Task() {
 				@Override
 				public void run() {
-					if (!setToKill) {
+					if (!setToDestroy) {
 						isInvincible = false;
 					}
 				}

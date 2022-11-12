@@ -1,5 +1,6 @@
-package com.killmonster.character;
+package com.killmonster.entity.character;
 
+import com.killmonster.entity.Entity;
 import com.killmonster.util.Constants;
 import com.killmonster.util.Utils;
 import com.badlogic.gdx.graphics.Texture;
@@ -14,7 +15,7 @@ public abstract class Enemy extends Character {
 	@Override
 	public void update(float delta) {
 		super.update(delta);
-		if (setToKill || isHitted) return;
+		if (setToDestroy || isHitted) return;
 		
 		if (isAlerted && hasLockedOnTarget()) {
 			// Is the target within melee attack range?
@@ -23,13 +24,13 @@ public abstract class Enemy extends Character {
 				swingWeapon();
 
 				// If the target's heath reaches zero, unset lockedOnTarget and it will stop attacking.
-				if (lockedOnTarget.setToKill) {
+				if (lockedOnTarget.isSetToKill()) {
 					lockedOnTarget = null;
 				}
 			} else {
 				// If the target isn't within melee attack range, move toward it until it can be attacked.
-				if (Utils.getDistance(body.getPosition().x, lockedOnTarget.body.getPosition().x) >= attackRange * 2 / Constants.PPM) {
-					behavioralModel.moveTowardTarget(lockedOnTarget);
+				if (Utils.getDistance(body.getPosition().x, lockedOnTarget.getBody().getPosition().x) >= attackRange * 2 / Constants.PPM) {
+					behavioralModel.moveTowardTarget((Character) lockedOnTarget);
 
 					// Jump if it gets stucked while moving toward the lockedOnTarget.
 					behavioralModel.jumpIfStucked(delta, .1f);
@@ -41,7 +42,7 @@ public abstract class Enemy extends Character {
 	}
 
 	@Override
-	public void inflictDamage(Character c, int damage) {
+	public void inflictDamage(Entity c, int damage) {
 		super.inflictDamage(c, damage);
 		setInRangeTarget(null);
 	}

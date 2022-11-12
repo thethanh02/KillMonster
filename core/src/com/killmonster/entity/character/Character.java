@@ -1,22 +1,16 @@
-package com.killmonster.character;
+package com.killmonster.entity.character;
 
 import com.killmonster.util.Constants;
+import com.killmonster.entity.Entity;
 import com.killmonster.util.CategoryBits;
-import com.killmonster.util.box2d.BodyBuilder;
-
 import java.util.Map;
-
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.utils.Disposable;
-import com.badlogic.gdx.utils.Queue;
 
-public abstract class Character extends Sprite implements Disposable {
+public abstract class Character extends Entity {
 
 	public enum State { IDLE, RUNNING, JUMPING, FALLING, HIT, ATTACKING, KILLED };
 	
@@ -24,37 +18,20 @@ public abstract class Character extends Sprite implements Disposable {
 	
 	protected State currentState;
 	protected State previousState;
-	
-	protected World currentWorld;
-	protected BodyBuilder bodyBuilder;
-	protected Body body;
-	protected Fixture bodyFixture;
+
 	protected Fixture meleeWeaponFixture;
 	protected Fixture feetFixture;
 	protected String typeMeleeShape;
 	
-	protected float stateTimer;
 	protected boolean isAlerted;
-	protected boolean facingRight;
 	protected boolean isJumping;
 	protected boolean isOnPlatform;
 	protected boolean isAttacking;
-	protected boolean isInvincible;
-	protected boolean isKilled;
-	protected boolean setToKill;
-	protected boolean isHitted;
 	
-	protected String name;
 	protected int level;
 	protected int exp;
-	protected int health;
 	protected int stamina;
 	protected int magicka;
-	
-	protected float bodyHeight;
-	protected float bodyWidth;
-	protected float offsetX;
-	protected float offsetY;
 	
 	protected float movementSpeed;
 	protected float jumpHeight;
@@ -63,39 +40,29 @@ public abstract class Character extends Sprite implements Disposable {
 	protected int attackDamage;
 	
 	protected BehavioralModel behavioralModel;
-	protected Character lockedOnTarget;
-	protected Character inRangeTarget;
-	
-	protected Queue<Actor> damageIndicators; // not removing expired ones yet.
-	
-	TextureRegion textureRegion;
 	
 	public Character(Texture texture, World currentWorld, float x, float y) {
-		super(texture);
-		this.currentWorld = currentWorld;
-		setPosition(x, y);
-		
-		bodyBuilder = new BodyBuilder(currentWorld);
+		super(texture, currentWorld, x, y);
 		behavioralModel = new BehavioralModel(this);
 		
 		currentState = State.IDLE;
 		previousState = State.IDLE;
 		facingRight = true;
 		
-		damageIndicators = new Queue<>();
 	}
     
+	@Override
 	public void update(float delta) {
-		if (!isKilled) {
+		if (!isDestroyed) {
 			// If the character's health has reached zero but hasn't die yet,
 			// it means that the killedAnimation is not fully played.
 			// So here we'll play it until it's finished.
-			if (setToKill) {
+			if (setToDestroy) {
 				setRegion(getFrame(delta));
 				// Set killed to true to prevent further rendering updates.
 				if (animation.get(State.KILLED).isAnimationFinished(stateTimer)) {
 					currentWorld.destroyBody(body);
-					isKilled = true;
+					isDestroyed = true;
 				}
 			} else if (isHitted) {
 				setRegion(getFrame(delta));
@@ -169,7 +136,7 @@ public abstract class Character extends Sprite implements Disposable {
 	}
 	
 	private State getState() {
-		if (setToKill) {
+		if (setToDestroy) {
 			return State.KILLED;
 		} else if (isHitted) {
 			return State.HIT;
@@ -187,22 +154,9 @@ public abstract class Character extends Sprite implements Disposable {
 	}
 
 	protected void defineBody(BodyDef.BodyType type, short bodyCategoryBits, short bodyMaskBits, short feetMaskBits, short meleeWeaponMaskBits) {
-		body = bodyBuilder.type(type)
-				.position(getX(), getY(), Constants.PPM)
-				.buildBody();
-
-		createBodyFixture(bodyCategoryBits, bodyMaskBits);
+		super.defineBody(type, bodyCategoryBits, bodyMaskBits, feetMaskBits, meleeWeaponMaskBits);
 		createFeetFixture(feetMaskBits);
 		createMeleeWeaponFixture(meleeWeaponMaskBits);
-	}
-
-	protected void createBodyFixture(short categoryBits, short maskBits) {
-		bodyFixture = bodyBuilder
-				.newRectangleFixture(body.getPosition(), bodyWidth / 2, bodyHeight / 2, Constants.PPM)
-				.categoryBits(categoryBits)
-				.maskBits(maskBits)
-				.setUserData(this)
-				.buildFixture();
 	}
 
 	protected void createFeetFixture(short maskBits) {
@@ -269,10 +223,10 @@ public abstract class Character extends Sprite implements Disposable {
 		if (!isAttacking) {
 			isAttacking = true;
 
-			if (hasInRangeTarget() && !inRangeTarget.isInvincible && !inRangeTarget.setToKill) {
+			if (hasInRangeTarget() && !inRangeTarget.isInvincible() && !inRangeTarget.isSetToKill()) {
 				this.lockedOnTarget = inRangeTarget;
-				inRangeTarget.lockedOnTarget = this;
-
+				inRangeTarget.setLockedOnTarget(this);
+				
 				inflictDamage(inRangeTarget, attackDamage);
 			}
 
@@ -280,68 +234,13 @@ public abstract class Character extends Sprite implements Disposable {
 		}
 	}
 
-	public void inflictDamage(Character c, int damage) {
+	public void inflictDamage(Entity c, int damage) {
 		c.receiveDamage(damage);
 		if (facingRight) {
 			c.knockedBack(attackForce);
-//			c.facingRight = true;
-//			if (!facingRight && !textureRegion.isFlipX()) {
-//				textureRegion.flip(true, false);
-//			} else if (facingRight && textureRegion.isFlipX()) {
-//				textureRegion.flip(true, false);
-//			} 
 		} else {
 			c.knockedBack(-attackForce);
-//			c.facingRight = false;
-//			if (!c.facingRight && !c.textureRegion.isFlipX()) {
-//				c.textureRegion.flip(true, false);
-//			} else if (c.facingRight && c.textureRegion.isFlipX()) {
-//				c.textureRegion.flip(true, false);
-//			}
 		}
-	}
-
-	public void receiveDamage(int damage) {
-		if (!isInvincible) {
-			health -= damage;
-
-			if (health <= 0) {
-				setCategoryBits(bodyFixture, CategoryBits.DESTROYED);
-				setToKill = true;
-			} else {
-				isHitted = true;
-			}
-		}
-	}
-
-	public void knockedBack(float force) {
-		body.applyLinearImpulse(new Vector2(force, 1f), body.getWorldCenter(), true);
-	}
-
-	public static void setCategoryBits(Fixture f, short bits) {
-		Filter filter = new Filter();
-		filter.categoryBits = bits;
-		f.setFilterData(filter);
-	}
-
-	public Body getBody() {
-		return body;
-	}
-	
-	public int getHealth() {
-		return health;
-	}
-	
-	public boolean isSetToKill() {
-		return setToKill;
-	}
-    
-	public boolean isKilled() {
-		return isKilled;
-	}
-	
-	public boolean isHitted() {
-		return isHitted;
 	}
     
 	public void setIsJumping(boolean isJumping) {
@@ -351,33 +250,9 @@ public abstract class Character extends Sprite implements Disposable {
 	public void setIsOnPlatform(boolean isOnPlatform) {
 		this.isOnPlatform = isOnPlatform;
 	}
-    
-	public boolean hasLockedOnTarget() {
-		return lockedOnTarget != null;
-	}
-    
-	public boolean hasInRangeTarget() {
-		return inRangeTarget != null;
-	}
-    
-	public void setInRangeTarget(Character enemy) {
-		inRangeTarget = enemy;
-	}
 	
 	public BehavioralModel getBehavioralModel() {
 		return behavioralModel;
 	}
 	
-	public Queue<Actor> getDamageIndicators() {
-		return damageIndicators;
-	}
-	
-	public void flipXTextureRegion() {
-		textureRegion.flip(true, false);
-	}
-	
-	@Override
-	public void dispose() {
-	}
-    
 }

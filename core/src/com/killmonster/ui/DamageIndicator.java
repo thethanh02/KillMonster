@@ -1,6 +1,6 @@
 package com.killmonster.ui;
 
-import com.killmonster.character.Character;
+import com.killmonster.entity.*;
 import com.killmonster.GameStateManager;
 import com.killmonster.util.Constants;
 import com.badlogic.gdx.graphics.Camera;
@@ -32,7 +32,7 @@ public class DamageIndicator extends Stage {
 	 * @param c target character.
 	 * @param damage amount of damage.
 	 */
-	public void show(Character c, int damage) {
+	public void show(Entity c, int damage) {
 		// Move previous text indicator up.
 		for (Actor i : c.getDamageIndicators()) {
 			i.addAction(Actions.moveBy(0, 10f, .2f));

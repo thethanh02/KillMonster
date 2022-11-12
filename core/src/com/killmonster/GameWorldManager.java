@@ -1,6 +1,6 @@
 package com.killmonster;
 
-import com.killmonster.character.Player;
+import com.killmonster.entity.character.Player;
 import com.killmonster.map.GameMap;
 import com.killmonster.ui.DamageIndicator;
 import com.killmonster.ui.MessageArea;

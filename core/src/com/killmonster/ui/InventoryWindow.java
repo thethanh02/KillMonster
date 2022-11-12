@@ -2,7 +2,7 @@ package com.killmonster.ui;
 
 import com.killmonster.GameStateManager;
 import com.killmonster.util.Constants;
-import com.killmonster.character.Player;
+import com.killmonster.entity.character.Player;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;

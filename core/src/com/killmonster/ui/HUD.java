@@ -1,6 +1,6 @@
 package com.killmonster.ui;
 
-import com.killmonster.character.Player;
+import com.killmonster.entity.character.Player;
 import com.killmonster.GameStateManager;
 import com.killmonster.util.Constants;
 import com.badlogic.gdx.graphics.Texture;

@@ -1,8 +1,8 @@
 package com.killmonster.map;
 
-import com.killmonster.character.*;
-import com.killmonster.character.Character;
-import com.killmonster.objects.*;
+import com.killmonster.entity.character.*;
+import com.killmonster.entity.character.Character;
+import com.killmonster.entity.objects.*;
 import com.killmonster.util.CategoryBits;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -69,18 +69,19 @@ public class WorldContactListener implements ContactListener {
 				enemy.setInRangeTarget(player);
 				break;
 			    
-//			case CategoryBits.MELEE_WEAPON | CategoryBits.BOX:
-//				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
-//				box = (Box) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
-//				player.setInRangeTarget(box);
-//				break;
-				
-			case CategoryBits.PLAYER | CategoryBits.OBJECT:
-				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
-				potion = (Potion) getTargetFixture(CategoryBits.OBJECT, fixtureA, fixtureB).getUserData();
-				potion.setIsPickedUp(true);
-				potion.healing(player);
+			case CategoryBits.MELEE_WEAPON | CategoryBits.BOX:
+				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
+				box = (Box) getTargetFixture(CategoryBits.BOX, fixtureA, fixtureB).getUserData();
+				player.setInRangeTarget(box);
 				break;
+				
+			case CategoryBits.PLAYER | CategoryBits.POTION:
+				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
+				potion = (Potion) getTargetFixture(CategoryBits.POTION, fixtureA, fixtureB).getUserData();
+				potion.healing(player);
+				potion.isPickedUp();
+				break;
+				
 			default:
 				break;
 		}

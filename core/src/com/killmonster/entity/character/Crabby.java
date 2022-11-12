@@ -1,4 +1,4 @@
-package com.killmonster.character;
+package com.killmonster.entity.character;
 
 import com.killmonster.util.*;
 
