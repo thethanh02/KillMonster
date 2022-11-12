@@ -50,7 +50,7 @@ public class Crabby extends Enemy {
     
 	public void defineBody() {
 		short bodyCategoryBits = CategoryBits.ENEMY;
-		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.PLAYER | CategoryBits.MELEE_WEAPON | CategoryBits.CLIFF_MARKER;
+		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.PLAYER | CategoryBits.MELEE_WEAPON | CategoryBits.CLIFF_MARKER | CategoryBits.SPIKE;
 		short feetMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM;
 		short weaponMaskBits = CategoryBits.PLAYER;
 		

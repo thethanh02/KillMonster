@@ -44,6 +44,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private Array<Character> enemies;
 	private Array<Box> boxes;
 	private Array<Potion> potions;
+	private Array<Spike> spikes;
 	
 	private PauseOverlay pauseOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
@@ -137,7 +138,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	}
 
 	public void update(float delta) {
-//		if (Gdx.input.isKeyJustPressed(Input.Keys.UP)) {
+//		if (isNextLevel) {
 //			if (currentLevel < 1) currentLevel++;
 //			gameMapFile = "res/level" + currentLevel + ".tmx";
 //			shade.addAction(Actions.sequence(Actions.fadeIn(.3f), new RunnableAction() {
@@ -173,7 +174,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 				if (x.isKilled()) {
 					if (!x.isDropped()) {
 						Random generator = new Random();
-						int rnd = generator.nextInt(3);
+						int rnd = generator.nextInt(2) + 1;
 						// if random == 0 -> Box is blank
 						if (rnd == 1)
 							potions.add(new BluePotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
@@ -184,6 +185,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 					x.setDropped(true);
 				}
 			}
+			spikes.forEach((Spike x) -> x.update(delta));
 			potions.forEach((Potion x) -> x.update(delta));
 			enemies.forEach((Character x) -> x.update(delta));
 			player.update(delta);
@@ -225,6 +227,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		getBatch().begin();
 		
 		// entities render
+		spikes.forEach((Spike x) -> x.draw(getBatch()));
 		for (Box x : boxes) 
 			if (!x.isKilled()) x.draw(getBatch());
 		
@@ -235,6 +238,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			if (!x.isKilled()) x.draw(getBatch());
 		
 		player.draw(getBatch());
+
 		getBatch().end();
 		
 		// ui render
@@ -277,6 +281,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		potions.forEach((Potion x) -> x.dispose());
 		enemies.forEach((Character x) -> x.dispose());
 		player.dispose();
+		spikes.forEach((Spike x) -> x.dispose());
 
 		
 		pauseOverlay.dispose();
@@ -320,6 +325,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		enemies = currentMap.spawnNPCs();
 //		potions = currentMap.spawnPotions();
 		boxes = currentMap.spawnBoxes();
+		spikes = currentMap.spawnSpikes();
 	}
 
 	@Override

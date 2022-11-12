@@ -56,7 +56,7 @@ public class Player extends Character {
 
 	public void defineBody() {
 		short bodyCategoryBits = CategoryBits.PLAYER;
-		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.ENEMY | CategoryBits.MELEE_WEAPON | CategoryBits.POTION;
+		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.ENEMY | CategoryBits.MELEE_WEAPON | CategoryBits.POTION | CategoryBits.SPIKE;
 		short feetMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM;
 		short weaponMaskBits = CategoryBits.ENEMY | CategoryBits.BOX;
 		

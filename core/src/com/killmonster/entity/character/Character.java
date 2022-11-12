@@ -187,7 +187,6 @@ public abstract class Character extends Entity {
 				.buildFixture();
 	}
 
-
 	public void moveLeft() {
 		facingRight = false;
 

@@ -82,6 +82,18 @@ public class GameMap implements Disposable {
         
 		return box;
 	}
+	
+	public Array<Spike> spawnSpikes() {
+		Array<Spike> spikes = new Array<>();
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.SPIKE.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Spike x = new Spike(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			spikes.add(x);
+		}
+        
+		return spikes;
+	}
     
 	public TiledMap getTiledMap() {
 		return tiledMap;

@@ -9,5 +9,6 @@ public enum GameMapLayer {
 	PLAYER,         // 4: Player
 	ENEMIES,        // 5: Enemies
 	POTION,			// 6: Potions
-	BOX;			// 7: Box
+	BOX,			// 7: Box
+	SPIKE;			// 8: Spike
 }

@@ -34,6 +34,7 @@ public class TiledObjectUtils {
 
 	private static void createRectangles(World world, GameMap gameMap, GameMapLayer layer,
 										short categoryBits, boolean collidable, float friction) {
+		
 		BodyBuilder bodyBuilder = new BodyBuilder(world);
 		MapObjects mapObjects = gameMap.getTiledMap().getLayers().get(layer.ordinal()).getObjects();
 		
@@ -55,6 +56,7 @@ public class TiledObjectUtils {
 
 	private static void createPolylines(World world, GameMap gameMap, GameMapLayer layer,
 										short categoryBits, boolean collidable, float friction) {
+		
 		BodyBuilder bodyBuilder = new BodyBuilder(world);
 		MapObjects mapObjects = gameMap.getTiledMap().getLayers().get(layer.ordinal()).getObjects();
 		

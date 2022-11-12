@@ -34,9 +34,9 @@ public class Box extends GameObject {
 		short bodyCategoryBits = CategoryBits.BOX;
 		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.MELEE_WEAPON;
 		
-		super.defineBody(BodyType.StaticBody, bodyCategoryBits, bodyMaskBits);
+		super.defineBody(BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits);
 		
-		bodyFixture.setSensor(true);
+//		bodyFixture.setSensor(true);
 		
 		setBounds(0, 0, 40 / Constants.PPM, 30 / Constants.PPM);
 		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));
@@ -45,6 +45,7 @@ public class Box extends GameObject {
 	public void setDropped(boolean dropped) {
 		this.dropped = dropped;
 	}
+	
 	public boolean isDropped() {
 		return dropped;
 	}

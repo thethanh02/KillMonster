@@ -27,6 +27,11 @@ public abstract class Potion extends GameObject {
 		
 	}
 	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+	}
+	
 	// Create body and fixtures.
 	protected void createBodyandFixture() {
 		short bodyCategoryBits = CategoryBits.POTION;

@@ -23,6 +23,7 @@ public class WorldContactListener implements ContactListener {
 		Enemy enemy;
 		Potion potion;
 		Box box;
+		Spike spike;
 		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
@@ -80,6 +81,18 @@ public class WorldContactListener implements ContactListener {
 				potion = (Potion) getTargetFixture(CategoryBits.POTION, fixtureA, fixtureB).getUserData();
 				potion.healing(player);
 				potion.isPickedUp();
+				break;
+				
+			case CategoryBits.PLAYER | CategoryBits.SPIKE:
+				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
+				spike = (Spike) getTargetFixture(CategoryBits.SPIKE, fixtureA, fixtureB).getUserData();
+				player.receiveDamage(100);
+				break;
+			
+			case CategoryBits.ENEMY | CategoryBits.SPIKE:
+				enemy = (Enemy) getTargetFixture(CategoryBits.ENEMY, fixtureA, fixtureB).getUserData();
+				spike = (Spike) getTargetFixture(CategoryBits.SPIKE, fixtureA, fixtureB).getUserData();
+				enemy.receiveDamage(100);
 				break;
 				
 			default:
