@@ -117,18 +117,6 @@ public class GameMap implements Disposable {
         
 		return cannons;
 	}
-	
-	public Array<CannonBall> spawnBullets() {
-		Array<CannonBall> bullets = new Array<>();
-		
-		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.BULLET.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
-			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			CannonBall x = new CannonBall(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
-			bullets.add(x);
-		}
-        
-		return bullets;
-	}
     
 	public TiledMap getTiledMap() {
 		return tiledMap;

@@ -85,6 +85,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		setGameMap(gameMapFile);
 		player = currentMap.spawnPlayer();
 		potions = new Array<>();
+		bullets = new Array<>();
 		
 		// Initialize HUD.
 		damageIndicator = new DamageIndicator(gsm, getCamera(), 1.5f);
@@ -189,7 +190,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			spikes.forEach((Spike x) -> x.update(delta));
 			for (Cannon x : cannons) {
 				x.update(delta);
-				if (x.isKilled()) cannons.removeValue(x, false);
+				if (x.cooldownSpawnBullet()) bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x  * Constants.PPM - 8.5f, x.getBody().getPosition().y * Constants.PPM));
+//				if (x.isKilled()) cannons.removeValue(x, false);
 			}
 			for (CannonBall x : bullets) {
 				x.update(delta);
@@ -204,7 +206,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 				if (x.isKilled()) enemies.removeValue(x, false);
 			}
 			player.update(delta);
-			System.out.println(player.getBody().getPosition().x + " " + player.getBody().getPosition().y);
 			// ui update
 			hud.update(delta);
 			messageArea.update(delta);
@@ -344,7 +345,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		boxes = currentMap.spawnBoxes();
 		spikes = currentMap.spawnSpikes();
 		cannons = currentMap.spawnCannons();
-		bullets = currentMap.spawnBullets();
 		water = currentMap.spawnWater();
 	}
 

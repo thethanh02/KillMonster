@@ -10,6 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.killmonster.entity.Entity;
+import com.killmonster.entity.character.Player;
 import com.killmonster.util.CategoryBits;
 import com.killmonster.util.Constants;
 
@@ -24,11 +25,14 @@ public abstract class Bullet extends Entity {
 	
 	protected int attackDamage;
 	protected float attackForce;
+	protected float movementSpeed;
 	
 	public Bullet(Texture texture, World currentWorld, float x, float y) {
 		super(texture, currentWorld, x, y);
+		health = 1;
 		attackDamage = 0;
-		attackForce = 0;
+		attackForce = 1.5f;
+		movementSpeed = 0.6f;
 	}
 		
 	@Override
@@ -41,6 +45,9 @@ public abstract class Bullet extends Entity {
 					isDestroyed = true;
 				}
 			} else {
+				if (body.getLinearVelocity().x >= -movementSpeed * 2) {
+					body.applyLinearImpulse(new Vector2(-movementSpeed, 0), body.getWorldCenter(), true);
+				}
 				setRegion(getFrame(delta));
 			}
 
@@ -91,10 +98,20 @@ public abstract class Bullet extends Entity {
 	
 	protected void createBodyandFixtureBullet() {
 		short bodyCategoryBits = CategoryBits.BULLET;
-		short bodyMaskBits = CategoryBits.PLAYER;
-		defineBody(BodyType.StaticBody, bodyCategoryBits, bodyMaskBits);
+		short bodyMaskBits = CategoryBits.PLAYER | CategoryBits.WALL;
+		defineBody(BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits);
 		
+		body.setGravityScale(0);
 		setBounds(0, 0, bodyWidth / Constants.PPM, bodyWidth / Constants.PPM);
 		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));
+	}
+	
+	public void inflictDamage(Player c, int damage) {
+		c.receiveDamage(damage);
+		if (facingRight) {
+			c.knockedBack(attackForce);
+		} else {
+			c.knockedBack(-attackForce);
+		}
 	}
 }

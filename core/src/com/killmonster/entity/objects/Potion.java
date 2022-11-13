@@ -49,9 +49,5 @@ public abstract class Potion extends GameObject {
 	public void healing(Player c) {
 		c.healed(healthRegen);
 	}
-	
-	public void isPickedUp() {
-		this.setToDestroy = true;
-	}
 
 }

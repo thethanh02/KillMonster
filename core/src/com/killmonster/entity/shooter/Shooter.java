@@ -2,6 +2,7 @@ package com.killmonster.entity.shooter;
 
 import java.util.Map;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -19,6 +20,7 @@ public abstract class Shooter extends Entity {
 	protected State previousState;
 	
 	protected boolean isAttacking;
+	protected float cooldownTime;
 	
 	TextureRegion textureRegion;
 
@@ -29,6 +31,8 @@ public abstract class Shooter extends Entity {
 	@Override
 	public void update(float delta) {
 		if (!isDestroyed) {
+			cooldownTime += Gdx.graphics.getDeltaTime();
+			
 			// If the character's health has reached zero but hasn't die yet,
 			// it means that the killedAnimation is not fully played.
 			// So here we'll play it until it's finished.
@@ -66,7 +70,7 @@ public abstract class Shooter extends Entity {
 	private TextureRegion getFrame(float delta) {
 		previousState = currentState;
 		currentState = getState();
-		
+
 		switch (currentState) {
 			case ATTACKING:
 				textureRegion = animation.get(State.ATTACKING).getKeyFrame(stateTimer, false);
@@ -88,15 +92,16 @@ public abstract class Shooter extends Entity {
 	}
 	
 	private State getState() {
-		if (setToDestroy) {
-			return State.DESTROYED;
-		} else if (isHitted) {
-			return State.HIT;
-		} else if (isAttacking) {
-			return State.ATTACKING;
-		} else {
-			return State.IDLE;
-		}
+//		if (setToDestroy) {
+//			return State.DESTROYED;
+//		} else if (isHitted) {
+//			return State.HIT;
+//		} else if (isAttacking) {
+		isAttacking = true;
+		return State.ATTACKING;
+//		} else {
+//			return State.IDLE;
+//		}
 	}
 	
 	protected void defineBody(BodyDef.BodyType type, short bodyCategoryBits, short bodyMaskBits) {

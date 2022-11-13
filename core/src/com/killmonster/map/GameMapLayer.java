@@ -11,7 +11,6 @@ public enum GameMapLayer {
 	BOX,			// 6: Box
 	SPIKE,			// 7: Spike
 	CANNON,			// 8: Cannon
-	BULLET,			// 9: Bullet
-	WATER;			// 10: Water
+	WATER;			// 9: Water
 	
 }

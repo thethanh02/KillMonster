@@ -145,6 +145,10 @@ public abstract class Entity extends Sprite implements Disposable {
 		return damageIndicators;
 	}
 	
+	public void SetToDestroy() {
+		setToDestroy = true;
+	}
+	
 	@Override
 	public void dispose() {
 	}

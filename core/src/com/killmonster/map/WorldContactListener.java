@@ -3,6 +3,7 @@ package com.killmonster.map;
 import com.killmonster.entity.character.*;
 import com.killmonster.entity.character.Character;
 import com.killmonster.entity.objects.*;
+import com.killmonster.entity.shooter.Bullet;
 import com.killmonster.util.CategoryBits;
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
@@ -23,6 +24,7 @@ public class WorldContactListener implements ContactListener {
 		Enemy enemy;
 		Potion potion;
 		Box box;
+		Bullet bullet;
 		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
@@ -42,6 +44,16 @@ public class WorldContactListener implements ContactListener {
 				character.setIsOnPlatform(true);
 				break;
 			
+			case CategoryBits.PLAYER | CategoryBits.DEATHPLACE:
+				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
+				player.SetToDestroy();
+				break;
+			
+			case CategoryBits.ENEMY | CategoryBits.DEATHPLACE:
+				enemy = (Enemy) getTargetFixture(CategoryBits.ENEMY, fixtureA, fixtureB).getUserData();
+				enemy.SetToDestroy();
+				break;	
+				
 			// When a player bumps into an enemy, the enemy will inflict damage and knockback to the player.
 			case CategoryBits.PLAYER | CategoryBits.ENEMY:
 				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
@@ -79,17 +91,19 @@ public class WorldContactListener implements ContactListener {
 				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
 				potion = (Potion) getTargetFixture(CategoryBits.POTION, fixtureA, fixtureB).getUserData();
 				potion.healing(player);
-				potion.isPickedUp();
+				potion.SetToDestroy();
 				break;
 				
-			case CategoryBits.PLAYER | CategoryBits.DEATHPLACE:
+			case CategoryBits.PLAYER | CategoryBits.BULLET:
 				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
-				player.receiveDamage(100);
+				bullet = (Bullet) getTargetFixture(CategoryBits.BULLET, fixtureA, fixtureB).getUserData();
+				bullet.inflictDamage(player, 30);
+				bullet.SetToDestroy();;
 				break;
-			
-			case CategoryBits.ENEMY | CategoryBits.DEATHPLACE:
-				enemy = (Enemy) getTargetFixture(CategoryBits.ENEMY, fixtureA, fixtureB).getUserData();
-				enemy.receiveDamage(100);
+				
+			case CategoryBits.WALL | CategoryBits.BULLET:
+				bullet = (Bullet) getTargetFixture(CategoryBits.BULLET, fixtureA, fixtureB).getUserData();
+				bullet.SetToDestroy();;
 				break;
 				
 			default:
@@ -150,6 +164,7 @@ public class WorldContactListener implements ContactListener {
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
+		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
 		

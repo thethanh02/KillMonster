@@ -3,12 +3,11 @@ package com.killmonster.entity.shooter;
 import java.util.HashMap;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.killmonster.GameWorldManager;
-import com.killmonster.entity.objects.GameObject;
 import com.killmonster.util.CategoryBits;
 import com.killmonster.util.Constants;
 import com.killmonster.util.Utils;
 
-public class Cannon extends GameObject {
+public class Cannon extends Shooter {
 
 	private static final String TEXTURE_FILE = "objects/cannon_atlas.png";
 
@@ -19,26 +18,35 @@ public class Cannon extends GameObject {
 		bodyWidth = 40f;
 		bodyHeight = 26f;
 		offsetX = .2f;
-		offsetY = .13f;
+		offsetY = .15f;
 		
 		health = 1;
 		isInvincible = true;
-		
+		cooldownTime = .4f;
+
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();
-		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 15f / Constants.PPM, 0, 6, 0, 0, 40, 26));
-//		animation.put(State.ATTACKING, 	Utils.createAnimation(getTexture(), 15f / Constants.PPM, 0, 6, 0, 0, 40, 26));
-		animation.put(State.HIT,	 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 6, 0, 0, 40, 26));
-		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 6, 0, 0, 40, 26));
-		
+		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 0, 40, 26));
+		animation.put(State.ATTACKING, 	Utils.createAnimation(getTexture(), 20f / Constants.PPM, 0, 6, 0, 0, 40, 26));
+		animation.put(State.HIT,	 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 0, 40, 26));
+		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 0, 40, 26));
+
 		// Create body and fixtures.
 		short bodyCategoryBits = CategoryBits.CANNON;
 		short bodyMaskBits = CategoryBits.GROUND;
 		super.defineBody(BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits);
 
 		setBounds(0, 0, 40 / Constants.PPM, 26 / Constants.PPM);
-		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));
+		setRegion(animation.get(State.ATTACKING).getKeyFrame(stateTimer, true));
 
+	}
+	
+	public boolean cooldownSpawnBullet() {
+		if (cooldownTime > 1.4f) {
+			cooldownTime = 0;
+			return true;
+		}
+		return false;
 	}
 
 }
