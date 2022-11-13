@@ -169,7 +169,7 @@ public class BodyBuilder {
 	 * @param ppm scale factor.
 	 * @return BodyBuilder instance.
 	 */
-	public BodyBuilder newCircleFixture(Vector2 position, int radius, float ppm) {
+	public BodyBuilder newCircleFixture(Vector2 position, float radius, float ppm) {
 		fdef = new FixtureDef();
 		userData = null;
 		

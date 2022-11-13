@@ -13,7 +13,8 @@ public class CategoryBits {
 	public static final short BOX = 128;
 	public static final short POTION = 256;
 	public static final short MELEE_WEAPON = 512;
-	public static final short DESTROYED = 1024;
-	public static final short SPIKE = 2048;
+	public static final short DEATHPLACE = 1024;
+	public static final short BULLET = 2048;
+	public static final short CANNON = 4096;
 	
 }

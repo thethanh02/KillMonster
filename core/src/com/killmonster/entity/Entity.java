@@ -72,7 +72,6 @@ public abstract class Entity extends Sprite implements Disposable {
 			health -= damage;
 
 			if (health <= 0) {
-				setCategoryBits(bodyFixture, CategoryBits.DESTROYED);
 				setToDestroy = true;
 			} else {
 				isHitted = true;

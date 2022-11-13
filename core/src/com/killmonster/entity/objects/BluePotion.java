@@ -17,7 +17,7 @@ public class BluePotion extends Potion {
 		bodyHeight = 14f;
 		offsetX = .065f;
 		offsetY = .067f;
-		super.createBodyandFixture();
+		super.createBodyandFixturePotion();
 	}
 	
 }

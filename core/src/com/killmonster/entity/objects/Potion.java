@@ -14,7 +14,7 @@ import com.killmonster.util.box2d.BodyBuilder;
 public abstract class Potion extends GameObject {
 
 	protected int healthRegen;
-	
+
 	public Potion(Texture texture, World currentWorld, float x, float y) {
 		super(texture, currentWorld, x, y);
 		
@@ -23,6 +23,7 @@ public abstract class Potion extends GameObject {
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();
 		animation.put(State.IDLE, 		Utils.createAnimation(getTexture(), 14f / Constants.PPM, 0, 6, 0, 0, 12, 16));
+		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 0f / Constants.PPM, 7, 7, 0, 0, 12, 16));
 		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 0f / Constants.PPM, 7, 7, 0, 0, 12, 16));
 		
 	}
@@ -33,12 +34,12 @@ public abstract class Potion extends GameObject {
 	}
 	
 	// Create body and fixtures.
-	protected void createBodyandFixture() {
+	protected void createBodyandFixturePotion() {
 		short bodyCategoryBits = CategoryBits.POTION;
 		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLAYER;
 		
 		super.defineBody(BodyType.StaticBody, bodyCategoryBits, bodyMaskBits);
-		
+//		body.setGravityScale(0f);
 		bodyFixture.setSensor(true);
 
 		setBounds(0, 0, 12 / Constants.PPM, 16 / Constants.PPM);

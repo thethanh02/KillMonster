@@ -3,6 +3,7 @@ package com.killmonster.screens;
 import com.killmonster.entity.character.Character;
 import com.killmonster.entity.character.Player;
 import com.killmonster.entity.objects.*;
+import com.killmonster.entity.shooter.*;
 import com.killmonster.*;
 import com.killmonster.map.*;
 import com.killmonster.ui.*;
@@ -45,6 +46,9 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private Array<Box> boxes;
 	private Array<Potion> potions;
 	private Array<Spike> spikes;
+	private Array<Cannon> cannons;
+	private Array<CannonBall> bullets;
+	private Array<Water> water;
 	
 	private PauseOverlay pauseOverlay;
 	private LevelCompletedOverlay levelCompletedOverlay;
@@ -158,9 +162,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			if (currentLevel < 1) currentLevel++;
 			gameMapFile = "res/level" + currentLevel + ".tmx";
 			setGameMap(gameMapFile);
-			world.destroyBody(player.getBody());
-			
-			player = currentMap.spawnPlayer();
 			isNextLevel = false;
 		}
 		
@@ -172,24 +173,38 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			for (Box x : boxes) {
 				x.update(delta);
 				if (x.isKilled()) {
-					if (!x.isDropped()) {
-						Random generator = new Random();
-						int rnd = generator.nextInt(2) + 1;
-						// if random == 0 -> Box is blank
-						if (rnd == 1)
-							potions.add(new BluePotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
+					Random generator = new Random();
+					int rnd = generator.nextInt(2) + 1;
+					// if random == 0 -> Box is blank
+					if (rnd == 1)
+						potions.add(new BluePotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
 
-						else if (rnd == 2)
-							potions.add(new RedPotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
-					}
-					x.setDropped(true);
+					else if (rnd == 2)
+						potions.add(new RedPotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
+				
+					boxes.removeValue(x, false);
 				}
 			}
+			water.forEach((Water x) -> x.update(delta));
 			spikes.forEach((Spike x) -> x.update(delta));
-			potions.forEach((Potion x) -> x.update(delta));
-			enemies.forEach((Character x) -> x.update(delta));
+			for (Cannon x : cannons) {
+				x.update(delta);
+				if (x.isKilled()) cannons.removeValue(x, false);
+			}
+			for (CannonBall x : bullets) {
+				x.update(delta);
+				if (x.isKilled()) bullets.removeValue(x, false);
+			}
+			for (Potion x : potions) {
+				x.update(delta);
+				if (x.isKilled()) potions.removeValue(x, false);
+			}			
+			for (Character x : enemies) {
+				x.update(delta);
+				if (x.isKilled()) enemies.removeValue(x, false);
+			}
 			player.update(delta);
-			
+			System.out.println(player.getBody().getPosition().x + " " + player.getBody().getPosition().y);
 			// ui update
 			hud.update(delta);
 			messageArea.update(delta);
@@ -227,16 +242,13 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		getBatch().begin();
 		
 		// entities render
+		water.forEach((Water x) -> x.draw(getBatch()));
 		spikes.forEach((Spike x) -> x.draw(getBatch()));
-		for (Box x : boxes) 
-			if (!x.isKilled()) x.draw(getBatch());
-		
-		for (Potion x : potions) 
-			if (!x.isKilled()) x.draw(getBatch());
-		
-		for (Character x : enemies) 
-			if (!x.isKilled()) x.draw(getBatch());
-		
+		cannons.forEach((Cannon x) -> x.draw(getBatch()));
+		bullets.forEach((CannonBall x) -> x.draw(getBatch()));
+		boxes.forEach((Box x) -> x.draw(getBatch()));
+		potions.forEach((Potion x) -> x.draw(getBatch()));
+		enemies.forEach((Character x) -> x.draw(getBatch()));		
 		player.draw(getBatch());
 
 		getBatch().end();
@@ -277,12 +289,14 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		currentMap.dispose();
 		world.dispose();
 		
+		water.forEach((Water x) -> x.dispose());
+		spikes.forEach((Spike x) -> x.dispose());
+		cannons.forEach((Cannon x) -> x.dispose());
+		bullets.forEach((CannonBall x) -> x.dispose());
 		boxes.forEach((Box x) -> x.dispose());
 		potions.forEach((Potion x) -> x.dispose());
 		enemies.forEach((Character x) -> x.dispose());
 		player.dispose();
-		spikes.forEach((Spike x) -> x.dispose());
-
 		
 		pauseOverlay.dispose();
 		levelCompletedOverlay.dispose();
@@ -321,11 +335,17 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		// Update shade size to make fade out/in work correctly.
 		shade.setSize(getCurrentMap().getMapWidth(), getCurrentMap().getMapHeight());
 		
+		if (player != null) {
+			player.reposition(currentMap.getPosPlayer());
+		}
 		// TODO: Don't respawn enemies whenever a map loads.
 		enemies = currentMap.spawnNPCs();
 //		potions = currentMap.spawnPotions();
 		boxes = currentMap.spawnBoxes();
 		spikes = currentMap.spawnSpikes();
+		cannons = currentMap.spawnCannons();
+		bullets = currentMap.spawnBullets();
+		water = currentMap.spawnWater();
 	}
 
 	@Override

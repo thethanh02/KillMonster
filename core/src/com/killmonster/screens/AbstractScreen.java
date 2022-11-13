@@ -14,7 +14,7 @@ public abstract class AbstractScreen extends Stage implements Screen {
 	
 	protected AbstractScreen(GameStateManager gsm) {
 		// Note that this default constructor does NOT scale the viewport with PPM!
-		super(new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT , new OrthographicCamera()), gsm.getBatch());
+		super(new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT, new OrthographicCamera()), gsm.getBatch());
 		this.gsm = gsm;
 		Gdx.input.setInputProcessor(this);
 	}

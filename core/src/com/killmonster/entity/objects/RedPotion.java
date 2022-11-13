@@ -17,7 +17,7 @@ public class RedPotion extends Potion {
 		bodyHeight = 14f;
 		offsetX = .065f;
 		offsetY = .07f;
-		super.createBodyandFixture();
+		super.createBodyandFixturePotion();
 	}
 
 }

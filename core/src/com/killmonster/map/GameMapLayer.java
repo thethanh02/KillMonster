@@ -8,7 +8,10 @@ public enum GameMapLayer {
 	CLIFF_MARKER,   // 3: Alert an NPC that it is near a cliff.
 	PLAYER,         // 4: Player
 	ENEMIES,        // 5: Enemies
-	POTION,			// 6: Potions
-	BOX,			// 7: Box
-	SPIKE;			// 8: Spike
+	BOX,			// 6: Box
+	SPIKE,			// 7: Spike
+	CANNON,			// 8: Cannon
+	BULLET,			// 9: Bullet
+	WATER;			// 10: Water
+	
 }
