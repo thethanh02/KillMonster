@@ -2,6 +2,7 @@ package com.killmonster.screens;
 
 import com.killmonster.KillMonster;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
@@ -14,7 +15,9 @@ public class MainMenuScreen extends AbstractScreen {
 	
 	private static final String SKIN_FILE = "res/button_atlas.json";
 	private static final String BACKGROUND_TEXTURE_FILE = "interface/mainmenu_bg.png";
+	private static final String BACKGROUND_MUSIC_FILE = "sound/menu.wav";
 	
+	private Music backgroundMusic;
 	private Button playButton, optionsButton, quitButton;
 	private Image backgroundImage;
 	
@@ -23,6 +26,7 @@ public class MainMenuScreen extends AbstractScreen {
 		
 		Texture backgroundTexture = gsm.getAssets().get(BACKGROUND_TEXTURE_FILE);
 		Skin skin = gsm.getAssets().get(SKIN_FILE);
+		backgroundMusic = gsm.getAssets().get(BACKGROUND_MUSIC_FILE);
 		
 		// Define background and button
 		backgroundImage = new Image(backgroundTexture);
@@ -47,6 +51,9 @@ public class MainMenuScreen extends AbstractScreen {
 		tableButton.add(quitButton).padTop(10f).row();
 		
 		addActor(tableButton);
+		
+		backgroundMusic.setLooping(true);
+		backgroundMusic.play();
 	}
     
 	@Override
@@ -70,6 +77,7 @@ public class MainMenuScreen extends AbstractScreen {
 		playButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
+				backgroundMusic.stop();
 				gsm.showScreen(Screens.GAME);
 			}
 
@@ -117,5 +125,6 @@ public class MainMenuScreen extends AbstractScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
+		backgroundMusic.dispose();
 	}
 }

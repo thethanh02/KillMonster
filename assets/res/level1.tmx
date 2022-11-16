@@ -1,10 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="25" nextobjectid="240">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="257">
  <properties>
-  <property name="brightness" value="0.8"/>
+  <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
  <tileset firstgid="1" source="outside_sprites.tsx"/>
  <tileset firstgid="49" source="playing_bg_img.tsx"/>
+ <tileset firstgid="97" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="water.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="98" name="big_clouds" tilewidth="32" tileheight="32" tilecount="42" columns="14">
+  <image source="big_clouds.png" width="448" height="101"/>
+ </tileset>
  <objectgroup id="1" name="Ground">
   <object id="227" x="32" y="320">
    <polyline points="0,0 128,0"/>
@@ -53,44 +59,62 @@
  </objectgroup>
  <objectgroup id="4" name="CliffMarker"/>
  <objectgroup id="5" name="Player">
-  <object id="181" x="53.3333" y="276" width="33.3333" height="33.3333"/>
+  <object id="181" x="50.7878" y="289.091" width="19" height="26"/>
  </objectgroup>
  <objectgroup id="6" name="NPCS">
-  <object id="175" x="1036" y="308" width="36" height="37.3333"/>
-  <object id="176" x="846.667" y="309.333" width="30.6667" height="32"/>
-  <object id="180" x="1296" y="308" width="34.6667" height="36"/>
+  <object id="175" x="1034.55" y="316.727" width="24.6" height="23"/>
+  <object id="176" x="850.485" y="321.697" width="24.6" height="23"/>
+  <object id="180" x="1295.27" y="319.636" width="24.6" height="23"/>
  </objectgroup>
  <objectgroup id="7" name="Box">
-  <object id="218" x="1148" y="245.333" width="34.6667" height="33.3333"/>
-  <object id="220" x="780" y="238" width="46" height="42"/>
+  <object id="218" x="1153.33" y="265.666" width="25" height="18"/>
+  <object id="220" x="779.667" y="264.333" width="25" height="18"/>
  </objectgroup>
  <objectgroup id="8" name="Spike">
-  <object id="224" x="1407" y="371" width="32" height="12"/>
-  <object id="225" x="1439" y="369" width="32" height="14"/>
+  <object id="224" x="1408" y="368" width="32" height="16"/>
+  <object id="225" x="1440" y="368" width="32" height="16"/>
  </objectgroup>
- <layer id="10" name="Background" width="50" height="14">
+ <objectgroup id="9" name="Cannon"/>
+ <objectgroup id="10" name="Water">
+  <object id="242" x="160" y="320" width="32" height="32"/>
+  <object id="243" x="192" y="320" width="32" height="32"/>
+  <object id="244" x="224" y="320" width="32" height="32"/>
+  <object id="245" x="256" y="320" width="32" height="32"/>
+  <object id="246" x="288" y="320" width="32" height="32"/>
+  <object id="247" x="320" y="320" width="32" height="32"/>
+  <object id="248" x="352" y="320" width="32" height="32"/>
+  <object id="249" x="384" y="320" width="32" height="32"/>
+  <object id="250" x="416" y="320" width="32" height="32"/>
+  <object id="251" x="448" y="320" width="32" height="32"/>
+  <object id="252" x="480" y="320" width="32" height="32"/>
+  <object id="253" x="512" y="320" width="32" height="32"/>
+  <object id="254" x="544" y="320" width="32" height="32"/>
+  <object id="255" x="576" y="320" width="32" height="32"/>
+  <object id="256" x="608" y="320" width="32" height="32"/>
+ </objectgroup>
+ <layer id="12" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJzt0DkSgkAQRuG50qRUKYiyCqjsgtv9T+EjJyCga5IOvmzqr35jjTFWKaXUKk9g8yDgCB8BTghxxgUR4h13EqTIBOS4okCJCjfc8UC9406DFp0DPQaMeGLCjBfe+GzcWd598XPUIfEfrm/RDjcdvXDHHzeYsXg=
   </data>
  </layer>
- <layer id="11" name="Wall" width="50" height="14">
+ <layer id="13" name="Wall" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBgFgwnwD7QDqARG/TG4wKg/BhcY9cfgAqP+GAWjYPgDAFbdAIg=
   </data>
  </layer>
- <layer id="12" name="Ground - back" width="50" height="14">
+ <layer id="14" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUjIJRMApGAbUAIxAzoWFmGuqDAT4K9GIDvFAzkTE/DfXBACV6iXUPelhhw9j04Atj9Pijlz/ojYeqPwAvhQW6
   </data>
  </layer>
- <layer id="13" name="Ground - upper" width="50" height="14">
+ <layer id="15" name="Ground - upper" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJztwzENAAAIA7ApmAD8C8UEF2mTNkmfnAcBALi1E2IHxQ==
   </data>
  </layer>
- <layer id="14" name="Objects" width="50" height="14">
+ <layer id="16" name="Objects" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRMFSABg72YALI7lIFYjUoVh8Y54yCUTAKRgEDABNfARE=
+   eJxjYBgFo2AUjIJRMFSABg72YALI7lIFYjUoVh8Y54yCYQASKcCDCVDiD54BcC8uMBT9AQCbOBI2
   </data>
  </layer>
 </map>

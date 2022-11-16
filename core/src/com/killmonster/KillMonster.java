@@ -3,11 +3,10 @@ package com.killmonster;
 import com.killmonster.screens.AbstractScreen;
 import com.killmonster.screens.Screens;
 import com.killmonster.util.Font;
-import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.audio.*;
+import com.badlogic.gdx.graphics.*;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 
@@ -28,13 +27,16 @@ public class KillMonster extends Game implements GameStateManager {
 		assets.load("res/urm_button.json", Skin.class);
 		assets.load("res/volume_button.json", Skin.class);
 		assets.load("interface/skin/medievania_skin.json", Skin.class);
+		
 		assets.load("res/health_power_bar.png", Texture.class);
 		assets.load("res/pause_menu.png", Texture.class);
 		assets.load("res/completed_sprite.png", Texture.class);
 		assets.load("interface/mainmenu_bg.png", Texture.class);
 		assets.load("interface/hud/hud.png", Texture.class);
+		
 		assets.load("character/player/Player.png", Texture.class);
 		assets.load("character/crabby/Crabby.png", Texture.class);
+		
 		assets.load("objects/blue_potion.png", Texture.class);
 		assets.load("objects/red_potion.png", Texture.class);
 		assets.load("objects/objects_sprites.png", Texture.class);
@@ -42,6 +44,15 @@ public class KillMonster extends Game implements GameStateManager {
 		assets.load("objects/cannon_atlas.png", Texture.class);
 		assets.load("objects/cannon_ball.png", Texture.class);
 		assets.load("objects/water_atlas_animation.png", Texture.class);
+		
+		assets.load("sound/menu.wav", Music.class);
+		assets.load("sound/gameover.wav", Music.class);
+		assets.load("sound/level1.wav", Music.class);
+		assets.load("sound/level2.wav", Music.class);
+		assets.load("sound/die.wav", Sound.class);
+		assets.load("sound/attack1.wav", Sound.class);
+		assets.load("sound/jump.wav", Sound.class);
+		
 		assets.finishLoading();
 		
 		showScreen(Screens.MAIN_MENU);

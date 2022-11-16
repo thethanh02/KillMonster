@@ -7,7 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.physics.box2d.World;
 
 public abstract class Enemy extends Character {
-
+	
 	public Enemy(Texture texture, World world, float x, float y) {
 		super(texture, world, x, y);
 	}
@@ -24,16 +24,20 @@ public abstract class Enemy extends Character {
 				swingWeapon();
 
 				// If the target's heath reaches zero, unset lockedOnTarget and it will stop attacking.
-				if (lockedOnTarget.isSetToKill()) {
-					lockedOnTarget = null;
+				for (Entity entity : lockedOnTarget) {
+					if (entity.isSetToKill()) {
+						lockedOnTarget.removeValue(entity, false);
+					}
 				}
 			} else {
 				// If the target isn't within melee attack range, move toward it until it can be attacked.
-				if (Utils.getDistance(body.getPosition().x, lockedOnTarget.getBody().getPosition().x) >= attackRange * 2 / Constants.PPM) {
-					behavioralModel.moveTowardTarget((Character) lockedOnTarget);
-
-					// Jump if it gets stucked while moving toward the lockedOnTarget.
-					behavioralModel.jumpIfStucked(delta, .1f);
+				for (Entity entity : lockedOnTarget) {
+					if (Utils.getDistance(body.getPosition().x, entity.getBody().getPosition().x) >= attackRange * 2 / Constants.PPM) {
+						behavioralModel.moveTowardTarget((Character) entity);
+	
+						// Jump if it gets stucked while moving toward the lockedOnTarget.
+						behavioralModel.jumpIfStucked(delta, .1f);
+					}
 				}
 			}
 		} else {
@@ -44,7 +48,7 @@ public abstract class Enemy extends Character {
 	@Override
 	public void inflictDamage(Entity c, int damage) {
 		super.inflictDamage(c, damage);
-		setInRangeTarget(null);
+		removeInRangeTarget(c);
 	}
     
 	@Override

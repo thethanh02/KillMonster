@@ -98,12 +98,12 @@ public class WorldContactListener implements ContactListener {
 				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
 				bullet = (Bullet) getTargetFixture(CategoryBits.BULLET, fixtureA, fixtureB).getUserData();
 				bullet.inflictDamage(player, 30);
-				bullet.SetToDestroy();;
+				bullet.SetToDestroy();
 				break;
 				
 			case CategoryBits.WALL | CategoryBits.BULLET:
 				bullet = (Bullet) getTargetFixture(CategoryBits.BULLET, fixtureA, fixtureB).getUserData();
-				bullet.SetToDestroy();;
+				bullet.SetToDestroy();
 				break;
 				
 			default:
@@ -117,6 +117,7 @@ public class WorldContactListener implements ContactListener {
 		Character character;
 		Player player;
 		Enemy enemy;
+		Box box;
 		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
@@ -143,18 +144,22 @@ public class WorldContactListener implements ContactListener {
 			// Clear player's current target (so player cannot inflict damage to enemy from a distance).
 			case CategoryBits.MELEE_WEAPON | CategoryBits.ENEMY:
 				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
-				player.setInRangeTarget(null);
+				enemy = (Enemy) getTargetFixture(CategoryBits.ENEMY, fixtureA, fixtureB).getUserData();
+				player.removeInRangeTarget(enemy);
 				break;
 			
 			// Clear enemy's current target (so enemy cannot inflict damage to player from a distance).
 			case CategoryBits.MELEE_WEAPON | CategoryBits.PLAYER:
+				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
 				enemy = (Enemy) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
-				enemy.setInRangeTarget(null);
+				enemy.removeInRangeTarget(player);
 				break;
 			    
 			case CategoryBits.MELEE_WEAPON | CategoryBits.BOX:
 				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
-				player.setInRangeTarget(null);
+				box = (Box) getTargetFixture(CategoryBits.BOX, fixtureA, fixtureB).getUserData();
+
+				player.removeInRangeTarget(box);
 				break;
 				
 			default:

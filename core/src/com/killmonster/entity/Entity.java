@@ -31,8 +31,8 @@ public abstract class Entity extends Sprite implements Disposable {
 	protected float offsetX;
 	protected float offsetY;
 	
-	protected Entity lockedOnTarget;
-	protected Entity inRangeTarget;
+	protected Array<Entity> lockedOnTarget;
+	protected Array<Entity> inRangeTarget;
 	
 	protected TextureRegion textureRegion;
 	protected Queue<Actor> damageIndicators; // not removing expired ones yet.
@@ -41,6 +41,9 @@ public abstract class Entity extends Sprite implements Disposable {
 		super(texture);
 		this.currentWorld = currentWorld;
 		setPosition(x, y);
+		
+		lockedOnTarget = new Array<Entity>();
+		inRangeTarget = new Array<Entity>();
 		
 		bodyBuilder = new BodyBuilder(currentWorld);
 		damageIndicators = new Queue<>();
@@ -122,19 +125,27 @@ public abstract class Entity extends Sprite implements Disposable {
 	}
 	
 	public boolean hasLockedOnTarget() {
-		return lockedOnTarget != null;
+		return !lockedOnTarget.isEmpty();
 	}
     
 	public boolean hasInRangeTarget() {
-		return inRangeTarget != null;
+		return !inRangeTarget.isEmpty();
 	}
 	
 	public void setLockedOnTarget(Entity lockedOnTarget) {
-		this.lockedOnTarget = lockedOnTarget;
+		this.lockedOnTarget.add(lockedOnTarget);
 	}
     
 	public void setInRangeTarget(Entity enemy) {
-		inRangeTarget = enemy;
+		inRangeTarget.add(enemy);
+	}
+	
+	public void removeLockedOnTarget(Entity lockedOnTarget) {
+		this.lockedOnTarget.removeValue(lockedOnTarget, false);
+}
+
+	public void removeInRangeTarget(Entity enemy) {
+		inRangeTarget.removeValue(enemy, false);
 	}
 	
 	public void flipXTextureRegion() {

@@ -4,11 +4,15 @@ import com.killmonster.util.Constants;
 import com.killmonster.entity.Entity;
 import com.killmonster.util.CategoryBits;
 import java.util.Map;
+
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.utils.Timer;
+import com.badlogic.gdx.utils.Timer.Task;
 
 public abstract class Character extends Entity {
 
@@ -22,6 +26,10 @@ public abstract class Character extends Entity {
 	protected Fixture meleeWeaponFixture;
 	protected Fixture feetFixture;
 	protected String typeMeleeShape;
+	
+	protected Sound deathSound;
+	protected Sound attackSound;
+	protected Sound jumpSound;
 	
 	protected boolean isAlerted;
 	protected boolean isJumping;
@@ -118,12 +126,22 @@ public abstract class Character extends Entity {
 		}
         
 //		fix later
-		if (typeMeleeShape.equals("CircleShape")) {
+		if (typeMeleeShape.equals("Player")) {
 			if (!facingRight && !textureRegion.isFlipX()) {
 				textureRegion.flip(true, false);
 				CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
 				shape.setPosition(new Vector2(-attackRange / Constants.PPM, 0));
 			} else if (facingRight && textureRegion.isFlipX()) {
+				textureRegion.flip(true, false);
+				CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
+				shape.setPosition(new Vector2(attackRange / Constants.PPM, 0));
+			} 
+		} else if (typeMeleeShape.equals("Enemy"))  {
+			if (!facingRight && textureRegion.isFlipX()) {
+				textureRegion.flip(true, false);
+				CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
+				shape.setPosition(new Vector2(-attackRange / Constants.PPM, 0));
+			} else if (facingRight && !textureRegion.isFlipX()) {
 				textureRegion.flip(true, false);
 				CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
 				shape.setPosition(new Vector2(attackRange / Constants.PPM, 0));
@@ -208,6 +226,7 @@ public abstract class Character extends Entity {
 			isJumping = true;
 
 			getBody().applyLinearImpulse(new Vector2(0, jumpHeight), body.getWorldCenter(), true);
+			if (jumpSound != null) jumpSound.play();
 		}
 	}
 
@@ -221,25 +240,52 @@ public abstract class Character extends Entity {
 	public void swingWeapon() {
 		if (!isAttacking) {
 			isAttacking = true;
-
-			if (hasInRangeTarget() && !inRangeTarget.isInvincible() && !inRangeTarget.isSetToKill()) {
-				this.lockedOnTarget = inRangeTarget;
-				inRangeTarget.setLockedOnTarget(this);
-				
-				inflictDamage(inRangeTarget, attackDamage);
+			for (Entity entity : inRangeTarget) {
+				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) {
+					this.lockedOnTarget.addAll(inRangeTarget);
+					entity.setLockedOnTarget(this);
+					
+					inflictDamage(entity, attackDamage);
+				}
 			}
-
+			
+			if (attackSound != null) attackSound.play();
 			return;
 		}
 	}
 
 	public void inflictDamage(Entity c, int damage) {
-		c.receiveDamage(damage);
-		if (facingRight) {
-			c.knockedBack(attackForce);
-		} else {
-			c.knockedBack(-attackForce);
+//		Timer.schedule(new Task(){
+//		    @Override
+//		    public void run() {
+		    	c.receiveDamage(damage);
+				if (facingRight) {
+					c.knockedBack(attackForce);
+				} else {
+					c.knockedBack(-attackForce);
+				}
+//		    }
+//		}, .4f);
+	}
+	
+	@Override
+	public void receiveDamage(int damage) {
+		if (!isInvincible) {
+			health -= damage;
+
+			if (health <= 0) {
+				setToDestroy = true;
+				if (deathSound != null) deathSound.play();
+			} else {
+				isHitted = true;
+			}
 		}
+	}
+	
+	@Override
+	public void SetToDestroy() {
+		super.SetToDestroy();
+		if (deathSound != null) deathSound.play();
 	}
     
 	public void setIsJumping(boolean isJumping) {
@@ -252,6 +298,12 @@ public abstract class Character extends Entity {
 	
 	public BehavioralModel getBehavioralModel() {
 		return behavioralModel;
+	}
+	
+	public void dispose() {
+		if (deathSound != null) deathSound.dispose();
+		if (attackSound != null) attackSound.dispose();
+		if (jumpSound != null) jumpSound.dispose();
 	}
 	
 }

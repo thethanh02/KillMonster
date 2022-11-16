@@ -10,7 +10,7 @@ public class DesktopLauncher {
 		config.setForegroundFPS(60);
 		config.setTitle("KillMonster");
 		config.useVsync(true);
-		config.setWindowedMode(26*16*3, 14*16*3);;
+		config.setWindowedMode(26*16*3*3/2, 14*16*3*3/2);;
 		new Lwjgl3Application(new KillMonster(), config);
 	}
 }

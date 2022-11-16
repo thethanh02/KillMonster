@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="153">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="156">
  <properties>
-  <property name="brightness" value="0.8"/>
+  <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
  <tileset firstgid="1" source="outside_sprites.tsx"/>
  <tileset firstgid="49" source="playing_bg_img.tsx"/>
@@ -60,9 +60,15 @@
   <object id="94" x="1599.19" y="320">
    <polyline points="0,0 0,-32"/>
   </object>
+  <object id="153" x="159" y="320.25">
+   <polyline points="0,0 0,-32"/>
+  </object>
+  <object id="154" x="224" y="256">
+   <polyline points="0,0 0,-32"/>
+  </object>
  </objectgroup>
  <objectgroup id="5" name="Player">
-  <object id="60" x="652.5" y="263.5" width="19" height="26"/>
+  <object id="60" x="647" y="284.25" width="19" height="26"/>
  </objectgroup>
  <objectgroup id="6" name="NPCS">
   <object id="57" x="97.5" y="271" width="24.6" height="23"/>
@@ -82,8 +88,8 @@
  </objectgroup>
  <objectgroup id="8" name="Spike">
   <object id="144" x="384" y="303.818" width="32" height="16"/>
-  <object id="145" x="192" y="303.909" width="32" height="16"/>
-  <object id="146" x="160.182" y="303.818" width="32" height="16"/>
+  <object id="145" x="192" y="304" width="32" height="16"/>
+  <object id="146" x="160" y="304" width="32" height="16"/>
  </objectgroup>
  <objectgroup id="9" name="Cannon">
   <object id="148" x="968.333" y="284" width="40" height="26"/>

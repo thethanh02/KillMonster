@@ -5,8 +5,8 @@ import com.killmonster.entity.character.*;
 import com.killmonster.entity.character.Character;
 import com.killmonster.entity.objects.*;
 import com.killmonster.entity.shooter.Cannon;
-import com.killmonster.entity.shooter.CannonBall;
 import com.killmonster.util.box2d.TiledObjectUtils;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObject;
 import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
@@ -21,6 +21,7 @@ public class GameMap implements Disposable {
 	private String mapFilePath;
 	private TiledMap tiledMap;
 	
+	private Music backgroundMusic;
 	private int mapWidth;
 	private int mapHeight;
 	private int mapTileSize;
@@ -38,8 +39,7 @@ public class GameMap implements Disposable {
 		assert tileWidth == tileHeight;
 		mapTileSize = tileWidth;
 		
-		
-		// Update brightness according to this map.
+		backgroundMusic = gameWorldManager.getAssets().get((String) tiledMap.getProperties().get("backgroundMusic"));
 		
 		// Create bodies in the world according to each map layer.
 		TiledObjectUtils.parseLayers(gameWorldManager.getWorld(), this);
@@ -134,6 +134,14 @@ public class GameMap implements Disposable {
 		return mapTileSize;
 	}
 	
+	public void playBackgroundMusic() {
+		backgroundMusic.setLooping(true);
+		backgroundMusic.play();
+	}
+	
+	public Music getBackgroundMusic() {
+		return backgroundMusic;
+	}
 	
 	@Override
 	public String toString() {

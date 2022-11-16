@@ -55,7 +55,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private ShapeRenderer shapeRenderer;
 	
 	public static boolean isNextLevel;
-	public static int currentLevel = 0;
+	private static int currentLevel = 0;
 	private String gameMapFile;
 	
 	public MainGameScreen(GameStateManager gsm) {
@@ -100,6 +100,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 
 	public void handleInput(float delta) {
 		if (player.isSetToKill()) {
+			currentMap.getBackgroundMusic().stop();
 			gsm.showScreen(Screens.GAME_OVER);
 			return;
 		}
@@ -143,29 +144,26 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	}
 
 	public void update(float delta) {
+		
 //		if (isNextLevel) {
-//			if (currentLevel < 1) currentLevel++;
+//			if (currentLevel < 2) currentLevel++;
 //			gameMapFile = "res/level" + currentLevel + ".tmx";
+//			isNextLevel = false;
 //			shade.addAction(Actions.sequence(Actions.fadeIn(.3f), new RunnableAction() {
 //				@Override
 //				public void run() {
 //					setGameMap(gameMapFile);
-//					world.destroyBody(player.getBody());
-//					
-//					player = currentMap.spawnPlayer();
 //				}
 //				
 //			}, Actions.fadeOut(.8f)));
-//			isNextLevel = false;
 //		}
 		
 		if (isNextLevel) {
-			if (currentLevel < 1) currentLevel++;
+			if (currentLevel < 3) currentLevel++;
 			gameMapFile = "res/level" + currentLevel + ".tmx";
 			setGameMap(gameMapFile);
 			isNextLevel = false;
 		}
-		
 		handleInput(delta);
 		if (!Constants.COMPLETED && !Constants.PAUSE) {
 			world.step(1/60f, 6, 2);
@@ -175,7 +173,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 				x.update(delta);
 				if (x.isKilled()) {
 					Random generator = new Random();
-					int rnd = generator.nextInt(2) + 1;
+					int rnd = generator.nextInt(3);
 					// if random == 0 -> Box is blank
 					if (rnd == 1)
 						potions.add(new BluePotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
@@ -314,6 +312,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		// Dispose previous map data if there is any.
 		if (currentMap != null) {
 			// Stop the background music, lights and dispose previous GameMap.
+			currentMap.getBackgroundMusic().stop();
 			currentMap.dispose();
 			
 			// Destroy all bodies except player's body.
@@ -325,10 +324,13 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 					world.destroyBody(bodies.get(i));
 				}
 			}
+			for (CannonBall x : bullets) bullets.removeValue(x, false);
+			for (Potion x : potions) potions.removeValue(x, false);
 		}
 
 		// Load the new map from gameMapFile.
 		currentMap = new GameMap(this, gameMapFile);
+		currentMap.playBackgroundMusic();
 		
 		// Sets the OrthogonalTiledMapRenderer to show our new map.
 		renderer.setMap(currentMap.getTiledMap());
@@ -341,7 +343,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		}
 		// TODO: Don't respawn enemies whenever a map loads.
 		enemies = currentMap.spawnNPCs();
-//		potions = currentMap.spawnPotions();
 		boxes = currentMap.spawnBoxes();
 		spikes = currentMap.spawnSpikes();
 		cannons = currentMap.spawnCannons();

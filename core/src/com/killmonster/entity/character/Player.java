@@ -35,7 +35,7 @@ public class Player extends Character {
 		attackRange = 15;
 		attackDamage = 25;
 		
-		typeMeleeShape = "CircleShape";
+		typeMeleeShape = "Player";
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();
@@ -46,6 +46,11 @@ public class Player extends Character {
 		animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 18f / Constants.PPM, 0, 2, 0, 4 * 40, 64, 40));
 		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 3, 0, 5 * 40, 64, 40));
 		animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 7, 0, 6 * 40, 64, 40));
+		
+		// Sounds.
+		deathSound = gameWorldManager.getAssets().get("sound/die.wav");
+		attackSound = gameWorldManager.getAssets().get("sound/attack1.wav");
+		jumpSound = gameWorldManager.getAssets().get("sound/jump.wav");
 		
 		// Create body and fixtures.
 		defineBody();
