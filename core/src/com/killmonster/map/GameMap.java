@@ -62,7 +62,7 @@ public class GameMap implements Disposable {
 	public Array<Character> spawnNPCs() {
 		Array<Character> npcs = new Array<>();
 		
-		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.ENEMIES.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.CRABBY.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			npcs.add(new Crabby(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2));
 		}
@@ -116,6 +116,18 @@ public class GameMap implements Disposable {
 		}
         
 		return cannons;
+	}
+	
+	public Array<GameObject> spawnTrees() {
+		Array<GameObject> objs = new Array<>();
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.TREE_ONE.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			TreeOne x = new TreeOne(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			objs.add(x);
+		}
+        
+		return objs;
 	}
     
 	public TiledMap getTiledMap() {

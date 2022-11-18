@@ -30,10 +30,7 @@ public class Box extends GameObject {
 		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 15f / Constants.PPM, 0, 7, 0, 0, 40, 30));
 		
 		// Create body and fixtures.
-		short bodyCategoryBits = CategoryBits.BOX;
-		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.MELEE_WEAPON;
-		
-		super.defineBody(BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits);
+		defineBody();
 		
 //		bodyFixture.setSensor(true);
 		
@@ -41,4 +38,11 @@ public class Box extends GameObject {
 		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));
 	}
 	
+	private void defineBody() {
+		BodyType type = BodyType.DynamicBody;
+		short bodyCategoryBits = CategoryBits.BOX;
+		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.MELEE_WEAPON;
+		super.defineBody(type);
+		super.createBodyFixture(bodyCategoryBits, bodyMaskBits);
+	}
 }

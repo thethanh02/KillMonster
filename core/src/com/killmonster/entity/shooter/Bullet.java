@@ -92,7 +92,8 @@ public abstract class Bullet extends Entity {
 	}
 	
 	protected void defineBody(BodyDef.BodyType type, short bodyCategoryBits, short bodyMaskBits) {
-		super.defineBody(type, bodyCategoryBits, bodyMaskBits, bodyMaskBits, bodyMaskBits);
+		super.defineBody(type);
+		super.createBodyFixture(bodyCategoryBits, bodyMaskBits);
 	}
 	
 	protected void createBodyandFixtureBullet() {

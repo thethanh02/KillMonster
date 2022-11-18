@@ -34,7 +34,8 @@ public class Spike extends GameObject {
 		short bodyCategoryBits = CategoryBits.DEATHPLACE;
 		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLAYER | CategoryBits.ENEMY;
 		
-		super.defineBody(BodyType.StaticBody, bodyCategoryBits, bodyMaskBits);
+		super.defineBody(BodyType.StaticBody);
+		super.createBodyFixture(bodyCategoryBits, bodyMaskBits);
 		
 		setBounds(0, 0, 32 / Constants.PPM, 32 / Constants.PPM);
 		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));

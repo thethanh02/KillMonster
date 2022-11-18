@@ -5,7 +5,6 @@ import java.util.Map;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 import com.killmonster.entity.Entity;
 
@@ -66,16 +65,6 @@ public abstract class GameObject extends Entity {
 		} else {
 			return State.IDLE;
 		}
-	}
-	
-	protected void defineBody(BodyDef.BodyType type, short bodyCategoryBits, short bodyMaskBits) {
-		super.defineBody(type, bodyCategoryBits, bodyMaskBits, bodyMaskBits, bodyMaskBits);
-	}
-
-	// Maybe inflict damage or maybe regenerate health point
-	// Mainly affect Player
-	protected void alterHealth(Character c) {
-		
 	}
 	
 }

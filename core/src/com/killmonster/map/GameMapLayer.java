@@ -7,10 +7,15 @@ public enum GameMapLayer {
 	WALL,           // 2: Verical walls or ceiling. Colliding with these wont set isJumping back to false.
 	CLIFF_MARKER,   // 3: Alert an NPC that it is near a cliff.
 	PLAYER,         // 4: Player
-	ENEMIES,        // 5: Enemies
-	BOX,			// 6: Box
-	SPIKE,			// 7: Spike
-	CANNON,			// 8: Cannon
-	WATER;			// 9: Water
+	BOX,			// 5: Box
+	SPIKE,			// 6: Spike
+	CANNON,			// 7: Cannon
+	WATER,			// 8: Water
+	TREE_ONE,		// 9: Tree1
+	TREE_TWO,		// 10: Tree2
+	TREE_THREE,		// 11: Tree3
+	CRABBY,        	// 12: Enemies Crabby
+	SHARK,			// 13: Enemies Shark
+	PINK_STAR;		// 14: Enemies PinkStar
 	
 }

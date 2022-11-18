@@ -53,12 +53,10 @@ public abstract class Entity extends Sprite implements Disposable {
 	public void update(float delta) {
 	}
     
-	protected void defineBody(BodyDef.BodyType type, short bodyCategoryBits, short bodyMaskBits, short feetMaskBits, short meleeWeaponMaskBits) {
+	protected void defineBody(BodyDef.BodyType type) {
 		body = bodyBuilder.type(type)
 				.position(getX(), getY(), Constants.PPM)
 				.buildBody();
-
-		createBodyFixture(bodyCategoryBits, bodyMaskBits);
 	}
 
 	protected void createBodyFixture(short categoryBits, short maskBits) {

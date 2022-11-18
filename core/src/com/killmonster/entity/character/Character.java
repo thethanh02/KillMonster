@@ -172,7 +172,8 @@ public abstract class Character extends Entity {
 	}
 
 	protected void defineBody(BodyDef.BodyType type, short bodyCategoryBits, short bodyMaskBits, short feetMaskBits, short meleeWeaponMaskBits) {
-		super.defineBody(type, bodyCategoryBits, bodyMaskBits, feetMaskBits, meleeWeaponMaskBits);
+		super.defineBody(type);
+		super.createBodyFixture(bodyCategoryBits, meleeWeaponMaskBits);
 		createFeetFixture(feetMaskBits);
 		createMeleeWeaponFixture(meleeWeaponMaskBits);
 	}

@@ -11,8 +11,7 @@ import com.killmonster.util.*;
 
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
+import com.badlogic.gdx.*;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -20,9 +19,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.Body;
-import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
-import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 
@@ -49,6 +46,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private Array<Shooter> cannons;
 	private Array<Bullet> bullets;
 	private Array<Water> water;
+	private Array<GameObject> objs;
 	
 	private PauseOverlay pauseOverlay;
 	private ShapeRenderer shapeRenderer;
@@ -104,9 +102,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		}
         Gdx.input.setInputProcessor(this);
 		if(isAllEnemiesKilled()) {
-//			Constants.COMPLETED = true;
-//			Gdx.input.setInputProcessor(levelCompletedOverlay);
-//			levelCompletedOverlay.handleInput();
 			gsm.showScreen(Screens.GAME_COMPLETED);
 			return;
 		}
@@ -189,6 +184,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			}
 			water.forEach((Water x) -> x.update(delta));
 			spikes.forEach((Spike x) -> x.update(delta));
+			objs.forEach((GameObject x) -> x.update(delta));
 			for (Shooter x : cannons) {
 				x.update(delta);
 				if (x.cooldownSpawnBullet()) {
@@ -255,6 +251,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		potions.forEach((Potion x) -> x.draw(getBatch()));
 		enemies.forEach((Character x) -> x.draw(getBatch()));		
 		player.draw(getBatch());
+		objs.forEach((GameObject x) -> x.draw(getBatch()));
 
 		getBatch().end();
 		
@@ -291,6 +288,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		currentMap.dispose();
 		world.dispose();
 		
+		objs.forEach((GameObject x) -> x.dispose());
 		water.forEach((Water x) -> x.dispose());
 		spikes.forEach((Spike x) -> x.dispose());
 		cannons.forEach((Shooter x) -> x.dispose());
@@ -326,10 +324,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 					world.destroyBody(bodies.get(i));
 				}
 			}
-			
-//			for (CannonBall x : bullets) x.SetToDestroy();
-//			for (Potion x : potions) x.SetToDestroy();
-				
 		}
 
 		// Load the new map from gameMapFile.
@@ -355,6 +349,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		spikes = currentMap.spawnSpikes();
 		cannons = currentMap.spawnCannons();
 		water = currentMap.spawnWater();
+		objs = currentMap.spawnTrees();
 	}
 	
 	public void addBullet(Bullet b) {

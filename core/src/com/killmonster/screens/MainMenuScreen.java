@@ -14,7 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 public class MainMenuScreen extends AbstractScreen {
 	
 	private static final String SKIN_FILE = "res/button_atlas.json";
-	private static final String BACKGROUND_TEXTURE_FILE = "interface/mainmenu_bg.png";
+	private static final String BACKGROUND_TEXTURE_FILE = "interface/mainmenu.jpg";
 	private static final String BACKGROUND_MUSIC_FILE = "sound/menu.wav";
 	
 	private Music backgroundMusic;

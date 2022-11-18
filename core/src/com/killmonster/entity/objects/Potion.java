@@ -38,7 +38,8 @@ public abstract class Potion extends GameObject {
 		short bodyCategoryBits = CategoryBits.POTION;
 		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLAYER;
 		
-		super.defineBody(BodyType.StaticBody, bodyCategoryBits, bodyMaskBits);
+		super.defineBody(BodyType.StaticBody);
+		super.createBodyFixture(bodyCategoryBits, bodyMaskBits);
 //		body.setGravityScale(0f);
 		bodyFixture.setSensor(true);
 
