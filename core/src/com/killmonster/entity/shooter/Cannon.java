@@ -41,12 +41,4 @@ public class Cannon extends Shooter {
 
 	}
 	
-	public boolean cooldownSpawnBullet() {
-		if (cooldownTime > 1.4f) {
-			cooldownTime = 0;
-			return true;
-		}
-		return false;
-	}
-
 }

@@ -4,7 +4,7 @@ import com.killmonster.*;
 import com.killmonster.entity.character.*;
 import com.killmonster.entity.character.Character;
 import com.killmonster.entity.objects.*;
-import com.killmonster.entity.shooter.Cannon;
+import com.killmonster.entity.shooter.*;
 import com.killmonster.util.box2d.TiledObjectUtils;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.maps.MapObject;
@@ -106,8 +106,8 @@ public class GameMap implements Disposable {
 		return water;
 	}
 	
-	public Array<Cannon> spawnCannons() {
-		Array<Cannon> cannons = new Array<>();
+	public Array<Shooter> spawnCannons() {
+		Array<Shooter> cannons = new Array<>();
 		
 		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.CANNON.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -134,13 +134,18 @@ public class GameMap implements Disposable {
 		return mapTileSize;
 	}
 	
-	public void playBackgroundMusic() {
+	public void playBackgroundMusic(float vol) {
 		backgroundMusic.setLooping(true);
+		backgroundMusic.setVolume(vol);
 		backgroundMusic.play();
 	}
 	
-	public Music getBackgroundMusic() {
-		return backgroundMusic;
+	public void stopBackgroundMusic() {
+		backgroundMusic.stop();
+	}
+	
+	public void pauseBackgroundMusic() {
+		backgroundMusic.pause();
 	}
 	
 	@Override

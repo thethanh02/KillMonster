@@ -11,7 +11,7 @@ music
   orig: 42, 42
   offset: 0, 0
   index: -1
-music-checked
+music-focus
   rotate: false
   xy: 42, 0
   size: 42, 42
@@ -25,21 +25,21 @@ music-down
   orig: 42, 42
   offset: 0, 0
   index: -1
-sfx
+mute
   rotate: false
   xy: 0, 42
   size: 42, 42
   orig: 42, 42
   offset: 0, 0
   index: -1
-sfx-checked
+mute-focus
   rotate: false
   xy: 42, 42
   size: 42, 42
   orig: 42, 42
   offset: 0, 0
   index: -1
-sfx-down
+mute-down
   rotate: false
   xy: 84, 42
   size: 42, 42

@@ -11,8 +11,6 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.badlogic.gdx.utils.Timer;
-import com.badlogic.gdx.utils.Timer.Task;
 
 public abstract class Character extends Entity {
 
@@ -30,6 +28,8 @@ public abstract class Character extends Entity {
 	protected Sound deathSound;
 	protected Sound attackSound;
 	protected Sound jumpSound;
+	protected float volume;
+	protected boolean isMute;
 	
 	protected boolean isAlerted;
 	protected boolean isJumping;
@@ -56,7 +56,7 @@ public abstract class Character extends Entity {
 		currentState = State.IDLE;
 		previousState = State.IDLE;
 		facingRight = true;
-		
+		volume = .5f;
 	}
     
 	@Override
@@ -226,7 +226,7 @@ public abstract class Character extends Entity {
 			isJumping = true;
 
 			getBody().applyLinearImpulse(new Vector2(0, jumpHeight), body.getWorldCenter(), true);
-			if (jumpSound != null) jumpSound.play();
+			if (jumpSound != null && !isMute) jumpSound.play(volume);
 		}
 	}
 
@@ -249,7 +249,7 @@ public abstract class Character extends Entity {
 				}
 			}
 			
-			if (attackSound != null) attackSound.play();
+			if (attackSound != null) attackSound.play(volume);
 			return;
 		}
 	}
@@ -275,7 +275,7 @@ public abstract class Character extends Entity {
 
 			if (health <= 0) {
 				setToDestroy = true;
-				if (deathSound != null) deathSound.play();
+				if (deathSound != null && !isMute) deathSound.play(volume);
 			} else {
 				isHitted = true;
 			}
@@ -285,7 +285,7 @@ public abstract class Character extends Entity {
 	@Override
 	public void SetToDestroy() {
 		super.SetToDestroy();
-		if (deathSound != null) deathSound.play();
+		if (deathSound != null && !isMute) deathSound.play(volume);
 	}
     
 	public void setIsJumping(boolean isJumping) {
@@ -300,10 +300,15 @@ public abstract class Character extends Entity {
 		return behavioralModel;
 	}
 	
+	public void setVolume(float volume) {
+		this.volume = volume;
+	}
+	
+	public void setToMute(boolean isMute) {
+		this.isMute = isMute;
+	}
+	
 	public void dispose() {
-		if (deathSound != null) deathSound.dispose();
-		if (attackSound != null) attackSound.dispose();
-		if (jumpSound != null) jumpSound.dispose();
 	}
 	
 }

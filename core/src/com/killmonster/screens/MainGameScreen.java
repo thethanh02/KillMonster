@@ -46,12 +46,11 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private Array<Box> boxes;
 	private Array<Potion> potions;
 	private Array<Spike> spikes;
-	private Array<Cannon> cannons;
-	private Array<CannonBall> bullets;
+	private Array<Shooter> cannons;
+	private Array<Bullet> bullets;
 	private Array<Water> water;
 	
 	private PauseOverlay pauseOverlay;
-	private LevelCompletedOverlay levelCompletedOverlay;
 	private ShapeRenderer shapeRenderer;
 	
 	public static boolean isNextLevel;
@@ -92,32 +91,35 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		messageArea = new MessageArea(gsm, 6, 3f);
 		hud = new HUD(gsm, player);
 		
-		pauseOverlay = new PauseOverlay(gsm);
-		levelCompletedOverlay = new LevelCompletedOverlay(gsm);
+		pauseOverlay = new PauseOverlay(this);
 		shapeRenderer = new ShapeRenderer();
 	}
 
 
 	public void handleInput(float delta) {
 		if (player.isSetToKill()) {
-			currentMap.getBackgroundMusic().stop();
+			currentMap.stopBackgroundMusic();
 			gsm.showScreen(Screens.GAME_OVER);
 			return;
 		}
-        
+        Gdx.input.setInputProcessor(this);
 		if(isAllEnemiesKilled()) {
-			Constants.COMPLETED = true;
-			levelCompletedOverlay.handleInput();
+//			Constants.COMPLETED = true;
+//			Gdx.input.setInputProcessor(levelCompletedOverlay);
+//			levelCompletedOverlay.handleInput();
+			gsm.showScreen(Screens.GAME_COMPLETED);
 			return;
 		}
 		
-		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_1)) {
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ESCAPE)) {
 			Constants.PAUSE = !Constants.PAUSE;
 		}   
 		if (Constants.PAUSE) {
+			Gdx.input.setInputProcessor(pauseOverlay);
 			pauseOverlay.handleInput();
 			return;
 		}
+		
 		if (Gdx.input.isKeyJustPressed(Input.Keys.NUM_0)) {
 			Constants.DEBUG = !Constants.DEBUG;
 		}
@@ -165,7 +167,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			isNextLevel = false;
 		}
 		handleInput(delta);
-		if (!Constants.COMPLETED && !Constants.PAUSE) {
+		if (!Constants.PAUSE) {
 			world.step(1/60f, 6, 2);
 			
 			// entities update
@@ -175,33 +177,37 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 					Random generator = new Random();
 					int rnd = generator.nextInt(3);
 					// if random == 0 -> Box is blank
-					if (rnd == 1)
-						potions.add(new BluePotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
-
-					else if (rnd == 2)
-						potions.add(new RedPotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
+					if (rnd == 1) {
+						Potion tmPotion = new BluePotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10); 
+						potions.add(tmPotion);
+					}
+//					else if (rnd == 2)
+//						potions.add(new RedPotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
 				
-					boxes.removeValue(x, false);
+					boxes.removeValue(x, true);
 				}
 			}
 			water.forEach((Water x) -> x.update(delta));
 			spikes.forEach((Spike x) -> x.update(delta));
-			for (Cannon x : cannons) {
+			for (Shooter x : cannons) {
 				x.update(delta);
-				if (x.cooldownSpawnBullet()) bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x  * Constants.PPM - 8.5f, x.getBody().getPosition().y * Constants.PPM));
-//				if (x.isKilled()) cannons.removeValue(x, false);
+				if (x.cooldownSpawnBullet()) {
+					CannonBall cannonBall = new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM - 8.5f, x.getBody().getPosition().y * Constants.PPM);
+					bullets.add(cannonBall);
+					
+				}
 			}
-			for (CannonBall x : bullets) {
+			for (Bullet x : bullets) {
 				x.update(delta);
-				if (x.isKilled()) bullets.removeValue(x, false);
+				if (x.isKilled()) bullets.removeValue(x, true);
 			}
 			for (Potion x : potions) {
 				x.update(delta);
-				if (x.isKilled()) potions.removeValue(x, false);
+				if (x.isKilled()) potions.removeValue(x, true);
 			}			
 			for (Character x : enemies) {
 				x.update(delta);
-				if (x.isKilled()) enemies.removeValue(x, false);
+				if (x.isKilled()) enemies.removeValue(x, true);
 			}
 			player.update(delta);
 			// ui update
@@ -243,8 +249,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		// entities render
 		water.forEach((Water x) -> x.draw(getBatch()));
 		spikes.forEach((Spike x) -> x.draw(getBatch()));
-		cannons.forEach((Cannon x) -> x.draw(getBatch()));
-		bullets.forEach((CannonBall x) -> x.draw(getBatch()));
+		cannons.forEach((Shooter x) -> x.draw(getBatch()));
+		bullets.forEach((Bullet x) -> x.draw(getBatch()));
 		boxes.forEach((Box x) -> x.draw(getBatch()));
 		potions.forEach((Potion x) -> x.draw(getBatch()));
 		enemies.forEach((Character x) -> x.draw(getBatch()));		
@@ -262,9 +268,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		// Set our batch to now draw what the Hud camera sees.
 		getBatch().setProjectionMatrix(hud.getCamera().combined);
 		hud.draw();
-		
-		if (Constants.COMPLETED) 
-			levelCompletedOverlay.draw();
 		
 		if (Constants.PAUSE) 
 			pauseOverlay.draw();;
@@ -290,15 +293,14 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		
 		water.forEach((Water x) -> x.dispose());
 		spikes.forEach((Spike x) -> x.dispose());
-		cannons.forEach((Cannon x) -> x.dispose());
-		bullets.forEach((CannonBall x) -> x.dispose());
+		cannons.forEach((Shooter x) -> x.dispose());
+		bullets.forEach((Bullet x) -> x.dispose());
 		boxes.forEach((Box x) -> x.dispose());
 		potions.forEach((Potion x) -> x.dispose());
 		enemies.forEach((Character x) -> x.dispose());
 		player.dispose();
 		
 		pauseOverlay.dispose();
-		levelCompletedOverlay.dispose();
 		shapeRenderer.dispose();
 	}
 
@@ -312,25 +314,31 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		// Dispose previous map data if there is any.
 		if (currentMap != null) {
 			// Stop the background music, lights and dispose previous GameMap.
-			currentMap.getBackgroundMusic().stop();
+			currentMap.stopBackgroundMusic();
 			currentMap.dispose();
 			
 			// Destroy all bodies except player's body.
 			Array<Body> bodies = new Array<>();
 			world.getBodies(bodies);
-			
+
 			for (int i = 0; i < bodies.size; i++) {
-				if (!bodies.get(i).equals(player.getBody())) {
+				if (bodies.get(i) != player.getBody()) {
 					world.destroyBody(bodies.get(i));
 				}
 			}
-			for (CannonBall x : bullets) bullets.removeValue(x, false);
-			for (Potion x : potions) potions.removeValue(x, false);
+			
+//			for (CannonBall x : bullets) x.SetToDestroy();
+//			for (Potion x : potions) x.SetToDestroy();
+				
 		}
 
 		// Load the new map from gameMapFile.
 		currentMap = new GameMap(this, gameMapFile);
-		currentMap.playBackgroundMusic();
+		if (pauseOverlay != null) { 
+			if (!pauseOverlay.setToMuteMusic())
+				currentMap.playBackgroundMusic(pauseOverlay.getVolume());
+		} else
+			currentMap.playBackgroundMusic(.5f);
 		
 		// Sets the OrthogonalTiledMapRenderer to show our new map.
 		renderer.setMap(currentMap.getTiledMap());
@@ -347,6 +355,10 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		spikes = currentMap.spawnSpikes();
 		cannons = currentMap.spawnCannons();
 		water = currentMap.spawnWater();
+	}
+	
+	public void addBullet(Bullet b) {
+		bullets.add(b);;
 	}
 
 	@Override

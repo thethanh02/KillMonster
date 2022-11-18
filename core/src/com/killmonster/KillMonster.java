@@ -25,9 +25,10 @@ public class KillMonster extends Game implements GameStateManager {
 		assets.load("res/button_atlas.json", Skin.class);
 		assets.load("res/sound_button.json", Skin.class);
 		assets.load("res/urm_button.json", Skin.class);
-		assets.load("res/volume_button.json", Skin.class);
+		assets.load("res/volume_button_slider.json", Skin.class);
 		assets.load("interface/skin/medievania_skin.json", Skin.class);
 		
+		assets.load("res/playing_bg_img.png", Texture.class);
 		assets.load("res/health_power_bar.png", Texture.class);
 		assets.load("res/pause_menu.png", Texture.class);
 		assets.load("res/completed_sprite.png", Texture.class);
@@ -46,6 +47,7 @@ public class KillMonster extends Game implements GameStateManager {
 		assets.load("objects/water_atlas_animation.png", Texture.class);
 		
 		assets.load("sound/menu.wav", Music.class);
+		assets.load("sound/lvlcompleted.wav", Music.class);
 		assets.load("sound/gameover.wav", Music.class);
 		assets.load("sound/level1.wav", Music.class);
 		assets.load("sound/level2.wav", Music.class);

@@ -42,6 +42,7 @@ public abstract class Shooter extends Entity {
 				if (animation.get(State.DESTROYED).isAnimationFinished(stateTimer)) {
 					currentWorld.destroyBody(body);
 					isDestroyed = true;
+					
 				}
 			} else if (isHitted) {
 				setRegion(getFrame(delta));
@@ -92,24 +93,20 @@ public abstract class Shooter extends Entity {
 	}
 	
 	private State getState() {
-//		if (setToDestroy) {
-//			return State.DESTROYED;
-//		} else if (isHitted) {
-//			return State.HIT;
-//		} else if (isAttacking) {
 		isAttacking = true;
 		return State.ATTACKING;
-//		} else {
-//			return State.IDLE;
-//		}
 	}
 	
 	protected void defineBody(BodyDef.BodyType type, short bodyCategoryBits, short bodyMaskBits) {
 		super.defineBody(type, bodyCategoryBits, bodyMaskBits, bodyMaskBits, bodyMaskBits);
 	}
 
-	protected void shoot() {
-		
+	public boolean cooldownSpawnBullet() {
+		if (cooldownTime > 1.4f) {
+			cooldownTime = 0;
+			return true;
+		}
+		return false;
 	}
 	
 }

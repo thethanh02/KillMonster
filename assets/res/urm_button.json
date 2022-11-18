@@ -4,19 +4,16 @@ com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
 	home: {
 		up: home
 		down: home-down
-		checked: home-checked
 	}
 
 	resume: {
 		up: resume
 		down: resume-down
-		checked: resume-checked
 	}
 
 	back: {
 		up: back
 		down: back-down
-		checked: back-checked
 	}
 
 }

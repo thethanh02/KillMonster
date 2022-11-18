@@ -84,19 +84,18 @@ public class Player extends Character {
 		}
 		
 		super.inflictDamage(c, damage);
-		gameWorldManager.getDamageIndicator().show(c, damage);
+//		gameWorldManager.getDamageIndicator().show(c, damage);
 		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
 //		CameraShake.shake(8 / Constants.PPM, .1f);
-		
-		if (c instanceof Enemy && c.isSetToKill()) {
-			gameWorldManager.getMessageArea().show(String.format("You earned 10 exp."));
-		}
+//		if (c instanceof Enemy && c.isSetToKill()) {
+//			gameWorldManager.getMessageArea().show(String.format("You earned 10 exp."));
+//		}
 	}
     
 	@Override
 	public void receiveDamage(int damage) {
 		super.receiveDamage(damage);
-		
+		gameWorldManager.getDamageIndicator().show(this, damage);
 		// Sets the player to be untouchable for a while.
 		if (!isInvincible) {
 			CameraShake.shake(8 / Constants.PPM, .1f);
@@ -109,7 +108,7 @@ public class Player extends Character {
 						isInvincible = false;
 					}
 				}
-			}, 2.5f);
+			}, 1f);
 		}
 	}
 

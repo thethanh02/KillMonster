@@ -21,6 +21,7 @@ public class CannonBall extends Bullet {
 		offsetY = .0775f;
 		
 		health = 1;
+		attackDamage = 15;
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();

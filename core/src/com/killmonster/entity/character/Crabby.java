@@ -26,7 +26,7 @@ public class Crabby extends Enemy {
 		jumpHeight = 4.5f;
 		attackForce = 1.4f;
 		attackRange = 14;
-		attackDamage = 25;
+		attackDamage = 15;
 		
 		typeMeleeShape = "PolygonShape";
 		

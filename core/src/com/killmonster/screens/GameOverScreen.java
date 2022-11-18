@@ -34,7 +34,7 @@ public class GameOverScreen extends AbstractScreen {
 		
 		addActor(table);
 		
-		backgroundMusic.setLooping(true);
+		backgroundMusic.setLooping(false);
 		backgroundMusic.play();
 	}
 
@@ -61,8 +61,6 @@ public class GameOverScreen extends AbstractScreen {
 	@Override
 	public void dispose() {
 		super.dispose();
-		skin.dispose();
-		backgroundMusic.dispose();
 	}
 
 }

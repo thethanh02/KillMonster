@@ -1,31 +1,31 @@
 
-volume_button.png
+volume_button_slider.png
 size: 299, 44
 format: RGBA8888
 filter: Linear,Linear
 repeat: none
-button
+slider-knob
   rotate: false
   xy: 0, 0
   size: 28, 44
   orig: 28, 44
   offset: 0, 0
   index: -1
-button-checked
+slider-knob-checked
   rotate: false
   xy: 28, 0
   size: 28, 44
   orig: 28, 44
   offset: 0, 0
   index: -1
-button-down
+slider-knob-down
   rotate: false
   xy: 56, 0
   size: 28, 44
   orig: 28, 44
   offset: 0, 0
   index: -1
-bar
+slider
   rotate: false
   xy: 84, 0
   size: 215, 44

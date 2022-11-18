@@ -4,7 +4,6 @@ public final class Constants {
     
 	public static boolean DEBUG = true;
 	public static boolean PAUSE = false;
-	public static boolean COMPLETED = false;
 	// Graphics constants
 	public static final float PPM = 100;
 	public static final int V_WIDTH = 26*32;

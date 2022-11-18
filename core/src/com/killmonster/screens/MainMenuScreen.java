@@ -36,16 +36,12 @@ public class MainMenuScreen extends AbstractScreen {
 		
 		Table tableBackground = new Table();
 		tableBackground.setFillParent(true);
-		
 		tableBackground.add(backgroundImage);
 		
 		addActor(tableBackground);
 		
-		
 		Table tableButton = new Table();
 		tableButton.setFillParent(true);
-		
-		handleInput();
 		tableButton.add(playButton).row();
 		tableButton.add(optionsButton).padTop(10f).row();
 		tableButton.add(quitButton).padTop(10f).row();
@@ -54,6 +50,7 @@ public class MainMenuScreen extends AbstractScreen {
 		
 		backgroundMusic.setLooping(true);
 		backgroundMusic.play();
+		handleInput();
 	}
     
 	@Override
@@ -66,37 +63,11 @@ public class MainMenuScreen extends AbstractScreen {
 	}
     
 	public void handleInput() {
-		backgroundImage.addListener(new ClickListener() {
-			@Override
-			public boolean mouseMoved(InputEvent event, float x, float y) {
-				resetButtonChecked(false, false, false);
-				return super.mouseMoved(event, x, y);
-			}
-		});
-    	
 		playButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				backgroundMusic.stop();
 				gsm.showScreen(Screens.GAME);
-			}
-
-			@Override
-			public boolean mouseMoved(InputEvent event, float x, float y) {
-				resetButtonChecked(true, false, false);
-				return super.mouseMoved(event, x, y);
-			}
-		});
-        
-		optionsButton.addListener(new ClickListener() {
-			@Override
-			public void clicked(InputEvent event, float x, float y) {
-			}
-			
-			@Override
-			public boolean mouseMoved(InputEvent event, float x, float y) {
-				resetButtonChecked(false, true, false);
-				return super.mouseMoved(event, x, y);
 			}
 		});
         
@@ -106,25 +77,12 @@ public class MainMenuScreen extends AbstractScreen {
 				gsm.showScreen(Screens.GAME);
 				Gdx.app.exit();
 			}
-			
-			@Override
-			public boolean mouseMoved(InputEvent event, float x, float y) {
-				resetButtonChecked(false, false, true);
-				return super.mouseMoved(event, x, y);
-			}
 		});
         
     }
     
-	void resetButtonChecked(boolean play, boolean options, boolean quit) {
-		playButton.setChecked(play);
-		optionsButton.setChecked(options);
-		quitButton.setChecked(quit);
-	}
-    
 	@Override
 	public void dispose() {
 		super.dispose();
-		backgroundMusic.dispose();
 	}
 }

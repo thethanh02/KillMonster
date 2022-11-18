@@ -7,18 +7,15 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class HUD extends Stage {
 
-	private static final String SKIN_FILE = "interface/skin/medievania_skin.json";
 	private static int healthLength = 150; // pixel
 	private static int powerLength = 104; // pixel
     
 	private Player player;
-	private Skin skin;
 	    
 	private Texture hudTexture;
 	private TextureRegion barsBackground;
@@ -34,8 +31,6 @@ public class HUD extends Stage {
 	public HUD(GameStateManager gsm, Player player) {
 		super(new FitViewport(Constants.V_WIDTH, Constants.V_HEIGHT), gsm.getBatch());
 		this.player = player;
-		
-		skin = gsm.getAssets().get(SKIN_FILE);
 		
 		// Initializes player hud Texture and TextureRegions.
 		hudTexture = gsm.getAssets().get("res/health_power_bar.png");

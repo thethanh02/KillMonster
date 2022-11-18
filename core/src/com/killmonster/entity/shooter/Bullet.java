@@ -30,7 +30,6 @@ public abstract class Bullet extends Entity {
 	public Bullet(Texture texture, World currentWorld, float x, float y) {
 		super(texture, currentWorld, x, y);
 		health = 1;
-		attackDamage = 0;
 		attackForce = 1.5f;
 		movementSpeed = 0.6f;
 	}
@@ -106,8 +105,8 @@ public abstract class Bullet extends Entity {
 		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));
 	}
 	
-	public void inflictDamage(Player c, int damage) {
-		c.receiveDamage(damage);
+	public void inflictDamage(Player c) {
+		c.receiveDamage(attackDamage);
 		if (facingRight) {
 			c.knockedBack(attackForce);
 		} else {
