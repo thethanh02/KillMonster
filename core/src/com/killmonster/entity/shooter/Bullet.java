@@ -30,7 +30,7 @@ public abstract class Bullet extends Entity {
 	public Bullet(Texture texture, World currentWorld, float x, float y) {
 		super(texture, currentWorld, x, y);
 		health = 1;
-		attackForce = 1.5f;
+		attackForce = 1.2f;
 		movementSpeed = 0.6f;
 	}
 		

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="157">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="158">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -98,7 +98,9 @@
  <objectgroup id="10" name="TreeOne">
   <object id="156" x="1440" y="258" width="39" height="92"/>
  </objectgroup>
- <objectgroup id="11" name="TreeTwo"/>
+ <objectgroup id="11" name="TreeTwo">
+  <object id="157" x="486.5" y="299" width="62" height="54"/>
+ </objectgroup>
  <objectgroup id="12" name="TreeThree"/>
  <objectgroup id="13" name="Crabby">
   <object id="57" x="97.5" y="271" width="24.6" height="23"/>

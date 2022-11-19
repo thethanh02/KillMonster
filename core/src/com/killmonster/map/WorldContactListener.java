@@ -58,7 +58,7 @@ public class WorldContactListener implements ContactListener {
 			case CategoryBits.PLAYER | CategoryBits.ENEMY:
 				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
 				enemy = (Enemy) getTargetFixture(CategoryBits.ENEMY, fixtureA, fixtureB).getUserData();
-				enemy.inflictDamage(player, 10);
+				if (!enemy.isSetToKill()) enemy.inflictDamage(player, 10);
 				break;
 			
 			// When an NPC hits a cliff marker, reverse the NPC's current direction.
@@ -169,35 +169,10 @@ public class WorldContactListener implements ContactListener {
 
 	@Override
 	public void preSolve(Contact contact, Manifold oldManifold) {
-		
-		Fixture fixtureA = contact.getFixtureA();
-		Fixture fixtureB = contact.getFixtureB();
-		
-		int cDef = fixtureA.getFilterData().categoryBits | fixtureB.getFilterData().categoryBits;
-		
-		switch (cDef) {
-			// Allow player to pass through platforms and collide on the way down.
-			case CategoryBits.PLAYER | CategoryBits.PLATFORM:
-				Fixture playerBody = getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB);
-				Fixture platform = getTargetFixture(CategoryBits.PLATFORM, fixtureA, fixtureB);
-				
-				float playerY = playerBody.getBody().getPosition().y;
-				float platformY = platform.getBody().getPosition().y;
-				
-				// Enable contact if the player is about to land on the platform.
-				// .15f is a value that works fine in my world.
-				contact.setEnabled((playerY > platformY + .15f));
-				break;
-			    
-			default:
-				break;
-		}
-        
 	}
 
 	@Override
 	public void postSolve(Contact contact, ContactImpulse impulse) {
-    
 	}
 
 

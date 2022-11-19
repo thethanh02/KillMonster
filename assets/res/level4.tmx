@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="397">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="397">
  <properties>
   <property name="brightness" value="0.8"/>
  </properties>
@@ -126,32 +126,24 @@
  <objectgroup id="5" name="Player">
   <object id="349" x="190" y="287" width="19" height="26"/>
  </objectgroup>
- <objectgroup id="6" name="NPCS">
-  <object id="342" x="545" y="296" width="24.6" height="23"/>
-  <object id="343" x="751" y="231" width="24.6" height="23"/>
-  <object id="344" x="1272" y="103" width="24.6" height="23"/>
-  <object id="345" x="156" y="133" width="24.6" height="23"/>
-  <object id="346" x="763" y="232" width="24.6" height="23"/>
-  <object id="348" x="1506" y="160" width="24.6" height="29"/>
- </objectgroup>
- <objectgroup id="7" name="Box">
+ <objectgroup id="6" name="Box">
   <object id="338" x="102" y="139" width="25" height="18"/>
   <object id="339" x="522" y="300" width="25" height="18"/>
   <object id="340" x="899" y="75" width="25" height="18"/>
   <object id="341" x="1276" y="109" width="25" height="18"/>
  </objectgroup>
- <objectgroup id="8" name="Spike">
+ <objectgroup id="7" name="Spike">
   <object id="334" x="127" y="366" width="32" height="16"/>
   <object id="335" x="1441" y="174" width="32" height="16"/>
   <object id="336" x="1216" y="174" width="32" height="16"/>
   <object id="337" x="1089" y="272" width="32" height="16"/>
  </objectgroup>
- <objectgroup id="9" name="Cannon">
+ <objectgroup id="8" name="Cannon">
   <object id="329" x="665" y="292" width="40" height="26"/>
   <object id="331" x="788" y="132" width="40" height="26"/>
   <object id="332" x="1430" y="101" width="40" height="26"/>
  </objectgroup>
- <objectgroup id="11" name="                         ">
+ <objectgroup id="9" name="Water">
   <object id="287" x="288" y="384" width="32" height="32"/>
   <object id="288" x="320" y="384" width="32" height="32"/>
   <object id="289" x="352" y="384" width="32" height="32"/>
@@ -194,27 +186,40 @@
   <object id="327" x="1536" y="384" width="32" height="32"/>
   <object id="328" x="1568" y="384" width="32" height="32"/>
  </objectgroup>
- <layer id="12" name="Background" width="50" height="14">
+ <objectgroup id="10" name="TreeOne"/>
+ <objectgroup id="11" name="TreeTwo"/>
+ <objectgroup id="12" name="TreeThree"/>
+ <objectgroup id="13" name="Crabby">
+  <object id="342" x="545" y="296" width="24.6" height="23"/>
+  <object id="343" x="751" y="231" width="24.6" height="23"/>
+  <object id="344" x="1272" y="103" width="24.6" height="23"/>
+  <object id="345" x="156" y="133" width="24.6" height="23"/>
+  <object id="346" x="763" y="232" width="24.6" height="23"/>
+  <object id="348" x="1506" y="160" width="24.6" height="29"/>
+ </objectgroup>
+ <objectgroup id="14" name="Shark"/>
+ <objectgroup id="15" name="PinkStar"/>
+ <layer id="16" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJzt0MkOgkAQhOF5pQk3E0DZBHdAATf0/Z/C3zsHTKbTHubw3TqVqrbGGPtngh9od3W1VbuH53nTFgKZoYAIMZZYIUGKDDkKhzlrlKgEbLDFDnsccMQJNRqHOS3OuCjo0GPAFTfc8cAT48yc790Lb6UdEv/Q7uJ36OzohHd8AD+PsZI=
   </data>
  </layer>
- <layer id="13" name="Wall" width="50" height="14">
+ <layer id="17" name="Wall" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJztwQENAAAAwqD3T20PBxQAAPwaCvAAAQ==
   </data>
  </layer>
- <layer id="14" name="Ground - back" width="50" height="14">
+ <layer id="18" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYGBgkCIBYwOk6KcmRgb8ONw21MCoPwYXGPXHKBgFo2AoA0YgZoJi5gF2C7GAD4sYL1QchIdKeQZyKxMa5mMYmv7Ah4eKPwAJ8AWS
   </data>
  </layer>
- <layer id="15" name="Ground - upper" width="50" height="14">
+ <layer id="19" name="Ground - upper" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJzjY2BgkBoGmJ9heIBRfwwuMOqPwQVG/TG4wKg/BhcY9ccoGAW4AQArXwWu
   </data>
  </layer>
- <layer id="16" name="Objects" width="50" height="14">
+ <layer id="20" name="Objects" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2DoA1UgVkPC6gPrHKoCDSxi6P4lxe/4worYcMRm/3AKcxDAFu4wQEp6o0XaxOe2wQhIDQNc6Xu4pTEQQPbrQPpvOIU5Dxo9CmgPEocABgAHzBlO
   </data>

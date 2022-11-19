@@ -31,7 +31,7 @@ public class Player extends Character {
 		movementSpeed = .55f;
 		jumpHeight = 4f;
 		
-		attackForce = 2f;
+		attackForce = 1.5f;
 		attackRange = 15;
 		attackDamage = 25;
 		

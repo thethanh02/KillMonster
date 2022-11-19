@@ -24,7 +24,7 @@ public class Crabby extends Enemy {
 		health = 100;
 		movementSpeed = .25f;
 		jumpHeight = 4.5f;
-		attackForce = 1.4f;
+		attackForce = 1.3f;
 		attackRange = 14;
 		attackDamage = 15;
 		

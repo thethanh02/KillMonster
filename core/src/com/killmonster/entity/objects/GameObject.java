@@ -21,6 +21,7 @@ public abstract class GameObject extends Entity {
 
 	public GameObject(Texture texture, World currentWorld, float x, float y) {
 		super(texture, currentWorld, x, y);
+		facingRight = true;
 	}
 	
 	@Override
@@ -55,6 +56,12 @@ public abstract class GameObject extends Entity {
 				textureRegion = animation.get(State.IDLE).getKeyFrame(stateTimer, true);
 				break;
 		}
+		if (!facingRight && !textureRegion.isFlipX()) {
+			textureRegion.flip(true, false);
+		} else if (facingRight && textureRegion.isFlipX()) {
+			textureRegion.flip(true, false);
+		} 
+		
 		stateTimer = (currentState != previousState) ? 0 : stateTimer + delta;
 		return textureRegion;
 	}

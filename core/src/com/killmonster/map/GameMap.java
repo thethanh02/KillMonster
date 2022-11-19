@@ -82,30 +82,6 @@ public class GameMap implements Disposable {
 		return box;
 	}
 	
-	public Array<Spike> spawnSpikes() {
-		Array<Spike> spikes = new Array<>();
-		
-		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.SPIKE.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
-			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			Spike x = new Spike(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
-			spikes.add(x);
-		}
-        
-		return spikes;
-	}
-	
-	public Array<Water> spawnWater() {
-		Array<Water> water = new Array<>();
-		
-		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.WATER.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
-			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			Water x = new Water(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
-			water.add(x);
-		}
-        
-		return water;
-	}
-	
 	public Array<Shooter> spawnCannons() {
 		Array<Shooter> cannons = new Array<>();
 		
@@ -118,12 +94,36 @@ public class GameMap implements Disposable {
 		return cannons;
 	}
 	
-	public Array<GameObject> spawnTrees() {
+	public Array<GameObject> spawnGameObjects() {
 		Array<GameObject> objs = new Array<>();
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.WATER.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Water x = new Water(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			objs.add(x);
+		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.SPIKE.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Spike x = new Spike(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			objs.add(x);
+		}
 		
 		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.TREE_ONE.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			TreeOne x = new TreeOne(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			TreeOne x = new TreeOne(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2, true);
+			objs.add(x);
+		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.TREE_TWO.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			TreeTwo x = new TreeTwo(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2, true);
+			objs.add(x);
+		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.TREE_THREE.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			TreeTwo x = new TreeTwo(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2, false);
 			objs.add(x);
 		}
         

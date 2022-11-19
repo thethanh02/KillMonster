@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="28" nextobjectid="260">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="260">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -71,21 +71,16 @@
  <objectgroup id="5" name="Player">
   <object id="181" x="50.7878" y="289.091" width="19" height="26"/>
  </objectgroup>
- <objectgroup id="6" name="NPCS">
-  <object id="175" x="1034.55" y="316.727" width="24.6" height="23"/>
-  <object id="176" x="850.485" y="321.697" width="24.6" height="23"/>
-  <object id="180" x="1295.27" y="319.636" width="24.6" height="23"/>
- </objectgroup>
- <objectgroup id="7" name="Box">
+ <objectgroup id="6" name="Box">
   <object id="218" x="1153.33" y="265.666" width="25" height="18"/>
   <object id="220" x="779.667" y="264.333" width="25" height="18"/>
  </objectgroup>
- <objectgroup id="8" name="Spike">
+ <objectgroup id="7" name="Spike">
   <object id="224" x="1408" y="368" width="32" height="16"/>
   <object id="225" x="1440" y="368" width="32" height="16"/>
  </objectgroup>
- <objectgroup id="9" name="Cannon"/>
- <objectgroup id="10" name="Water">
+ <objectgroup id="8" name="Cannon"/>
+ <objectgroup id="9" name="Water">
   <object id="242" x="160" y="352" width="32" height="32"/>
   <object id="243" x="192" y="352" width="32" height="32"/>
   <object id="244" x="224" y="352" width="32" height="32"/>
@@ -102,27 +97,37 @@
   <object id="255" x="576" y="352" width="32" height="32"/>
   <object id="256" x="608" y="352" width="32" height="32"/>
  </objectgroup>
- <layer id="12" name="Background" width="50" height="14">
+ <objectgroup id="10" name="TreeOne"/>
+ <objectgroup id="11" name="TreeTwo"/>
+ <objectgroup id="12" name="TreeThree"/>
+ <objectgroup id="13" name="Crabby">
+  <object id="175" x="1034.55" y="316.727" width="24.6" height="23"/>
+  <object id="176" x="850.485" y="321.697" width="24.6" height="23"/>
+  <object id="180" x="1295.27" y="319.636" width="24.6" height="23"/>
+ </objectgroup>
+ <objectgroup id="14" name="Shark"/>
+ <objectgroup id="15" name="PinkStar"/>
+ <layer id="16" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJzt0DkSgkAQRuG50qRUKYiyCqjsgtv9T+EjJyCga5IOvmzqr35jjTFWKaXUKk9g8yDgCB8BTghxxgUR4h13EqTIBOS4okCJCjfc8UC9406DFp0DPQaMeGLCjBfe+GzcWd598XPUIfEfrm/RDjcdvXDHHzeYsXg=
   </data>
  </layer>
- <layer id="13" name="Wall" width="50" height="14">
+ <layer id="17" name="Wall" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBgFgwnwD7QDqARG/TG4wKg/BhcY9cfgAqP+GAWjYPgDAFbdAIg=
   </data>
  </layer>
- <layer id="14" name="Ground - back" width="50" height="14">
+ <layer id="18" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUjIJRMApGAbUAIxAzoWFmGuqDAT4K9GIDvFAzkTE/DfXBACV6iXUPelhhw9j04Atj9Pijlz/ojYeqPwAvhQW6
   </data>
  </layer>
- <layer id="15" name="Ground - upper" width="50" height="14">
+ <layer id="19" name="Ground - upper" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJztwzENAAAIA7ApmAD8C8UEF2mTNkmfnAcBALi1E2IHxQ==
   </data>
  </layer>
- <layer id="16" name="Objects" width="50" height="14">
+ <layer id="20" name="Objects" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUjIJRMFSABg72YALI7lIFYjUoVh8Y54yCYQB4KMCDCSRSgAeTX4aiPwDdWw07
   </data>

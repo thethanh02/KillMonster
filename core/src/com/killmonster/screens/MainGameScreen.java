@@ -42,10 +42,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private Array<Character> enemies;
 	private Array<Box> boxes;
 	private Array<Potion> potions;
-	private Array<Spike> spikes;
 	private Array<Shooter> cannons;
 	private Array<Bullet> bullets;
-	private Array<Water> water;
 	private Array<GameObject> objs;
 	
 	private PauseOverlay pauseOverlay;
@@ -176,14 +174,12 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 						Potion tmPotion = new BluePotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10); 
 						potions.add(tmPotion);
 					}
-//					else if (rnd == 2)
-//						potions.add(new RedPotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
+					else if (rnd == 2)
+						potions.add(new RedPotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
 				
 					boxes.removeValue(x, true);
 				}
 			}
-			water.forEach((Water x) -> x.update(delta));
-			spikes.forEach((Spike x) -> x.update(delta));
 			objs.forEach((GameObject x) -> x.update(delta));
 			for (Shooter x : cannons) {
 				x.update(delta);
@@ -243,8 +239,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		getBatch().begin();
 		
 		// entities render
-		water.forEach((Water x) -> x.draw(getBatch()));
-		spikes.forEach((Spike x) -> x.draw(getBatch()));
 		cannons.forEach((Shooter x) -> x.draw(getBatch()));
 		bullets.forEach((Bullet x) -> x.draw(getBatch()));
 		boxes.forEach((Box x) -> x.draw(getBatch()));
@@ -289,8 +283,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		world.dispose();
 		
 		objs.forEach((GameObject x) -> x.dispose());
-		water.forEach((Water x) -> x.dispose());
-		spikes.forEach((Spike x) -> x.dispose());
 		cannons.forEach((Shooter x) -> x.dispose());
 		bullets.forEach((Bullet x) -> x.dispose());
 		boxes.forEach((Box x) -> x.dispose());
@@ -346,10 +338,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		// TODO: Don't respawn enemies whenever a map loads.
 		enemies = currentMap.spawnNPCs();
 		boxes = currentMap.spawnBoxes();
-		spikes = currentMap.spawnSpikes();
 		cannons = currentMap.spawnCannons();
-		water = currentMap.spawnWater();
-		objs = currentMap.spawnTrees();
+		objs = currentMap.spawnGameObjects();
 	}
 	
 	public void addBullet(Bullet b) {
