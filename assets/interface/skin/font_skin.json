@@ -1,0 +1,51 @@
+{
+com.badlogic.gdx.graphics.g2d.BitmapFont: {
+	Vormgevers: {
+		file: Vormgevers.fnt
+	}
+}
+com.badlogic.gdx.graphics.Color: {
+	black: {
+		r: 0
+		g: 0
+		b: 0
+		a: 1
+	}
+	blue: {
+		r: 0.26
+		g: 0.66
+		b: 1
+		a: 1
+	}
+	grey_light: {
+		r: 0.3
+		g: 0.3
+		b: 0.3
+		a: 1
+	}
+	grey_dark: {
+		r: 0.2
+		g: 0.2
+		b: 0.2
+		a: 1
+	}
+	white: {
+		r: 1
+		g: 1
+		b: 1
+		a: 1
+	}
+	yellow: {
+		r: 1
+		g: 0.9
+		b: 0.28
+		a: 1
+	}
+}
+com.badlogic.gdx.scenes.scene2d.ui.Label$LabelStyle: {
+	default: {
+		font: Vormgevers
+		fontColor: white
+	}
+}
+}

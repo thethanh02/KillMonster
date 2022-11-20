@@ -3,7 +3,6 @@ package com.killmonster.screens;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Button;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -11,14 +10,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.killmonster.GameStateManager;
-import com.killmonster.util.Constants;
 
 public class LevelCompletedScreen extends AbstractScreen {
 
 	private static final String URM_SKIN_FILE = "res/urm_button.json";
 	private static final String TEXTURE_FILE = "res/completed_sprite.png";
 	
-	private static final String BACKGROUND_IMAGE = "res/playing_bg_img.png";
+	private static final String BACKGROUND_IMAGE = "interface/field.png";
 	private static final String BACKGROUND_MUSIC_FILE = "sound/lvlcompleted.wav";
 	
 	private Music backgroundMusic;
@@ -33,8 +31,8 @@ public class LevelCompletedScreen extends AbstractScreen {
 		Skin urmSkin = gsm.getAssets().get(URM_SKIN_FILE);
 		backgroundMusic = gsm.getAssets().get(BACKGROUND_MUSIC_FILE);
 		
-		background = new Image(new TextureRegion(texture1, 0, 120, 1, 1));
-		background.setScale(Constants.V_WIDTH, Constants.V_HEIGHT);
+		background = new Image(texture1);
+//		background.setScale(Constants.V_WIDTH, Constants.V_HEIGHT);
 		Table tableBackground = new Table();
 		tableBackground.setFillParent(true);
 		tableBackground.bottom().left();

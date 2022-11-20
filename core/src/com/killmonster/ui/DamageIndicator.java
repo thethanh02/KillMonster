@@ -32,7 +32,7 @@ public class DamageIndicator extends Stage {
 	 * @param c target character.
 	 * @param damage amount of damage.
 	 */
-	public void show(Entity c, int damage) {
+	public void show(Entity c, String damage, Color color) {
 		// Move previous text indicator up.
 		for (Actor i : c.getDamageIndicators()) {
 			i.addAction(Actions.moveBy(0, 10f, .2f));
@@ -41,7 +41,7 @@ public class DamageIndicator extends Stage {
 		// Display the new message.
 		// Rename Message later! It can be reused for displaying on-screens texts, so
 		// the name should be more generic.
-		Message indicator = new Message(Integer.toString(damage), new Label.LabelStyle(gsm.getFont().getDefaultFont(), Color.RED), damageTextLifetime);
+		Message indicator = new Message(damage, new Label.LabelStyle(gsm.getFont().getDefaultFont(), color), damageTextLifetime);
 		
 		// Convert the coordinate from world to screens.
 		Vector3 worldCoordinates = new Vector3(c.getBody().getPosition().x, c.getBody().getPosition().y, 0);

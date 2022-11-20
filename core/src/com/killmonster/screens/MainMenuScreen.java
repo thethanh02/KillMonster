@@ -74,7 +74,6 @@ public class MainMenuScreen extends AbstractScreen {
 		quitButton.addListener(new ClickListener() {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
-				gsm.showScreen(Screens.GAME);
 				Gdx.app.exit();
 			}
 		});

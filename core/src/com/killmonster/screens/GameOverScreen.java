@@ -9,7 +9,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 
 public class GameOverScreen extends AbstractScreen {
     
-	private static final String SKIN_FILE = "interface/skin/medievania_skin.json";
+	private static final String SKIN_FILE = "interface/skin/font_skin.json";
 	private static final String BACKGROUND_MUSIC_FILE = "sound/gameover.wav";
 	
 	private Music backgroundMusic;

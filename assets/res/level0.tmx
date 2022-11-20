@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="158">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="159">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -7,6 +7,9 @@
  <tileset firstgid="49" source="playing_bg_img.tsx"/>
  <tileset firstgid="97" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="water.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="100" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
+  <image source="grass_atlas.png" width="64" height="32"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="84" x="32" y="320">
@@ -106,7 +109,9 @@
   <object id="57" x="97.5" y="271" width="24.6" height="23"/>
   <object id="59" x="1125.5" y="275" width="24.6" height="23"/>
  </objectgroup>
- <objectgroup id="14" name="Shark"/>
+ <objectgroup id="14" name="Shark">
+  <object id="158" x="907" y="255.5" width="21" height="22"/>
+ </objectgroup>
  <objectgroup id="15" name="PinkStar"/>
  <layer id="16" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
@@ -120,7 +125,7 @@
  </layer>
  <layer id="18" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJztkTEKACAMA6vOKvr/x+pYMzhosQg5uK1D0ogQQgghtoRpVCbfOMfkaVFW3zhbmqw/13ZZe+At7oP7vbRciPvgfr/IHvYOQrAItw==
+   eJztkUEKgDAMBKOebdEn1v//oe1tXZSKtoZABuYWwiYr4jjOSA7tAJ1J2gFeYqWHRFrJzUzFGVx04zSpf+bfV9ZiAOPFLMI7sMen3u1oucn55+hOd/As98P9/Wn4YKQ7uD8r+h39zZfpGyc=
   </data>
  </layer>
  <layer id="19" name="Ground - upper" width="50" height="14">

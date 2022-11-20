@@ -20,6 +20,8 @@ import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.actions.RunnableAction;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.Array;
 
@@ -81,6 +83,11 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		player = currentMap.spawnPlayer();
 		potions = new Array<>();
 		bullets = new Array<>();
+		shade.addAction(Actions.sequence(Actions.alpha(.3f), new RunnableAction() {
+			@Override
+			public void run() {
+			}
+		}, Actions.fadeOut(.3f)));
 		
 		// Initialize HUD.
 		damageIndicator = new DamageIndicator(gsm, getCamera(), 1.5f);
@@ -91,7 +98,6 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		shapeRenderer = new ShapeRenderer();
 	}
 
-
 	public void handleInput(float delta) {
 		if (player.isSetToKill()) {
 			currentMap.stopBackgroundMusic();
@@ -100,7 +106,14 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		}
         Gdx.input.setInputProcessor(this);
 		if(isAllEnemiesKilled()) {
-			gsm.showScreen(Screens.GAME_COMPLETED);
+			currentMap.stopBackgroundMusic();
+			shade.addAction(Actions.sequence(Actions.fadeIn(.3f), new RunnableAction() {
+				@Override
+				public void run() {
+					gsm.showScreen(Screens.GAME_COMPLETED);
+				}
+				
+			}, Actions.fadeOut(.5f)));
 			return;
 		}
 		
@@ -118,6 +131,9 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		}
 		
 		if (player.isHitted()) return;
+		if (Gdx.input.isKeyJustPressed(Input.Keys.ALT_LEFT)) {
+			player.attackPower();
+		}
 		if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 			player.swingWeapon();
 		}
@@ -139,26 +155,19 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	}
 
 	public void update(float delta) {
-		
-//		if (isNextLevel) {
-//			if (currentLevel < 2) currentLevel++;
-//			gameMapFile = "res/level" + currentLevel + ".tmx";
-//			isNextLevel = false;
-//			shade.addAction(Actions.sequence(Actions.fadeIn(.3f), new RunnableAction() {
-//				@Override
-//				public void run() {
-//					setGameMap(gameMapFile);
-//				}
-//				
-//			}, Actions.fadeOut(.8f)));
-//		}
-		
 		if (isNextLevel) {
-			if (currentLevel < 3) currentLevel++;
+			if (currentLevel < 2) currentLevel++;
 			gameMapFile = "res/level" + currentLevel + ".tmx";
-			setGameMap(gameMapFile);
 			isNextLevel = false;
+			shade.addAction(Actions.sequence(Actions.alpha(.3f), new RunnableAction() {
+				@Override
+				public void run() {
+					setGameMap(gameMapFile);
+				}
+				
+			}, Actions.fadeOut(.3f)));
 		}
+		
 		handleInput(delta);
 		if (!Constants.PAUSE) {
 			world.step(1/60f, 6, 2);

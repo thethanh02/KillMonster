@@ -81,7 +81,7 @@ public abstract class Entity extends Sprite implements Disposable {
 	}
 
 	public void knockedBack(float force) {
-		body.applyLinearImpulse(new Vector2(force, 1f), body.getWorldCenter(), true);
+		body.applyLinearImpulse(new Vector2(force, .4f), body.getWorldCenter(), true);
 	}
 
 	public static void setCategoryBits(Fixture f, short bits) {

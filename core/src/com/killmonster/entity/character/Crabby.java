@@ -24,9 +24,13 @@ public class Crabby extends Enemy {
 		health = 100;
 		movementSpeed = .25f;
 		jumpHeight = 4.5f;
-		attackForce = 1.3f;
+		attackForce = 1.5f;
 		attackRange = 14;
 		attackDamage = 15;
+		facingRight = false;
+		
+		startHitTime = .6f; // Frame 3rd
+		endHitTime = 1f; // Frame 5th
 		
 		typeMeleeShape = "PolygonShape";
 		
@@ -44,8 +48,6 @@ public class Crabby extends Enemy {
 		
 		setBounds(0, 0, 72 / Constants.PPM, 32 / Constants.PPM);
 		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));
-		
-		facingRight = false;
 	}
     
 	public void defineBody() {
@@ -54,11 +56,7 @@ public class Crabby extends Enemy {
 		short feetMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM;
 		short weaponMaskBits = CategoryBits.PLAYER;
 		
-		body = bodyBuilder
-				.type(BodyDef.BodyType.DynamicBody)
-				.position(getX(), getY(), Constants.PPM)
-				.buildBody();
-
+		super.defineBody(BodyDef.BodyType.DynamicBody);
 		super.createBodyFixture(bodyCategoryBits, bodyMaskBits);
 		super.createFeetFixture(feetMaskBits);
 		createMeleeWeaponFixture(weaponMaskBits);
@@ -73,5 +71,5 @@ public class Crabby extends Enemy {
 				.setUserData(this)
 				.buildFixture();
 	}
-    
+	
 }

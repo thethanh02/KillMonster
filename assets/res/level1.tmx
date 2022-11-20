@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="260">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="273">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -10,6 +10,10 @@
  </tileset>
  <tileset firstgid="98" name="big_clouds" tilewidth="32" tileheight="32" tilecount="42" columns="14">
   <image source="big_clouds.png" width="448" height="101"/>
+ </tileset>
+ <tileset firstgid="140" source="grass_atlas.tsx"/>
+ <tileset firstgid="142" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
+  <image source="grass_atlas.png" width="64" height="32"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="227" x="32" y="320">
@@ -67,6 +71,12 @@
   <object id="258" x="1600" y="320">
    <polyline points="0,0 0,32"/>
   </object>
+  <object id="271" x="1408" y="320">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="272" x="1472" y="320">
+   <polyline points="0,0 0,32"/>
+  </object>
  </objectgroup>
  <objectgroup id="5" name="Player">
   <object id="181" x="50.7878" y="289.091" width="19" height="26"/>
@@ -97,9 +107,18 @@
   <object id="255" x="576" y="352" width="32" height="32"/>
   <object id="256" x="608" y="352" width="32" height="32"/>
  </objectgroup>
- <objectgroup id="10" name="TreeOne"/>
- <objectgroup id="11" name="TreeTwo"/>
- <objectgroup id="12" name="TreeThree"/>
+ <objectgroup id="10" name="TreeOne">
+  <object id="260" x="671" y="222" width="39" height="92"/>
+  <object id="265" x="1533" y="284" width="39" height="92"/>
+  <object id="270" x="992" y="282" width="39" height="92"/>
+ </objectgroup>
+ <objectgroup id="11" name="TreeTwo">
+  <object id="264" x="389" y="230" width="62" height="54"/>
+  <object id="267" x="134" y="295" width="62" height="54"/>
+ </objectgroup>
+ <objectgroup id="12" name="TreeThree">
+  <object id="269" x="536" y="196" width="62" height="54"/>
+ </objectgroup>
  <objectgroup id="13" name="Crabby">
   <object id="175" x="1034.55" y="316.727" width="24.6" height="23"/>
   <object id="176" x="850.485" y="321.697" width="24.6" height="23"/>
@@ -119,7 +138,7 @@
  </layer>
  <layer id="18" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRMApGAbUAIxAzoWFmGuqDAT4K9GIDvFAzkTE/DfXBACV6iXUPelhhw9j04Atj9Pijlz/ojYeqPwAvhQW6
+   eJztktsKgDAMQ6s+qz++/rMKCjWGep+oPRDYS7YlrUgQBMH3Seasj/3Cx/4rgf7AkFOJtvis90hne9/0KHqVoOpG30RzwsuoxzutWpnvpcpyV9d82DHOnXmvzoFdMTGP1zHOL1eO3Hprjg4PzRsh
   </data>
  </layer>
  <layer id="19" name="Ground - upper" width="50" height="14">

@@ -6,6 +6,7 @@ import com.killmonster.util.*;
 
 import java.util.HashMap;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.utils.Timer;
@@ -31,9 +32,12 @@ public class Player extends Character {
 		movementSpeed = .55f;
 		jumpHeight = 4f;
 		
-		attackForce = 1.5f;
+		attackForce = 2f;
 		attackRange = 15;
 		attackDamage = 25;
+		
+		startHitTime = 0f;
+		endHitTime = 0.18f * 3f;
 		
 		typeMeleeShape = "Player";
 		
@@ -84,9 +88,7 @@ public class Player extends Character {
 		}
 		
 		super.inflictDamage(c, damage);
-//		gameWorldManager.getDamageIndicator().show(c, damage);
 		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
-//		CameraShake.shake(8 / Constants.PPM, .1f);
 //		if (c instanceof Enemy && c.isSetToKill()) {
 //			gameWorldManager.getMessageArea().show(String.format("You earned 10 exp."));
 //		}
@@ -95,9 +97,9 @@ public class Player extends Character {
 	@Override
 	public void receiveDamage(int damage) {
 		super.receiveDamage(damage);
-		gameWorldManager.getDamageIndicator().show(this, damage);
 		// Sets the player to be untouchable for a while.
 		if (!isInvincible) {
+			gameWorldManager.getDamageIndicator().show(this, "-"+damage, Color.RED);
 			CameraShake.shake(8 / Constants.PPM, .1f);
 			isInvincible = true;
 			
@@ -114,7 +116,16 @@ public class Player extends Character {
 
 	public void healed(int health) {
 		this.health = this.health + health > 100 ? 100 : this.health + health;
+		gameWorldManager.getDamageIndicator().show(this, "+"+health, Color.GREEN);
 		gameWorldManager.getMessageArea().show(String.format("You are healed %d HP", health));
+	}
+	
+	public void attackPower() {
+//		if (facingRight)
+//			body.applyLinearImpulse(new Vector2(5f, 0f), body.getWorldCenter(), true);
+//		else 
+//			body.applyLinearImpulse(new Vector2(-5f, 0f), body.getWorldCenter(), true);
+//		System.out.println(body.getLinearVelocity());
 	}
 	
 }

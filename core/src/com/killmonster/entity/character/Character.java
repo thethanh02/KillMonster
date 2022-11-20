@@ -47,6 +47,10 @@ public abstract class Character extends Entity {
 	protected int attackRange;
 	protected int attackDamage;
 	
+	protected float startHitTime;
+	protected float endHitTime;
+	protected boolean isInflictDmg;
+	
 	protected BehavioralModel behavioralModel;
 	
 	public Character(Texture texture, World currentWorld, float x, float y) {
@@ -85,6 +89,7 @@ public abstract class Character extends Entity {
 				
 				// Set isAttacking back to false, implying attack has complete.
 				if (animation.get(State.ATTACKING).isAnimationFinished(stateTimer)) {
+				// if (isAttacking && stateTimer >= attackTime) {
 					isAttacking = false;
 					stateTimer = 0;
 				}
@@ -96,7 +101,7 @@ public abstract class Character extends Entity {
 		}
 	}
     
-	private TextureRegion getFrame(float delta) {
+	protected TextureRegion getFrame(float delta) {
 		previousState = currentState;
 		currentState = getState();
 		
@@ -153,7 +158,7 @@ public abstract class Character extends Entity {
 		return textureRegion;
 	}
 	
-	private State getState() {
+	protected State getState() {
 		if (setToDestroy) {
 			return State.KILLED;
 		} else if (isHitted) {
@@ -180,10 +185,11 @@ public abstract class Character extends Entity {
 
 	protected void createFeetFixture(short maskBits) {
 		Vector2[] feetPolyVertices = new Vector2[4];
-		feetPolyVertices[0] =  new Vector2(-bodyWidth / 2 + 1, -bodyHeight / 2);
-		feetPolyVertices[1] =  new Vector2(bodyWidth / 2 - 1, -bodyHeight / 2);
-		feetPolyVertices[2] =  new Vector2(-bodyWidth / 2 + 1, -bodyHeight / 2 - 2);
-		feetPolyVertices[3] =  new Vector2(bodyWidth / 2 - 1, -bodyHeight / 2 - 2);
+		// Origin is origin of body
+		feetPolyVertices[0] = new Vector2(-bodyWidth / 2 + 1, -bodyHeight / 2);
+		feetPolyVertices[1] = new Vector2(bodyWidth / 2 - 1, -bodyHeight / 2);
+		feetPolyVertices[2] = new Vector2(-bodyWidth / 2 + 1, -bodyHeight / 2 - 2);
+		feetPolyVertices[3] = new Vector2(bodyWidth / 2 - 1, -bodyHeight / 2 - 2);
 
 		feetFixture = bodyBuilder
 				.newPolygonFixture(feetPolyVertices, Constants.PPM)
@@ -241,32 +247,29 @@ public abstract class Character extends Entity {
 	public void swingWeapon() {
 		if (!isAttacking) {
 			isAttacking = true;
+			isInflictDmg = false;
 			for (Entity entity : inRangeTarget) {
 				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) {
 					this.lockedOnTarget.addAll(inRangeTarget);
 					entity.setLockedOnTarget(this);
-					
-					inflictDamage(entity, attackDamage);
 				}
 			}
-			
 			if (attackSound != null) attackSound.play(volume);
-			return;
+		} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
+			for (Entity entity : inRangeTarget)
+				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) 
+					inflictDamage(entity, attackDamage);
+			isInflictDmg = true;
 		}
 	}
 
 	public void inflictDamage(Entity c, int damage) {
-//		Timer.schedule(new Task(){
-//		    @Override
-//		    public void run() {
-		    	c.receiveDamage(damage);
-				if (facingRight) {
-					c.knockedBack(attackForce);
-				} else {
-					c.knockedBack(-attackForce);
-				}
-//		    }
-//		}, .4f);
+    	c.receiveDamage(damage);
+		if (facingRight) {
+			c.knockedBack(attackForce);
+		} else {
+			c.knockedBack(-attackForce);
+		}
 	}
 	
 	@Override

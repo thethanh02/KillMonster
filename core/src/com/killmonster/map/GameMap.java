@@ -66,6 +66,16 @@ public class GameMap implements Disposable {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			npcs.add(new Crabby(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2));
 		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.SHARK.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			npcs.add(new Shark(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2));
+		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.PINK_STAR.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			npcs.add(new PinkStar(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2));
+		}
         
 		return npcs;
 	}
