@@ -16,5 +16,6 @@ public class CategoryBits {
 	public static final short DEATHPLACE = 1024;
 	public static final short BULLET = 2048;
 	public static final short CANNON = 4096;
+	public static final short DIAMOND = 8192;
 	
 }

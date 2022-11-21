@@ -11,7 +11,7 @@ public class Cannon extends Shooter {
 
 	private static final String TEXTURE_FILE = "objects/cannon_atlas.png";
 
-	public Cannon(GameWorldManager gameWorldManager, float x, float y) {
+	public Cannon(GameWorldManager gameWorldManager, float x, float y, boolean facingRight) {
 		super(gameWorldManager.getAssets().get(TEXTURE_FILE), gameWorldManager.getWorld(), x, y);
 		
 		name = "Cannon";
@@ -19,6 +19,7 @@ public class Cannon extends Shooter {
 		bodyHeight = 26f;
 		offsetX = .2f;
 		offsetY = .15f;
+		this.facingRight = facingRight;
 		
 		health = 1;
 		isInvincible = true;
@@ -26,10 +27,10 @@ public class Cannon extends Shooter {
 
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();
-		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 0, 40, 26));
-		animation.put(State.ATTACKING, 	Utils.createAnimation(getTexture(), 20f / Constants.PPM, 0, 6, 0, 0, 40, 26));
-		animation.put(State.HIT,	 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 0, 40, 26));
-		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 0, 40, 26));
+		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 40, 26));
+		animation.put(State.ATTACKING, 	Utils.createAnimation(getTexture(), 20f / Constants.PPM, 0, 6, 0, 40, 26));
+		animation.put(State.HIT,	 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 40, 26));
+		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 40, 26));
 
 		// Create body and fixtures.
 		short bodyCategoryBits = CategoryBits.CANNON;

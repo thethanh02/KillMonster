@@ -87,6 +87,12 @@ public abstract class Shooter extends Entity {
 				textureRegion = animation.get(State.IDLE).getKeyFrame(stateTimer, true);
 				break;
 		}
+		// Default texture of shooter is facing left, so facingRight meaning facingLeft
+		if (facingRight && !textureRegion.isFlipX()) {
+			textureRegion.flip(true, false);
+		} else if (!facingRight && textureRegion.isFlipX()) {
+			textureRegion.flip(true, false);
+		}
 		
 		stateTimer = (currentState != previousState) ? 0 : stateTimer + delta;
 		return textureRegion;

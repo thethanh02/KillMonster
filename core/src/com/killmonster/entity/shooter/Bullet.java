@@ -44,8 +44,13 @@ public abstract class Bullet extends Entity {
 					isDestroyed = true;
 				}
 			} else {
-				if (body.getLinearVelocity().x >= -movementSpeed * 2) {
-					body.applyLinearImpulse(new Vector2(-movementSpeed, 0), body.getWorldCenter(), true);
+				if (!facingRight) {
+					if (body.getLinearVelocity().x >= -movementSpeed * 2) 
+						body.applyLinearImpulse(new Vector2(-movementSpeed, 0), body.getWorldCenter(), true);
+				} else {
+					if (body.getLinearVelocity().x <= movementSpeed * 2) {
+						body.applyLinearImpulse(new Vector2(movementSpeed, 0), body.getWorldCenter(), true);
+					}
 				}
 				setRegion(getFrame(delta));
 			}

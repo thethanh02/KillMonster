@@ -22,12 +22,11 @@ public class TreeTwo extends GameObject {
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();
-		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 16f / Constants.PPM, 0, 3, 0, 0, 62, 54));
-		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 0f / Constants.PPM, 1, 1, 0, 0, 62, 54));
-		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 0f / Constants.PPM, 1, 1, 0, 0, 62, 54));
+		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 16f / Constants.PPM, 0, 3, 0, 62, 54));
+		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 0f / Constants.PPM, 1, 1, 0, 62, 54));
+		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 0f / Constants.PPM, 1, 1, 0, 62, 54));
 		
 		super.defineBody(BodyType.StaticBody);
-		
 		
 		setBounds(0, 0, 62 / Constants.PPM, 54 / Constants.PPM);
 		textureRegion = animation.get(State.IDLE).getKeyFrame(stateTimer, true);

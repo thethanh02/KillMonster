@@ -25,9 +25,9 @@ public class Box extends GameObject {
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();
-		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 14f / Constants.PPM, 0, 0, 0, 0, 40, 30));
-		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 0f / Constants.PPM, 8, 8, 0, 0, 40, 30));
-		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 15f / Constants.PPM, 0, 7, 0, 0, 40, 30));
+		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 14f / Constants.PPM, 0, 0, 0, 40, 30));
+		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 0f / Constants.PPM, 8, 8, 0, 40, 30));
+		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 15f / Constants.PPM, 0, 7, 0, 40, 30));
 		
 		// Create body and fixtures.
 		defineBody();

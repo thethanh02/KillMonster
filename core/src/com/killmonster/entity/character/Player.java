@@ -43,13 +43,13 @@ public class Player extends Character {
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();
-		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 14f / Constants.PPM, 0, 4, 0, 0 * 40, 64, 40));
-		animation.put(State.RUNNING, 	Utils.createAnimation(getTexture(), 9f / Constants.PPM,  0, 5, 0, 1 * 40, 64, 40));
-		animation.put(State.JUMPING, 	Utils.createAnimation(getTexture(), 10f / Constants.PPM, 0, 2, 0, 2 * 40, 64, 40));
-		animation.put(State.FALLING, 	Utils.createAnimation(getTexture(), 10f / Constants.PPM, 0, 0, 0, 3 * 40, 64, 40));
-		animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 18f / Constants.PPM, 0, 2, 0, 4 * 40, 64, 40));
-		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 3, 0, 5 * 40, 64, 40));
-		animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 7, 0, 6 * 40, 64, 40));
+		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 14f / Constants.PPM, 0, 4, 0 * 40, 64, 40));
+		animation.put(State.RUNNING, 	Utils.createAnimation(getTexture(), 9f / Constants.PPM,  0, 5, 1 * 40, 64, 40));
+		animation.put(State.JUMPING, 	Utils.createAnimation(getTexture(), 10f / Constants.PPM, 0, 2, 2 * 40, 64, 40));
+		animation.put(State.FALLING, 	Utils.createAnimation(getTexture(), 10f / Constants.PPM, 0, 0, 3 * 40, 64, 40));
+		animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 18f / Constants.PPM, 0, 2, 4 * 40, 64, 40));
+		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 3, 5 * 40, 64, 40));
+		animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 7, 6 * 40, 64, 40));
 		
 		// Sounds.
 		deathSound = gameWorldManager.getAssets().get("sound/die.wav");
@@ -65,7 +65,8 @@ public class Player extends Character {
 
 	public void defineBody() {
 		short bodyCategoryBits = CategoryBits.PLAYER;
-		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.ENEMY | CategoryBits.MELEE_WEAPON | CategoryBits.POTION | CategoryBits.DEATHPLACE | CategoryBits.BULLET;
+		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.ENEMY | CategoryBits.MELEE_WEAPON
+				| CategoryBits.POTION | CategoryBits.DEATHPLACE | CategoryBits.BULLET| CategoryBits.DIAMOND;
 		short feetMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM;
 		short weaponMaskBits = CategoryBits.ENEMY | CategoryBits.BOX;
 		
@@ -118,6 +119,16 @@ public class Player extends Character {
 		this.health = this.health + health > 100 ? 100 : this.health + health;
 		gameWorldManager.getDamageIndicator().show(this, "+"+health, Color.GREEN);
 		gameWorldManager.getMessageArea().show(String.format("You are healed %d HP", health));
+	}
+	
+	public void receiveScore(int scorePoint) {
+		score += scorePoint;
+		gameWorldManager.getDamageIndicator().show(this, "+"+scorePoint, Color.YELLOW);
+		gameWorldManager.getMessageArea().show(String.format("Score: %d", score));
+	}
+	
+	public void setScore(int score) {
+		this.score = score;
 	}
 	
 	public void attackPower() {

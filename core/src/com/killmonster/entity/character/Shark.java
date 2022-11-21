@@ -35,13 +35,13 @@ public class Shark extends Enemy {
 		
 		// Knight stand animation.
 		animation = new HashMap<>();
-		animation.put(State.IDLE, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 7, 0, 0 * 30, 34, 30));
-		animation.put(State.RUNNING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 5, 0, 1 * 30, 34, 30));
-		animation.put(State.JUMPING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 2, 3, 0, 0 * 30, 34, 30));
-		animation.put(State.FALLING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 4, 4, 0, 0 * 30, 34, 30));
-		animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 10f / Constants.PPM, 0, 7, 0, 2 * 30, 34, 30));
-		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 3, 0, 3 * 30, 34, 30));
-		animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 4, 0, 4 * 30, 34, 30));
+		animation.put(State.IDLE, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 7, 0 * 30, 34, 30));
+		animation.put(State.RUNNING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 5, 1 * 30, 34, 30));
+		animation.put(State.JUMPING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 2, 3, 0 * 30, 34, 30));
+		animation.put(State.FALLING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 4, 4, 0 * 30, 34, 30));
+		animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 10f / Constants.PPM, 0, 7, 2 * 30, 34, 30));
+		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 3, 3 * 30, 34, 30));
+		animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 4, 4 * 30, 34, 30));
 		
 		short bodyCategoryBits = CategoryBits.ENEMY;
 		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.PLAYER | CategoryBits.MELEE_WEAPON | CategoryBits.CLIFF_MARKER | CategoryBits.DEATHPLACE;
@@ -75,9 +75,9 @@ public class Shark extends Enemy {
 			isAttacking = true;
 			isInflictDmg = false;
 			if (facingRight)
-				body.applyLinearImpulse(new Vector2(.5f, 0f), body.getWorldCenter(), true);
+				body.applyLinearImpulse(new Vector2(5f, 0f), body.getWorldCenter(), false);
 			else 
-				body.applyLinearImpulse(new Vector2(-.5f, 0f), body.getWorldCenter(), true);
+				body.applyLinearImpulse(new Vector2(-5f, 0f), body.getWorldCenter(), false);
 			for (Entity entity : inRangeTarget) {
 				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) {
 					this.lockedOnTarget.addAll(inRangeTarget);
@@ -88,6 +88,7 @@ public class Shark extends Enemy {
 			for (Entity entity : inRangeTarget)
 				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) 
 					inflictDamage(entity, attackDamage);
+				
 			isInflictDmg = true;
 		}
 	}

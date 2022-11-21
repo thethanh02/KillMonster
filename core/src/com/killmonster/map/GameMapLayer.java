@@ -16,6 +16,9 @@ public enum GameMapLayer {
 	TREE_THREE,		// 11: Tree3
 	CRABBY,        	// 12: Enemies Crabby
 	SHARK,			// 13: Enemies Shark
-	PINK_STAR;		// 14: Enemies PinkStar
-	
+	PINK_STAR,		// 14: Enemies PinkStar
+	BLUE_DIAMOND,	// 15: Blue Diamond
+	GREEN_DIAMOND,	// 16: Green Diamond
+	RED_DIAMOND,	// 17: Red Diamond
+	CANNON_FLIP;	// 18: Cannon flipX
 }

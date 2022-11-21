@@ -47,6 +47,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private Array<Shooter> cannons;
 	private Array<Bullet> bullets;
 	private Array<GameObject> objs;
+	private Array<Diamond> dia;
 	
 	private PauseOverlay pauseOverlay;
 	private ShapeRenderer shapeRenderer;
@@ -54,6 +55,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	public static boolean isNextLevel;
 	private static int currentLevel = 0;
 	private String gameMapFile;
+	private int prvScorePlayer;
 	
 	public MainGameScreen(GameStateManager gsm) {
 		super(gsm);
@@ -78,7 +80,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		mapLoader = new TmxMapLoader();
 		
 		// Load the map and spawn player.
-		gameMapFile = "res/level" + currentLevel + ".tmx";
+		gameMapFile = "map/level" + currentLevel + ".tmx";
 		setGameMap(gameMapFile);
 		player = currentMap.spawnPlayer();
 		potions = new Array<>();
@@ -151,13 +153,16 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		for (Character character : enemies)
 			if (!character.isKilled())
 				return false;
+		for (Diamond diamond : dia)
+			if (!diamond.isKilled())
+				return false;
 		return true;
 	}
 
 	public void update(float delta) {
 		if (isNextLevel) {
 			if (currentLevel < 2) currentLevel++;
-			gameMapFile = "res/level" + currentLevel + ".tmx";
+			gameMapFile = "map/level" + currentLevel + ".tmx";
 			isNextLevel = false;
 			shade.addAction(Actions.sequence(Actions.alpha(.3f), new RunnableAction() {
 				@Override
@@ -179,10 +184,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 					Random generator = new Random();
 					int rnd = generator.nextInt(3);
 					// if random == 0 -> Box is blank
-					if (rnd == 1) {
-						Potion tmPotion = new BluePotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10); 
-						potions.add(tmPotion);
-					}
+					if (rnd == 1) 
+						potions.add(new BluePotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
 					else if (rnd == 2)
 						potions.add(new RedPotion(assets, world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
 				
@@ -193,11 +196,16 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			for (Shooter x : cannons) {
 				x.update(delta);
 				if (x.cooldownSpawnBullet()) {
-					CannonBall cannonBall = new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM - 8.5f, x.getBody().getPosition().y * Constants.PPM);
-					bullets.add(cannonBall);
-					
+					if (!x.isFacingRight())
+						bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM - 8.5f, x.getBody().getPosition().y * Constants.PPM, false));
+					else
+						bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM + 8.5f, x.getBody().getPosition().y * Constants.PPM, true));
 				}
 			}
+			for (Diamond x : dia) {
+				x.update(delta);
+				if (x.isKilled()) dia.removeValue(x, true);
+			}	
 			for (Bullet x : bullets) {
 				x.update(delta);
 				if (x.isKilled()) bullets.removeValue(x, true);
@@ -252,6 +260,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		bullets.forEach((Bullet x) -> x.draw(getBatch()));
 		boxes.forEach((Box x) -> x.draw(getBatch()));
 		potions.forEach((Potion x) -> x.draw(getBatch()));
+		dia.forEach((Diamond x) -> x.draw(getBatch()));
 		enemies.forEach((Character x) -> x.draw(getBatch()));		
 		player.draw(getBatch());
 		objs.forEach((GameObject x) -> x.draw(getBatch()));
@@ -296,6 +305,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		bullets.forEach((Bullet x) -> x.dispose());
 		boxes.forEach((Box x) -> x.dispose());
 		potions.forEach((Potion x) -> x.dispose());
+		dia.forEach((Diamond x) -> x.dispose());
 		enemies.forEach((Character x) -> x.dispose());
 		player.dispose();
 		
@@ -343,12 +353,14 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		
 		if (player != null) {
 			player.reposition(currentMap.getPosPlayer());
+			player.setScore(prvScorePlayer);
 		}
 		// TODO: Don't respawn enemies whenever a map loads.
 		enemies = currentMap.spawnNPCs();
 		boxes = currentMap.spawnBoxes();
 		cannons = currentMap.spawnCannons();
 		objs = currentMap.spawnGameObjects();
+		dia = currentMap.spawnDiamonds();
 	}
 	
 	public void addBullet(Bullet b) {

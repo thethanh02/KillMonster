@@ -36,13 +36,13 @@ public class Crabby extends Enemy {
 		
 		// Knight stand animation.
 		animation = new HashMap<>();
-		animation.put(State.IDLE, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 8, 0, 0 * 32, 72, 32));
-		animation.put(State.RUNNING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 5, 0, 1 * 32, 72, 32));
-		animation.put(State.JUMPING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 5, 7, 0, 0 * 32, 72, 32));
-		animation.put(State.FALLING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 7, 7, 0, 0 * 32, 72, 32));
-		animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 20f / Constants.PPM, 0, 6, 0, 2 * 32, 72, 32));
-		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 3, 0, 3 * 32, 72, 32));
-		animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 4, 0, 4 * 32, 72, 32));
+		animation.put(State.IDLE, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 8, 0 * 32, 72, 32));
+		animation.put(State.RUNNING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 5, 1 * 32, 72, 32));
+		animation.put(State.JUMPING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 5, 7, 0 * 32, 72, 32));
+		animation.put(State.FALLING, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 7, 7, 0 * 32, 72, 32));
+		animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 20f / Constants.PPM, 0, 6, 2 * 32, 72, 32));
+		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 3, 3 * 32, 72, 32));
+		animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 4, 4 * 32, 72, 32));
 		
 		defineBody();
 		

@@ -36,8 +36,7 @@ public abstract class Character extends Entity {
 	protected boolean isOnPlatform;
 	protected boolean isAttacking;
 	
-	protected int level;
-	protected int exp;
+	protected int score;
 	protected int stamina;
 	protected int magicka;
 	

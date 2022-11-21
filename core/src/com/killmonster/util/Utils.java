@@ -40,22 +40,21 @@ public class Utils {
 	 * @param firstFrameCount The starting frame count of the frames to extract,
 	 *        usually 0 if correct offsetX is given.
 	 * @param lastFrameCount The last frame count of the frames to extract.
-	 * @param offsetX The x offset to apply in order to reach the first frame.
 	 * @param offsetY The y offset to apply in order to reach the first frame.
 	 * @param width The width of the TextureRegion. May be negative to flip the sprite when drawn.
 	 * @param height The height of the TextureRegion. May be negative to flip the sprite when drawn.
 	 * @return Extracted animation.
 	 */
 	public static Animation<TextureRegion> createAnimation(Texture texture, float frameDuration,
-			int firstFrameCount, int lastFrameCount, int offsetX, int offsetY, int width, int height) {
+			int firstFrameCount, int lastFrameCount, int offsetY, int width, int height) {
 		frames.clear();
         
 		for (int i = firstFrameCount; i <= lastFrameCount; i++) {
-			TextureRegion textureRegion = new TextureRegion(texture, i * width + offsetX, offsetY, width, height);
+			TextureRegion textureRegion = new TextureRegion(texture, i * width, offsetY, width, height);
 			frames.add(textureRegion);
 		}
         
 		return new Animation<>(frameDuration, frames);
 	}
-    
+	
 }

@@ -26,9 +26,9 @@ public class Spike extends GameObject {
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();
-		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 0, 32, 32));
-		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 0f / Constants.PPM, 1, 1, 0, 0, 32, 32));
-		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 0f / Constants.PPM, 1, 1, 0, 0, 32, 32));
+		animation.put(State.IDLE, 	 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 32, 32));
+		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 0f / Constants.PPM, 1, 1, 0, 32, 32));
+		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 0f / Constants.PPM, 1, 1, 0, 32, 32));
 		
 		// Create body and fixtures.
 		short bodyCategoryBits = CategoryBits.DEATHPLACE;

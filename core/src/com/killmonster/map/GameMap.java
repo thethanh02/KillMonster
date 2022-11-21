@@ -97,11 +97,41 @@ public class GameMap implements Disposable {
 		
 		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.CANNON.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			Cannon x = new Cannon(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			Cannon x = new Cannon(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2, false);
+			cannons.add(x);
+		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.CANNON_FLIP.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Cannon x = new Cannon(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2, true);
 			cannons.add(x);
 		}
         
 		return cannons;
+	}
+	
+	public Array<Diamond> spawnDiamonds() {
+		Array<Diamond> diamonds = new Array<>();
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.BLUE_DIAMOND.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			BlueDiamond x = new BlueDiamond(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			diamonds.add(x);
+		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.GREEN_DIAMOND.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			GreenDiamond x = new GreenDiamond(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			diamonds.add(x);
+		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.RED_DIAMOND.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			RedDiamond x = new RedDiamond(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			diamonds.add(x);
+		}
+        
+		return diamonds;
 	}
 	
 	public Array<GameObject> spawnGameObjects() {
