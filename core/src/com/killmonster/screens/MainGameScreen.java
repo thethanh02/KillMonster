@@ -61,7 +61,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private ShapeRenderer shapeRenderer;
 	
 	public static boolean isNextLevel;
-	private static int currentLevel = 0;
+	private static int currentLevel = 1;
 	private String gameMapFile;
 	private int prvScorePlayer = 0;
 	public static int currentScore = 0;

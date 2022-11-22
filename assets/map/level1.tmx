@@ -1,18 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="37" nextobjectid="278">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="37" nextobjectid="278">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
  <tileset firstgid="1" source="outside_sprites.tsx"/>
- <tileset firstgid="49" source="playing_bg_img.tsx"/>
- <tileset firstgid="97" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+ <tileset firstgid="49" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="water.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="98" name="big_clouds" tilewidth="32" tileheight="32" tilecount="42" columns="14">
+ <tileset firstgid="50" name="big_clouds" tilewidth="32" tileheight="32" tilecount="42" columns="14">
   <image source="big_clouds.png" width="448" height="101"/>
- </tileset>\
- <tileset firstgid="142" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="0" columns="2">
+ </tileset>
+ <tileset firstgid="94" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
   <image source="grass_atlas.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="96" name="background1" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+  <image source="../interface/background1.jpg" width="1920" height="1080"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="227" x="32" y="320">
@@ -140,7 +142,7 @@
  </objectgroup>
  <layer id="20" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJzt0DkSgkAQRuG50qRUKYiyCqjsgtv9T+EjJyCga5IOvmzqr35jjTFWKaXUKk9g8yDgCB8BTghxxgUR4h13EqTIBOS4okCJCjfc8UC9406DFp0DPQaMeGLCjBfe+GzcWd598XPUIfEfrm/RDjcdvXDHHzeYsXg=
+   eJwN02ODEAYAANDLtmstY8uuVVu2a8u23dqyddndXcaFy7xs2za3sMxt78P7CS8wQkDAeCYwkUlMZgpTmcZ0ZjCTWcxmDkEEE8Jc5jGfBSxkEYtZwlKWEcpyVrCSVYSxmjWsZR3r2cBGNrGZLWxlG+FsZwc7OcJRjnGcE5zkFKc5w1nOcZ4LXOQSl7nCVa5xnRvc5Ba3ucNd7nGfBzzkEY95wlOe8Rd/85wXvOQV//CaN7zlHe/5wEc+ETliQEAUohKN6MQgJrGITRziEo/4JCAhiUhMEpKSjOSkICWp+I7UfE8a0pKO9GQgI5nITBay8gM/ko3s5CAnuchNHvKSj/wUoAQlKUVpylCWcpSnAhWpRGWqUJVqVKcGNalFberwK79Rl3rUpwENaURjmtCUZjSnBS1pRWva0JZ2tKcDHelEZ7rQlW50pz8DGMggBjOEoQxjOCMYyShGM4axjCOQ8UxgIpOYzBSmMo3pzGAms5jNHIIIJoS5zGM+C1jIIhazhKUsI5TlrGAlqwhjK9sIZzs72MkudrOHvexjPwc4yCEOc4SjHOM4JzjJKU5zhrOc4zwXuMglLnOFq1zjOje4yS1uc4e73OM+D3jIIx7zhKe85R3v+cBHPvGZL3zlG//yHwGRAgIiEJFIRCYKUYlGdGIQk1jEJg5xiUd8EpCQRCQmCUlJRnJSkJJUfEdqvicNaUlHejKQkUzkJg95yUd+ClCQQhSmCD9RlGIU52d+oQQlKUVpylCWcpSnAhWpRGWqUJVqVKcGNalFberwK79Rl3rUpwENaURjmtCUZjSnE53pQle60Z0e9KQXvenD7/TlD/6kH/0ZwEAGMZghDGUYwxnBSEYxmjGMZRyBjGcCE5nEZKYwlWlMZwYzmcVs5hBEMCGEspwVrGQVYaxmDWtZx3o2sJFNbGYLW9lGONvZwU52sZs97GUf+znAQQ5xmCMc5RjHOcFJTnGaM5zlHOe5wEUucZkrXOUBD3nEY57wlGf8xd885wUvecU/vOYNb3nHez7wkU985gtf+ca//EdAZL+ISCQiE4WoRCM6MYhJLGITh7jEIz4JSEgiEpOEtKQjPRnISCYyk4Ws/MCPZCM7OchJLnKTh7zkIz8FKEghClOEnyhKMYrzM79QgpKUojRlKEs5ylOBilSiMlWoSjWqU4OaNKIxTWhKM5rTgpa0ojVtaEs72tOBjnSiM13oSje604Oe9KI3ffidvvzBn/SjPwMYyCAGM4ShDGM4IxjJKEYzhrGMI5DxzGI2cwgimBDmMo/5LGAhi1jMEpayjFCWs4KVrCKM1axhLetYzwY2sonNbGEr2whnOzvYyS52s4e97GM/BzjIIQ5zhKP8Dw8Fa4o=
   </data>
  </layer>
  <layer id="21" name="Wall" width="50" height="14">
@@ -150,7 +152,7 @@
  </layer>
  <layer id="22" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjILhD3pwsAcTQHcjMh4JAN3PxPqdXH34zKAEMAIxExpmpqE+GOCjQC82wAs1ExnzM+AObxgmVh8M9KJhbHqp7Q/0sMKGsenBF8bo8Ucvf9AbD1V/AADR3hsS
+   eJxjYBgFo2AUjILhD3jQ8GAE6G6ktXsHWzjg8z++cKBGmFEzvBmBmAkNM9NQHwiA3MxHpl5cgBdqJjLmZyAcR8TqQ3Y7Msaml9r+QA8rbBibHnxhjB5/9PIHvfFQ9QcADPwH+g==
   </data>
  </layer>
  <layer id="23" name="Ground - upper" width="50" height="14">
@@ -160,7 +162,7 @@
  </layer>
  <layer id="24" name="Objects" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRMFSABg72YALI7lIFYjUoVh8Y54yCYQB4KMCDCSRSgAeTX4aiPwDdWw07
+   eJxjYBgFo2AUjIJRMFSABg72YALI7lIFYjUoVh8Y54yCYQB4KMCDCRhSgAeTX4aiPwBTkAeb
   </data>
  </layer>
 </map>
