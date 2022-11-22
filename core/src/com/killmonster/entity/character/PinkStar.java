@@ -102,4 +102,9 @@ public class PinkStar extends Enemy {
 		return textureRegion;
 	}
 	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		super.AIBehavior2(delta);
+	}
 }

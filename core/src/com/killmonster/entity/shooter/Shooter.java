@@ -107,7 +107,7 @@ public abstract class Shooter extends Entity {
 		} else if (isAttacking) {
 			return State.ATTACKING;
 		} else {
-			return State.IDLE;
+			return State.ATTACKING;
 		}
 	}
 	

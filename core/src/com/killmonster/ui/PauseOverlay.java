@@ -2,6 +2,7 @@ package com.killmonster.ui;
 
 import com.killmonster.screens.MainGameScreen;
 import com.killmonster.util.Constants;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -20,7 +21,7 @@ public class PauseOverlay extends Stage {
 	private static final String VOLUME_SKIN_FILE = "res/volume_button_slider.json";
 	private static final String TEXTURE_FILE = "res/pause_menu.png";
     
-	private Button resumeButton, backButton, homeButton;
+	private Button resumeButton, homeButton;
 	private Button musicButton, sfxButton;
 	private Slider volumeMusicSlider;
 	private Image transparentImage, background;
@@ -57,7 +58,6 @@ public class PauseOverlay extends Stage {
 		volumeMusicSlider.setValue(.5f);
 		
 		resumeButton = new Button(urmSkin, "resume");
-		backButton = new Button(urmSkin, "back");
 		homeButton = new Button(urmSkin, "home");
 		
 		musicButton = new Button(soundSkin, "default");
@@ -69,7 +69,6 @@ public class PauseOverlay extends Stage {
 		tableUrmButton.padTop(270f);
 		
 		tableUrmButton.add(homeButton);
-		tableUrmButton.add(backButton).padLeft(12f);
 		tableUrmButton.add(resumeButton).padLeft(12f);
 		
 		Table tableVolumeBar = new Table();
@@ -111,6 +110,13 @@ public class PauseOverlay extends Stage {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				Constants.PAUSE = false;
+			}
+		});
+		
+		homeButton.addListener(new ClickListener() {
+			@Override
+			public void clicked(InputEvent event, float x, float y) {
+				Gdx.app.exit();
 			}
 		});
 	}

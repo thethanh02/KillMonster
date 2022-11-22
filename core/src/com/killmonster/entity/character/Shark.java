@@ -70,26 +70,25 @@ public class Shark extends Enemy {
 	}
 	
 	@Override
-	public void swingWeapon() {
+	public void swingWeapon2() {
 		if (!isAttacking) {
 			isAttacking = true;
 			isInflictDmg = false;
 			if (facingRight)
-				body.applyLinearImpulse(new Vector2(2f, 0f), body.getWorldCenter(), false);
+				body.applyLinearImpulse(new Vector2(1.4f, 0f), body.getWorldCenter(), false);
 			else 
-				body.applyLinearImpulse(new Vector2(-2f, 0f), body.getWorldCenter(), false);
-			for (Entity entity : inRangeTarget) {
-				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) {
-					this.lockedOnTarget.addAll(inRangeTarget);
-					entity.setLockedOnTarget(this);
-				}
-			}
+				body.applyLinearImpulse(new Vector2(-1.4f, 0f), body.getWorldCenter(), false);
 		} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
-			for (Entity entity : inRangeTarget)
-				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) 
+			for (Entity entity : inRangeAttack)
+				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
 					inflictDamage(entity, attackDamage);
-				
+			
 			isInflictDmg = true;
 		}
+	}
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		super.AIBehavior2(delta);
 	}
 }

@@ -1,7 +1,8 @@
 package com.killmonster.screens;
 
-import com.killmonster.entity.character.Character;
+import com.killmonster.entity.character.Enemy;
 import com.killmonster.entity.character.Player;
+import com.killmonster.entity.character.Shark;
 import com.killmonster.entity.objects.*;
 import com.killmonster.entity.objects.chest.*;
 import com.killmonster.entity.objects.container.*;
@@ -45,7 +46,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private GameMap currentMap;
 	
 	private Player player;
-	private Array<Character> enemies;
+	private Array<Enemy> enemies;
 	private Array<Container> boxes;
 	private Array<Potion> potions;
 	private Array<Shooter> cannons;
@@ -162,8 +163,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	}
     
 	public boolean isAllEnemiesKilled() {
-		for (Character character : enemies)
-			if (!character.isKilled())
+		for (Enemy x : enemies)
+			if (!x.isKilled())
 				return false;
 		for (Chest c : chest)
 			if (!c.isKilled())
@@ -247,9 +248,40 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 				x.update(delta);
 				if (x.isKilled()) potions.removeValue(x, true);
 			}			
-			for (Character x : enemies) {
+			for (Enemy x : enemies) {
 				x.update(delta);
 				if (x.isKilled()) enemies.removeValue(x, true);
+				else if(!player.isKilled())  {
+					float distanceX = player.getBody().getPosition().x - x.getBody().getPosition().x;
+					float distanceY = player.getBody().getPosition().y - x.getBody().getPosition().y;
+					if (distanceY >= -.2f && distanceY <= .2f) {
+						if (x.isFacingRight()) {
+							if (distanceX <= .55f && distanceX >= 0) 
+								x.setInRangeTarget(true);
+							else
+								x.setInRangeTarget(false);
+						} else {
+							if (distanceX >= -.55f && distanceX <= 0) 
+								x.setInRangeTarget(true);
+							else 
+								x.setInRangeTarget(false);
+						}
+					}
+					if (x instanceof Shark && distanceY >= -.3f && distanceY <= .3f) {
+						if (x.isFacingRight()) {
+							if (distanceX <= 1.5f && distanceX >= 0) 
+								x.setLockedOnTarget(player);
+							else
+								x.removeLockedOnTarget(player);
+						} else {
+							if (distanceX >= -1.5f && distanceX <= 0) 
+								x.setLockedOnTarget(player);
+							else 
+								x.removeLockedOnTarget(player);
+						}
+					}
+						
+				}
 			}
 			player.update(delta);
 			// ui update
@@ -297,7 +329,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		key.forEach((Key x) -> x.draw(getBatch()));
 		dia.forEach((Treasure x) -> x.draw(getBatch()));
 		coin.forEach((Treasure x) -> x.draw(getBatch()));
-		enemies.forEach((Character x) -> x.draw(getBatch()));		
+		enemies.forEach((Enemy x) -> x.draw(getBatch()));		
 		player.draw(getBatch());
 		objs.forEach((GameObject x) -> x.draw(getBatch()));
 
@@ -345,7 +377,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		key.forEach((Key x) -> x.dispose());
 		dia.forEach((Treasure x) -> x.dispose());
 		coin.forEach((Treasure x) -> x.dispose());
-		enemies.forEach((Character x) -> x.dispose());
+		enemies.forEach((Enemy x) -> x.dispose());
 		player.dispose();
 		
 		pauseOverlay.dispose();

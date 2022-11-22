@@ -72,4 +72,9 @@ public class Crabby extends Enemy {
 				.buildFixture();
 	}
 	
+	@Override
+	public void update(float delta) {
+		super.update(delta);
+		super.AIBehavior1(delta);
+	}
 }

@@ -41,8 +41,8 @@ public class Player extends Character {
 		attackDamage = 25;
 		
 		startHitTime = 0f;
-		endHitTime = 0.18f * 3f;
-		startHitTime2 = .0f;
+		endHitTime = .18f * 3f;
+		startHitTime2 = 0f;
 		endHitTime2 = .12f * 6f; 
 		
 		key = 0;
@@ -77,15 +77,14 @@ public class Player extends Character {
 			// If the character's health has reached zero but hasn't die yet,
 			// it means that the killedAnimation is not fully played.
 			// So here we'll play it until it's finished.
+			setRegion(getFrame(delta));
 			if (setToDestroy) {
-				setRegion(getFrame(delta));
 				// Set killed to true to prevent further rendering updates.
 				if (animation.get(State.KILLED).isAnimationFinished(stateTimer)) {
 					currentWorld.destroyBody(body);
 					isDestroyed = true;
 				}
 			} else if (isHitted) {
-				setRegion(getFrame(delta));
 				
 				// Set isHitted back to false, implying hit has complete.
 				if (animation.get(State.HIT).isAnimationFinished(stateTimer)) {
@@ -93,19 +92,19 @@ public class Player extends Character {
 					stateTimer = 0;
 				}
 			} else {
-				setRegion(getFrame(delta));
-				if (isAttacking) {
-					if (animation.get(State.ATTACKING).isAnimationFinished(stateTimer)) {
-						isAttacking = false;
-						stateTimer = 0;
-					}
-				} else if (isAttacking2) {
+				if (isAttacking2) {
 					if (animation.get(State.ATTACK2).isAnimationFinished(stateTimer)) {
 						isAttacking2 = false;
 						isInvincible = false;
 						stateTimer = 0;
 					}
+				} else if (isAttacking) {
+					if (animation.get(State.ATTACKING).isAnimationFinished(stateTimer)) {
+						isAttacking = false;
+						stateTimer = 0;
+					}
 				} 
+				
 			} 
 
 			float textureX = body.getPosition().x - offsetX;
@@ -183,7 +182,6 @@ public class Player extends Character {
 	public void receiveScore(int scorePoint) {
 		score += scorePoint;
 		gameWorldManager.getDamageIndicator().show(this, "+"+scorePoint, Color.YELLOW);
-		gameWorldManager.getMessageArea().show(String.format("Score: %d", score));
 	}
 	
 	public void openChest() {

@@ -36,9 +36,6 @@ public abstract class Character extends Entity {
 	protected boolean isAttacking;
 	protected boolean isAttacking2;
 	
-	protected int stamina;
-	protected int magicka;
-	
 	protected float movementSpeed;
 	protected float jumpHeight;
 	protected float attackForce;
@@ -50,6 +47,7 @@ public abstract class Character extends Entity {
 	protected float startHitTime2;
 	protected float endHitTime2;
 	protected boolean isInflictDmg;
+	protected int stamina;
 	
 	protected BehavioralModel behavioralModel;
 	
@@ -245,16 +243,16 @@ public abstract class Character extends Entity {
 		if (!isAttacking) {
 			isAttacking = true;
 			isInflictDmg = false;
-			for (Entity entity : inRangeTarget) {
-				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) {
-					this.lockedOnTarget.addAll(inRangeTarget);
+			for (Entity entity : inRangeAttack) {
+				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) {
+					this.lockedOnTarget.addAll(inRangeAttack);
 					entity.setLockedOnTarget(this);
 				}
 			}
 			if (attackSound != null && !isMute) attackSound.play(volume);
 		} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
-			for (Entity entity : inRangeTarget)
-				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) 
+			for (Entity entity : inRangeAttack)
+				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
 					inflictDamage(entity, attackDamage);
 			isInflictDmg = true;
 		}
@@ -274,16 +272,16 @@ public abstract class Character extends Entity {
 			isInvincible = true;
 			isAttacking2 = true;
 			isInflictDmg = false;
-			for (Entity entity : inRangeTarget) {
-				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) {
-					this.lockedOnTarget.addAll(inRangeTarget);
+			for (Entity entity : inRangeAttack) {
+				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) {
+					this.lockedOnTarget.addAll(inRangeAttack);
 					entity.setLockedOnTarget(this);
 				}
 			}
 			if (attackSound != null && !isMute) attackSound.play(volume);
 		} else if (stateTimer >= startHitTime2 && stateTimer <= endHitTime2) {
-			for (Entity entity : inRangeTarget)
-				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) 
+			for (Entity entity : inRangeAttack)
+				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
 					inflictDamage2(entity, attackDamage);
 			isInflictDmg = true;
 		}

@@ -67,26 +67,26 @@ public class WorldContactListener implements ContactListener {
 			case CategoryBits.MELEE_WEAPON | CategoryBits.ENEMY:
 				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
 				enemy = (Enemy) getTargetFixture(CategoryBits.ENEMY, fixtureA, fixtureB).getUserData();
-				player.setInRangeTarget(enemy);
+				player.setInRangeAttack(enemy);
 				break;
 				
 			case CategoryBits.MELEE_WEAPON | CategoryBits.SHOOTER:
 				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
 				shooter = (Shooter) getTargetFixture(CategoryBits.SHOOTER, fixtureA, fixtureB).getUserData();
-				player.setInRangeTarget(shooter);
+				player.setInRangeAttack(shooter);
 				break;
 			
 			// Set player as enemy's current target (so enemy can inflict damage to player).
 			case CategoryBits.MELEE_WEAPON | CategoryBits.PLAYER:
 				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
 				enemy = (Enemy) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
-				enemy.setInRangeTarget(player);
+				enemy.setInRangeAttack(player);
 				break;
 			    
 			case CategoryBits.MELEE_WEAPON | CategoryBits.CONTAINER:
 				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
 				container = (Container) getTargetFixture(CategoryBits.CONTAINER, fixtureA, fixtureB).getUserData();
-				player.setInRangeTarget(container);
+				player.setInRangeAttack(container);
 				break;
 				
 			case CategoryBits.PLAYER | CategoryBits.POTION:

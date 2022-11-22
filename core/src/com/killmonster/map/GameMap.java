@@ -2,7 +2,6 @@ package com.killmonster.map;
 
 import com.killmonster.*;
 import com.killmonster.entity.character.*;
-import com.killmonster.entity.character.Character;
 import com.killmonster.entity.objects.*;
 import com.killmonster.entity.objects.chest.*;
 import com.killmonster.entity.objects.container.*;
@@ -62,8 +61,8 @@ public class GameMap implements Disposable {
 		return new Player(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
 	}
 	
-	public Array<Character> spawnNPCs() {
-		Array<Character> npcs = new Array<>();
+	public Array<Enemy> spawnNPCs() {
+		Array<Enemy> npcs = new Array<>();
 		
 		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.CRABBY.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
