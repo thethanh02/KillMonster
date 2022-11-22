@@ -40,8 +40,13 @@ public class KillMonster extends Game implements GameStateManager {
 		assets.load("character/shark/Shark.png", Texture.class);
 		assets.load("character/pinkstar/PinkStar.png", Texture.class);
 		
-		assets.load("objects/diamond/green_diamond.png", Texture.class);
-		assets.load("objects/diamond/blue_diamond.png", Texture.class);
+		assets.load("objects/chest/chest.png", Texture.class);
+		assets.load("objects/chest/key.png", Texture.class);
+		assets.load("objects/treasure/silver_coin.png", Texture.class);
+		assets.load("objects/treasure/gold_coin.png", Texture.class);
+		assets.load("objects/treasure/green_diamond.png", Texture.class);
+		assets.load("objects/treasure/blue_diamond.png", Texture.class);
+		assets.load("objects/treasure/red_diamond.png", Texture.class);
 		assets.load("objects/potion/blue_potion.png", Texture.class);
 		assets.load("objects/potion/red_potion.png", Texture.class);
 		assets.load("objects/containers/box.png", Texture.class);

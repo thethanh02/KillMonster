@@ -27,7 +27,7 @@ public class WorldContactListener implements ContactListener {
 		Potion potion;
 		Container container;
 		Bullet bullet;
-		Diamond diamond;
+		Treasure diamond;
 		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
@@ -111,7 +111,7 @@ public class WorldContactListener implements ContactListener {
 				
 			case CategoryBits.PLAYER | CategoryBits.DIAMOND:
 				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
-				diamond = (Diamond) getTargetFixture(CategoryBits.DIAMOND, fixtureA, fixtureB).getUserData();
+				diamond = (Treasure) getTargetFixture(CategoryBits.DIAMOND, fixtureA, fixtureB).getUserData();
 				diamond.increaseScorePoint(player);
 				diamond.SetToDestroy();
 				break;

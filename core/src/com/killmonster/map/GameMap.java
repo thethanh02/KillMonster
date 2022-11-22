@@ -8,9 +8,11 @@ import com.killmonster.entity.objects.container.Barrel;
 import com.killmonster.entity.objects.container.Box;
 import com.killmonster.entity.objects.container.Container;
 import com.killmonster.entity.objects.diamond.BlueDiamond;
-import com.killmonster.entity.objects.diamond.Diamond;
+import com.killmonster.entity.objects.diamond.GoldCoin;
+import com.killmonster.entity.objects.diamond.Treasure;
 import com.killmonster.entity.objects.diamond.GreenDiamond;
 import com.killmonster.entity.objects.diamond.RedDiamond;
+import com.killmonster.entity.objects.diamond.SilverCoin;
 import com.killmonster.entity.shooter.*;
 import com.killmonster.util.box2d.TiledObjectUtils;
 import com.badlogic.gdx.audio.Music;
@@ -123,8 +125,8 @@ public class GameMap implements Disposable {
 		return cannons;
 	}
 	
-	public Array<Diamond> spawnDiamonds() {
-		Array<Diamond> diamonds = new Array<>();
+	public Array<Treasure> spawnDiamonds() {
+		Array<Treasure> diamonds = new Array<>();
 		
 		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.BLUE_DIAMOND.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
@@ -145,6 +147,24 @@ public class GameMap implements Disposable {
 		}
         
 		return diamonds;
+	}
+	
+	public Array<Treasure> spawnCoin() {
+		Array<Treasure> coin = new Array<>();
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.SILVER_COIN.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			SilverCoin x = new SilverCoin(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			coin.add(x);
+		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.GOLD_COIN.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			GoldCoin x = new GoldCoin(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			coin.add(x);
+		}
+		
+		return coin;
 	}
 	
 	public Array<GameObject> spawnGameObjects() {

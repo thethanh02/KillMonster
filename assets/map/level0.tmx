@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="38" nextobjectid="163">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="40" nextobjectid="169">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -125,6 +125,16 @@
  </objectgroup>
  <objectgroup id="20" name="Barrel">
   <object id="162" x="332" y="208" width="23" height="28.5"/>
+ </objectgroup>
+ <objectgroup id="38" name="SilverCoin">
+  <object id="163" x="1480" y="270" width="11" height="11"/>
+  <object id="164" x="1500" y="270" width="11" height="11"/>
+  <object id="165" x="1520" y="270" width="11" height="11"/>
+ </objectgroup>
+ <objectgroup id="39" name="GoldCoin">
+  <object id="166" x="1460" y="270" width="11" height="11"/>
+  <object id="167" x="1440" y="270" width="11" height="11"/>
+  <object id="168" x="1440" y="270" width="11" height="11"/>
  </objectgroup>
  <layer id="30" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">

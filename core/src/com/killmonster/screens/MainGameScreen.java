@@ -50,7 +50,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private Array<Shooter> cannons;
 	private Array<Bullet> bullets;
 	private Array<GameObject> objs;
-	private Array<Diamond> dia;
+	private Array<Treasure> dia;
+	private Array<Treasure> coin;
 	
 	private PauseOverlay pauseOverlay;
 	private ShapeRenderer shapeRenderer;
@@ -159,7 +160,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		for (Character character : enemies)
 			if (!character.isKilled())
 				return false;
-		for (Diamond diamond : dia)
+		for (Treasure diamond : dia)
 			if (!diamond.isKilled())
 				return false;
 		return true;
@@ -213,9 +214,13 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 						bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM + 13f, x.getBody().getPosition().y * Constants.PPM, true));
 				}
 			}
-			for (Diamond x : dia) {
+			for (Treasure x : dia) {
 				x.update(delta);
 				if (x.isKilled()) dia.removeValue(x, true);
+			}
+			for (Treasure x : coin) {
+				x.update(delta);
+				if (x.isKilled()) coin.removeValue(x, true);
 			}	
 			for (Bullet x : bullets) {
 				x.update(delta);
@@ -271,7 +276,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		bullets.forEach((Bullet x) -> x.draw(getBatch()));
 		boxes.forEach((Container x) -> x.draw(getBatch()));
 		potions.forEach((Potion x) -> x.draw(getBatch()));
-		dia.forEach((Diamond x) -> x.draw(getBatch()));
+		dia.forEach((Treasure x) -> x.draw(getBatch()));
+		coin.forEach((Treasure x) -> x.draw(getBatch()));
 		enemies.forEach((Character x) -> x.draw(getBatch()));		
 		player.draw(getBatch());
 		objs.forEach((GameObject x) -> x.draw(getBatch()));
@@ -316,7 +322,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		bullets.forEach((Bullet x) -> x.dispose());
 		boxes.forEach((Container x) -> x.dispose());
 		potions.forEach((Potion x) -> x.dispose());
-		dia.forEach((Diamond x) -> x.dispose());
+		dia.forEach((Treasure x) -> x.dispose());
+		coin.forEach((Treasure x) -> x.dispose());
 		enemies.forEach((Character x) -> x.dispose());
 		player.dispose();
 		
@@ -372,6 +379,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		cannons = currentMap.spawnCannons();
 		objs = currentMap.spawnGameObjects();
 		dia = currentMap.spawnDiamonds();
+		coin = currentMap.spawnCoin();
 	}
 	
 	public void addBullet(Bullet b) {

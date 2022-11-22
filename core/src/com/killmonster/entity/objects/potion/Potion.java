@@ -10,7 +10,6 @@ import com.killmonster.entity.objects.GameObject;
 import com.killmonster.util.CategoryBits;
 import com.killmonster.util.Constants;
 import com.killmonster.util.Utils;
-import com.killmonster.util.box2d.BodyBuilder;
 
 public abstract class Potion extends GameObject {
 
@@ -18,8 +17,6 @@ public abstract class Potion extends GameObject {
 
 	public Potion(Texture texture, World currentWorld, float x, float y) {
 		super(texture, currentWorld, x, y);
-		
-		bodyBuilder = new BodyBuilder(currentWorld);
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();

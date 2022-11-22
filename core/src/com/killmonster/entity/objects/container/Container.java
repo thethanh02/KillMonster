@@ -7,13 +7,11 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.physics.box2d.BodyDef.BodyType;
 import com.killmonster.entity.objects.GameObject;
 import com.killmonster.util.*;
-import com.killmonster.util.box2d.BodyBuilder;
 
 public abstract class Container extends GameObject {
 
 	public Container(Texture texture, World currentWorld, float x, float y) {
 		super(texture, currentWorld, x, y);
-		bodyBuilder = new BodyBuilder(currentWorld);
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();

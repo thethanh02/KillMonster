@@ -2,6 +2,7 @@ package com.killmonster.entity.character;
 
 import com.killmonster.GameWorldManager;
 import com.killmonster.entity.Entity;
+import com.killmonster.entity.objects.chest.Chest;
 import com.killmonster.util.*;
 
 import java.util.HashMap;
@@ -18,6 +19,7 @@ public class Player extends Character {
 	
 	private GameWorldManager gameWorldManager;
 	private int score;
+	private Chest chestTarget;
 	
 	public Player(GameWorldManager gameWorldManager, float x, float y) {
 		super(gameWorldManager.getAssets().get(TEXTURE_FILE), gameWorldManager.getWorld(), x, y);
@@ -192,6 +194,10 @@ public class Player extends Character {
 	
 	public boolean isAttacking2() {
 		return isAttacking2;
+	}
+	
+	public void setChestTarget(Chest chestTarget) {
+		this.chestTarget = chestTarget;
 	}
 	
 }
