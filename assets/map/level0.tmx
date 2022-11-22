@@ -4,12 +4,14 @@
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
  <tileset firstgid="1" source="outside_sprites.tsx"/>
- <tileset firstgid="49" source="playing_bg_img.tsx"/>
- <tileset firstgid="97" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+ <tileset firstgid="49" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="water.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="100" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
+ <tileset firstgid="50" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
   <image source="grass_atlas.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="52" name="background1" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+  <image source="../interface/background1.jpg" width="1920" height="1080"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="84" x="32" y="320">
@@ -147,7 +149,7 @@
  </objectgroup>
  <layer id="30" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJzt0DkSgkAQRuG50qRUKYiyCqjsgtv9T+EjJyCga5IOvmzqr35jjTFWKaXUKk9g8yDgCB8BTghxxgUR4h13EqTIBOS4okCJCjfc8UC9406DFp0DPQaMeGLCjBfe+GzcWd598XPUIfEfrm/RDjcdvXDHHzeYsXg=
+   eJwN1eOfEAYAgOHLXsu215ZtrrZs23XZvuzrLuMuW6umuGy3Zdu293x4/oT39zaPEBDQgpa0ojVtaEs72tOBjnQikM50oSvd6E4PetKL3vShL/3ozwAGMojBDGEoQQxjOCMYyShGM4axjGM8E5jIJIKZTAihhBHOPOazgIUsYjFLWMoylrOClaxiNWtYyzp+Yz0b2Mjv/MGf/MXfbGIzW9jKNrbzDzvYyS52s4e97GM/BzjIIQ5zhKMc4zwXuMglLnOFq1zjOje4yS1uc4e73OM+D3jIIx7zhKc84zkveMkrXvOGt7zjPR/4yCc+84WvfCMgYkBABCISichEISrRiE4MEpKIxCQhKclITgpSkorUpCEt6UhPBjKSicxkISvZ+IHs/MhP5CAnuchNHvKSj/wUoCCFKEwRilKM4pSgJKUoTRnKUo7yVKcGNalFbepQl3rUpwENaURjmtCUZjSnBS1pRWva0JZ2tKcDHelEIJ3pQle60Z0e9KQXvelDX/rRnwEMZBCDGcJQghjGRCYRzGRCCGUKU5nGdGYwk1nMZg5zCSOcecxnAQtZxGKWsJRlLGcFK1nFatawlnX8xno2sJHf+YM/+Yu/2cRmtrCVbWznIIc4zBGOcozjnOAkpzjNv/zHGc5yjvNc4CKXuMwVrnKN69zgJre4zR3uco/7POAhj3jME57yjOe84CWveM0b3vKO93wgciTdEJVoRCcGMYlFbOLwHXH5nnjEJwEJSURikpCUZCQnBSlJRWrSkJZ0pCcDGclEZrKQlWz8QHZ+5CdykJNc5CYPeclHfkpRmjKUpRzl+ZkKVOQXfqUSlalCVapRnRrUpBa1qUNd6lGfBjSkEY1pQlOa0ZwWtKQVrWlDW9rRng50pBOBdKYLXelGdwYxmCEMJYhhDGcEIxnFaMYwlnGMZwITmUQwkwkhlClMZRrTmcFMZjGbOcwljHDmMZ8FLGQRi1nCUpaxnBWsZBWrWcNaNrGZLWxlG9v5hx3sZBe72cNe9rGfAxzkEIc5wlGOcZwTnOQUp/mX/zjDWc5xngtc5BKXucJVrnGdG9zkFre5w13ucZ8HvOYNb3nHez7wkU985gtf+UZAZF8iIpGITBSiEo3oxCAmsYhNHL4jLt8Tj/gkICGJSEwSkpKM5KQgJalITRrSko70ZCAjmchFbvKQl3zkpwAFKURhilCUYhSnBCUpRWnKUJZylOdnKlCRX/iVSlSmClWpRnVqUJNa1KYOdalHfRrQkEY0pglNaUZzWhBIZ7rQlW50pwc96UVv+tCXfvRnAAMZxGCGMJQghjGcEYxkFKMZw1jGMZ4JTGQSwUwmhFCmMJVpTGcGM5nFbOYwlzDC+R9gsmLK
   </data>
  </layer>
  <layer id="31" name="Wall" width="50" height="14">
@@ -157,7 +159,7 @@
  </layer>
  <layer id="32" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJztkUEKgDAMBKOebdEn1v//oe1tXZSKtoZABuYWwiYr4jjOSA7tAJ1J2gFeYqWHRFrJzUzFGVx04zSpf+bfV9ZiAOPFLMI7sMen3u1oucn55+hOd/As98P9/Wn4YKQ7uD8r+h39zZfpGyc=
+   eJxjYBgFo2AU0BLwDLQDqAyGqn+Girt5sOChCBiBmAkJMw+scwgCXOHOC8R8SJgfhzp85tALCzKghjkyFkLzB7pa9PhBjz96Yj4KMD+aP9Djb6jgUX9QHwMA9tgK9w==
   </data>
  </layer>
  <layer id="33" name="Ground - upper" width="50" height="14">
@@ -167,7 +169,7 @@
  </layer>
  <layer id="34" name="Objects" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjALCQGOgHUBlMFT9M1TdPQpGAb0ADxIeyiARCQ9lMFj8AQAzmwLj
+   eJxjYBgFo2AUjALCQGOgHUBlMFj9Y4SGjdHkB6u7hzpAD3dsYY9NLboabOZgM5dUOXx6YHgUQAAPEh7KwBAJD2UwWPwBAFErCsU=
   </data>
  </layer>
 </map>
