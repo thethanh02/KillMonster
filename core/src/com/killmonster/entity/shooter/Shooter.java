@@ -21,6 +21,7 @@ public abstract class Shooter extends Entity {
 	
 	protected boolean isAttacking;
 	protected float cooldownTime;
+	protected float attackTimeLoop;
 	
 	TextureRegion textureRegion;
 
@@ -99,8 +100,15 @@ public abstract class Shooter extends Entity {
 	}
 	
 	private State getState() {
-		isAttacking = true;
-		return State.ATTACKING;
+		if (setToDestroy) {
+			return State.DESTROYED;
+		} else if (isHitted) {
+			return State.HIT;
+		} else if (isAttacking) {
+			return State.ATTACKING;
+		} else {
+			return State.IDLE;
+		}
 	}
 	
 	protected void defineBody(BodyDef.BodyType type, short bodyCategoryBits, short bodyMaskBits) {
@@ -109,11 +117,15 @@ public abstract class Shooter extends Entity {
 	}
 
 	public boolean cooldownSpawnBullet() {
-		if (cooldownTime > 1.4f) {
+		if (cooldownTime > attackTimeLoop) {
 			cooldownTime = 0;
 			return true;
 		}
 		return false;
+	}
+	
+	public Bullet spawnBullet() {
+		return null;
 	}
 	
 }

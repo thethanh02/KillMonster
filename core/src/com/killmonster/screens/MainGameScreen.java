@@ -215,11 +215,9 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			objs.forEach((GameObject x) -> x.update(delta));
 			for (Shooter x : cannons) {
 				x.update(delta);
-				if (x.cooldownSpawnBullet()) {
-					if (!x.isFacingRight())
-						bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM - 13f, x.getBody().getPosition().y * Constants.PPM, false));
-					else
-						bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM + 13f, x.getBody().getPosition().y * Constants.PPM, true));
+				if (x.isKilled()) cannons.removeValue(x, true);
+				else if (x.cooldownSpawnBullet()) {
+					bullets.add(x.spawnBullet());
 				}
 			}
 			for (Chest x : chest) {

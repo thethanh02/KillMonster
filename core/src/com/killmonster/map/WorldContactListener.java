@@ -6,13 +6,9 @@ import com.killmonster.entity.objects.chest.*;
 import com.killmonster.entity.objects.container.*;
 import com.killmonster.entity.objects.diamond.*;
 import com.killmonster.entity.objects.potion.*;
-import com.killmonster.entity.shooter.Bullet;
+import com.killmonster.entity.shooter.*;
 import com.killmonster.util.CategoryBits;
-import com.badlogic.gdx.physics.box2d.Contact;
-import com.badlogic.gdx.physics.box2d.ContactImpulse;
-import com.badlogic.gdx.physics.box2d.ContactListener;
-import com.badlogic.gdx.physics.box2d.Fixture;
-import com.badlogic.gdx.physics.box2d.Manifold;
+import com.badlogic.gdx.physics.box2d.*;
 
 public class WorldContactListener implements ContactListener {
 
@@ -31,6 +27,7 @@ public class WorldContactListener implements ContactListener {
 		Treasure diamond;
 		Chest chest;
 		Key key;
+		Shooter shooter;
 		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
@@ -71,6 +68,12 @@ public class WorldContactListener implements ContactListener {
 				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
 				enemy = (Enemy) getTargetFixture(CategoryBits.ENEMY, fixtureA, fixtureB).getUserData();
 				player.setInRangeTarget(enemy);
+				break;
+				
+			case CategoryBits.MELEE_WEAPON | CategoryBits.SHOOTER:
+				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
+				shooter = (Shooter) getTargetFixture(CategoryBits.SHOOTER, fixtureA, fixtureB).getUserData();
+				player.setInRangeTarget(shooter);
 				break;
 			
 			// Set player as enemy's current target (so enemy can inflict damage to player).
@@ -136,6 +139,7 @@ public class WorldContactListener implements ContactListener {
 		Player player;
 		Enemy enemy;
 		Container box;
+		Shooter shooter;
 		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
@@ -167,8 +171,13 @@ public class WorldContactListener implements ContactListener {
 			case CategoryBits.MELEE_WEAPON | CategoryBits.CONTAINER:
 				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
 				box = (Container) getTargetFixture(CategoryBits.CONTAINER, fixtureA, fixtureB).getUserData();
-
 				player.removeInRangeTarget(box);
+				break;
+				
+			case CategoryBits.MELEE_WEAPON | CategoryBits.SHOOTER:
+				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
+				shooter = (Shooter) getTargetFixture(CategoryBits.SHOOTER, fixtureA, fixtureB).getUserData();
+				player.removeInRangeTarget(shooter);
 				break;
 				
 			case CategoryBits.PLAYER | CategoryBits.CHEST:

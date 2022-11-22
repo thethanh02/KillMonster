@@ -115,6 +115,18 @@ public class GameMap implements Disposable {
 			Cannon x = new Cannon(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2, true);
 			cannons.add(x);
 		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.SEASHELL.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Seashell x = new Seashell(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2, false);
+			cannons.add(x);
+		}
+        
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.SEASHELL_FLIP.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Seashell x = new Seashell(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2, false);
+			cannons.add(x);
+		}
         
 		return cannons;
 	}

@@ -23,5 +23,7 @@ public enum GameMapLayer {
 	SILVER_COIN,	// 19: Silver coin
 	GOLD_COIN,		// 20: Gold coin
 	CHEST,			// 21: Chest
-	KEY;			// 22: Key
+	KEY,			// 22: Key
+	SEASHELL,		// 23: Seashell shooter
+	SEASHELL_FLIP;	// 23: Seashell shooter flipX
 }

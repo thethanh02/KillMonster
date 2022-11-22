@@ -52,6 +52,7 @@ public class KillMonster extends Game implements GameStateManager {
 		assets.load("objects/containers/box.png", Texture.class);
 		assets.load("objects/containers/barrel.png", Texture.class);
 		assets.load("objects/trap_atlas.png", Texture.class);
+		assets.load("objects/shooter/seashell.png", Texture.class);
 		assets.load("objects/shooter/cannon_atlas.png", Texture.class);
 		assets.load("objects/shooter/cannon_ball.png", Texture.class);
 		assets.load("objects/water_atlas_animation.png", Texture.class);

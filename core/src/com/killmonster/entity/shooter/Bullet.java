@@ -107,8 +107,6 @@ public abstract class Bullet extends Entity {
 		defineBody(BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits);
 		
 		body.setGravityScale(0);
-		setBounds(0, 0, bodyWidth / Constants.PPM, bodyWidth / Constants.PPM);
-		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));
 	}
 	
 	public void inflictDamage(Player c) {

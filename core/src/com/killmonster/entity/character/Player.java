@@ -119,7 +119,7 @@ public class Player extends Character {
 		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.WALL | CategoryBits.ENEMY | CategoryBits.MELEE_WEAPON | CategoryBits.POTION
 				| CategoryBits.DEATHPLACE | CategoryBits.BULLET| CategoryBits.DIAMOND | CategoryBits.KEY | CategoryBits.CHEST;
 		short feetMaskBits = CategoryBits.GROUND;
-		short weaponMaskBits = CategoryBits.ENEMY | CategoryBits.CONTAINER;
+		short weaponMaskBits = CategoryBits.ENEMY | CategoryBits.CONTAINER | CategoryBits.SHOOTER;
 		
 		super.defineBody(BodyDef.BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits, feetMaskBits, weaponMaskBits);
 	}

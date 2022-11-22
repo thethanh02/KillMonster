@@ -30,7 +30,8 @@ public class CannonBall extends Bullet {
 		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 1f / Constants.PPM, 0, 0, 0, 15, 15));
 		
 		createBodyandFixtureBullet();
-
+		setBounds(0, 0, bodyWidth / Constants.PPM, bodyWidth / Constants.PPM);
+		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));
 	}
 	
 }
