@@ -44,8 +44,8 @@ public class Shark extends Enemy {
 		animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 4, 4 * 30, 34, 30));
 		
 		short bodyCategoryBits = CategoryBits.ENEMY;
-		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.PLAYER | CategoryBits.MELEE_WEAPON | CategoryBits.CLIFF_MARKER | CategoryBits.DEATHPLACE;
-		short feetMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM;
+		short bodyMaskBits = CategoryBits.GROUND| CategoryBits.WALL | CategoryBits.PLAYER | CategoryBits.MELEE_WEAPON | CategoryBits.CLIFF_MARKER | CategoryBits.DEATHPLACE;
+		short feetMaskBits = CategoryBits.GROUND;
 		short weaponMaskBits = CategoryBits.PLAYER;
 		super.defineBody(BodyDef.BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits, feetMaskBits, weaponMaskBits);
 		

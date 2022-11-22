@@ -14,12 +14,12 @@ public class Chest extends GameObject {
 	public Chest(GameWorldManager gameWorldManager, float x, float y) {
 		super(gameWorldManager.getAssets().get(TEXTURE_FILE), gameWorldManager.getWorld(), x, y);
 		
-		name = "Key";
+		name = "Chest";
 		
-		bodyWidth = 8f;
-		bodyHeight = 15f;
+		bodyWidth = 31f;
+		bodyHeight = 24f;
 		offsetX = .48f;
-		offsetY = .48f;
+		offsetY = .44f;
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();
@@ -27,7 +27,7 @@ public class Chest extends GameObject {
 		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 0f / Constants.PPM, 10, 10, 0, 96, 96));
 		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 14f / Constants.PPM, 1, 8, 0, 96, 96));
 		
-		short bodyCategoryBits = CategoryBits.DIAMOND;
+		short bodyCategoryBits = CategoryBits.CHEST;
 		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLAYER;
 		
 		super.defineBody(BodyType.StaticBody);

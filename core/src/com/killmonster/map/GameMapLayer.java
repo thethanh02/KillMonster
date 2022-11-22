@@ -2,8 +2,7 @@ package com.killmonster.map;
 
 public enum GameMapLayer {
 
-	GROUND,         // 0: Player can only jump while standing on the ground.
-	PLATFORM,       // 1: Floating and one-way passthrough platforms. Player can also jump on this.
+	GROUND,         // 1: Player can only jump while standing on the ground.
 	WALL,           // 2: Verical walls or ceiling. Colliding with these wont set isJumping back to false.
 	CLIFF_MARKER,   // 3: Alert an NPC that it is near a cliff.
 	PLAYER,         // 4: Player
@@ -19,9 +18,10 @@ public enum GameMapLayer {
 	PINK_STAR,		// 14: Enemies PinkStar
 	BLUE_DIAMOND,	// 15: Blue Diamond
 	GREEN_DIAMOND,	// 16: Green Diamond
-	RED_DIAMOND,	// 17: Red Diamond
-	CANNON_FLIP,	// 18: Cannon flipX
-	BARREL,			// 19: Barrel
-	SILVER_COIN,	// 20: Silver coin
-	GOLD_COIN;		// 21: Gold coin
+	CANNON_FLIP,	// 17: Cannon flipX
+	BARREL,			// 18: Barrel
+	SILVER_COIN,	// 19: Silver coin
+	GOLD_COIN,		// 20: Gold coin
+	CHEST,			// 21: Chest
+	KEY;			// 22: Key
 }

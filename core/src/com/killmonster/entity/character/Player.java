@@ -19,6 +19,7 @@ public class Player extends Character {
 	
 	private GameWorldManager gameWorldManager;
 	private int score;
+	private int key;
 	private Chest chestTarget;
 	
 	public Player(GameWorldManager gameWorldManager, float x, float y) {
@@ -44,6 +45,7 @@ public class Player extends Character {
 		startHitTime2 = .0f;
 		endHitTime2 = .12f * 6f; 
 		
+		key = 0;
 		typeMeleeShape = "Player";
 		
 		// Create animations by extracting frames from the spritesheet.
@@ -114,9 +116,9 @@ public class Player extends Character {
 
 	public void defineBody() {
 		short bodyCategoryBits = CategoryBits.PLAYER;
-		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.ENEMY | CategoryBits.MELEE_WEAPON
-				| CategoryBits.POTION | CategoryBits.DEATHPLACE | CategoryBits.BULLET| CategoryBits.DIAMOND;
-		short feetMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM;
+		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.WALL | CategoryBits.ENEMY | CategoryBits.MELEE_WEAPON | CategoryBits.POTION
+				| CategoryBits.DEATHPLACE | CategoryBits.BULLET| CategoryBits.DIAMOND | CategoryBits.KEY | CategoryBits.CHEST;
+		short feetMaskBits = CategoryBits.GROUND;
 		short weaponMaskBits = CategoryBits.ENEMY | CategoryBits.CONTAINER;
 		
 		super.defineBody(BodyDef.BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits, feetMaskBits, weaponMaskBits);
@@ -168,7 +170,7 @@ public class Player extends Character {
 						isInvincible = false;
 					}
 				}
-			}, 1f);
+			}, 1.5f);
 		}
 	}
 
@@ -182,6 +184,16 @@ public class Player extends Character {
 		score += scorePoint;
 		gameWorldManager.getDamageIndicator().show(this, "+"+scorePoint, Color.YELLOW);
 		gameWorldManager.getMessageArea().show(String.format("Score: %d", score));
+	}
+	
+	public void openChest() {
+		if (chestTarget != null) {
+			if (key > 0) {
+				chestTarget.SetToDestroy();
+			} else {
+				gameWorldManager.getMessageArea().show("You need key to open the chest");
+			}
+		}
 	}
 	
 	public void setScore(int score) {
@@ -198,6 +210,11 @@ public class Player extends Character {
 	
 	public void setChestTarget(Chest chestTarget) {
 		this.chestTarget = chestTarget;
+	}
+	
+	public void addKey() {
+		key += 1;
+		gameWorldManager.getMessageArea().show(String.format("Key: %d", key));
 	}
 	
 }

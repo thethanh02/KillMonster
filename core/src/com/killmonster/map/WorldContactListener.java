@@ -2,6 +2,7 @@ package com.killmonster.map;
 
 import com.killmonster.entity.character.*;
 import com.killmonster.entity.character.Character;
+import com.killmonster.entity.objects.chest.*;
 import com.killmonster.entity.objects.container.*;
 import com.killmonster.entity.objects.diamond.*;
 import com.killmonster.entity.objects.potion.*;
@@ -28,6 +29,8 @@ public class WorldContactListener implements ContactListener {
 		Container container;
 		Bullet bullet;
 		Treasure diamond;
+		Chest chest;
+		Key key;
 		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
@@ -38,13 +41,6 @@ public class WorldContactListener implements ContactListener {
 			case CategoryBits.FEET | CategoryBits.GROUND:
 				character = (Character) getTargetFixture(CategoryBits.FEET, fixtureA, fixtureB).getUserData();
 				character.setIsJumping(false);
-				break;
-			
-			// When a character lands on a platform, make following changes.
-			case CategoryBits.FEET | CategoryBits.PLATFORM:
-				character = (Character) getTargetFixture(CategoryBits.FEET, fixtureA, fixtureB).getUserData();
-				character.setIsJumping(false);
-				character.setIsOnPlatform(true);
 				break;
 			
 			case CategoryBits.PLAYER | CategoryBits.DEATHPLACE:
@@ -116,6 +112,18 @@ public class WorldContactListener implements ContactListener {
 				diamond.SetToDestroy();
 				break;
 				
+			case CategoryBits.PLAYER | CategoryBits.CHEST:
+				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
+				chest = (Chest) getTargetFixture(CategoryBits.CHEST, fixtureA, fixtureB).getUserData();
+				player.setChestTarget(chest);
+				break;
+				
+			case CategoryBits.PLAYER | CategoryBits.KEY:
+				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
+				key = (Key) getTargetFixture(CategoryBits.KEY, fixtureA, fixtureB).getUserData();
+				player.addKey();
+				key.SetToDestroy();
+				break;
 			default:
 				break;
 		}
@@ -142,15 +150,6 @@ public class WorldContactListener implements ContactListener {
 				}
 				break;
 			
-			// When a character leaves the platform, make following changes.
-			case CategoryBits.FEET | CategoryBits.PLATFORM:
-				character = (Character) getTargetFixture(CategoryBits.FEET, fixtureA, fixtureB).getUserData();
-				if (character.getBody().getLinearVelocity().y < -.5f) {
-					character.setIsJumping(true);
-					character.setIsOnPlatform(false);
-				}
-				break;
-			
 			// Clear player's current target (so player cannot inflict damage to enemy from a distance).
 			case CategoryBits.MELEE_WEAPON | CategoryBits.ENEMY:
 				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
@@ -170,6 +169,11 @@ public class WorldContactListener implements ContactListener {
 				box = (Container) getTargetFixture(CategoryBits.CONTAINER, fixtureA, fixtureB).getUserData();
 
 				player.removeInRangeTarget(box);
+				break;
+				
+			case CategoryBits.PLAYER | CategoryBits.CHEST:
+				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
+				player.setChestTarget(null);
 				break;
 				
 			default:

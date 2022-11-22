@@ -4,15 +4,9 @@ import com.killmonster.*;
 import com.killmonster.entity.character.*;
 import com.killmonster.entity.character.Character;
 import com.killmonster.entity.objects.*;
-import com.killmonster.entity.objects.container.Barrel;
-import com.killmonster.entity.objects.container.Box;
-import com.killmonster.entity.objects.container.Container;
-import com.killmonster.entity.objects.diamond.BlueDiamond;
-import com.killmonster.entity.objects.diamond.GoldCoin;
-import com.killmonster.entity.objects.diamond.Treasure;
-import com.killmonster.entity.objects.diamond.GreenDiamond;
-import com.killmonster.entity.objects.diamond.RedDiamond;
-import com.killmonster.entity.objects.diamond.SilverCoin;
+import com.killmonster.entity.objects.chest.*;
+import com.killmonster.entity.objects.container.*;
+import com.killmonster.entity.objects.diamond.*;
 import com.killmonster.entity.shooter.*;
 import com.killmonster.util.box2d.TiledObjectUtils;
 import com.badlogic.gdx.audio.Music;
@@ -139,12 +133,6 @@ public class GameMap implements Disposable {
 			GreenDiamond x = new GreenDiamond(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
 			diamonds.add(x);
 		}
-		
-		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.RED_DIAMOND.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
-			Rectangle rect = ((RectangleMapObject) object).getRectangle();
-			RedDiamond x = new RedDiamond(gameWorldManager.getAssets(), gameWorldManager.getWorld(), rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
-			diamonds.add(x);
-		}
         
 		return diamonds;
 	}
@@ -201,6 +189,30 @@ public class GameMap implements Disposable {
 		}
         
 		return objs;
+	}
+	
+	public Array<Chest> spawnChest() {
+		Array<Chest> chest = new Array<>();
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.CHEST.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Chest x = new Chest(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			chest.add(x);
+		}
+		
+		return chest;
+	}
+	
+	public Array<Key> spawnKey() {
+		Array<Key> key = new Array<>();
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.KEY.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Key x = new Key(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			key.add(x);
+		}
+		
+		return key;
 	}
     
 	public TiledMap getTiledMap() {

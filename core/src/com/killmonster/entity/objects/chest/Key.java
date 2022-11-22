@@ -27,7 +27,7 @@ public class Key extends GameObject {
 		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 0f / Constants.PPM, 8, 8, 0, 96, 96));
 		animation.put(State.DESTROYED, 	Utils.createAnimation(getTexture(), 0f / Constants.PPM, 8, 8, 0, 96, 96));
 		
-		short bodyCategoryBits = CategoryBits.DIAMOND;
+		short bodyCategoryBits = CategoryBits.KEY;
 		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLAYER;
 		
 		super.defineBody(BodyType.StaticBody);

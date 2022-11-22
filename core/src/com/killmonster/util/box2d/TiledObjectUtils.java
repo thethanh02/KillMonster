@@ -15,7 +15,6 @@ import com.badlogic.gdx.physics.box2d.World;
 public class TiledObjectUtils {
 
 	private static final boolean GROUND_COLLIDABLE = true;
-	private static final boolean PLATFORM_COLLIDABLE = true;
 	private static final boolean WALL_COLLIDABLE = true;
 	private static final boolean CLIFF_MARKER_COLLIDABLE = false;
 	
@@ -27,7 +26,6 @@ public class TiledObjectUtils {
 	 */
 	public static void parseLayers(World world, GameMap gameMap) {
 		createPolylines(world, gameMap, GameMapLayer.GROUND, CategoryBits.GROUND, GROUND_COLLIDABLE, Constants.GROUND_FRICTION);
-		createRectangles(world, gameMap, GameMapLayer.PLATFORM, CategoryBits.PLATFORM, PLATFORM_COLLIDABLE, Constants.GROUND_FRICTION);
 		createPolylines(world, gameMap, GameMapLayer.WALL, CategoryBits.WALL, WALL_COLLIDABLE, 0);
 		createPolylines(world, gameMap, GameMapLayer.CLIFF_MARKER, CategoryBits.CLIFF_MARKER, CLIFF_MARKER_COLLIDABLE, 0);
 	}

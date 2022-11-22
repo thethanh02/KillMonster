@@ -34,7 +34,7 @@ public class Cannon extends Shooter {
 
 		// Create body and fixtures.
 		short bodyCategoryBits = CategoryBits.CANNON;
-		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM;
+		short bodyMaskBits = CategoryBits.GROUND;
 		super.defineBody(BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits);
 
 		setBounds(0, 0, 40 / Constants.PPM, 26 / Constants.PPM);

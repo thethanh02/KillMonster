@@ -33,7 +33,6 @@ public abstract class Character extends Entity {
 	
 	protected boolean isAlerted;
 	protected boolean isJumping;
-	protected boolean isOnPlatform;
 	protected boolean isAttacking;
 	protected boolean isAttacking2;
 	
@@ -241,13 +240,6 @@ public abstract class Character extends Entity {
 			if (jumpSound != null && !isMute) jumpSound.play(volume);
 		}
 	}
-
-	public void jumpDown() {
-		if (isOnPlatform) {
-			isOnPlatform = false;
-			body.setTransform(body.getPosition().x, body.getPosition().y - 8f / Constants.PPM, 0);
-		}
-	}
 	
 	public void swingWeapon() {
 		if (!isAttacking) {
@@ -323,10 +315,6 @@ public abstract class Character extends Entity {
     
 	public void setIsJumping(boolean isJumping) {
 		this.isJumping = isJumping;
-	}
-
-	public void setIsOnPlatform(boolean isOnPlatform) {
-		this.isOnPlatform = isOnPlatform;
 	}
 	
 	public BehavioralModel getBehavioralModel() {

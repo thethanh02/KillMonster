@@ -3,6 +3,7 @@ package com.killmonster.screens;
 import com.killmonster.entity.character.Character;
 import com.killmonster.entity.character.Player;
 import com.killmonster.entity.objects.*;
+import com.killmonster.entity.objects.chest.*;
 import com.killmonster.entity.objects.container.*;
 import com.killmonster.entity.objects.diamond.*;
 import com.killmonster.entity.objects.potion.*;
@@ -52,6 +53,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private Array<GameObject> objs;
 	private Array<Treasure> dia;
 	private Array<Treasure> coin;
+	private Array<Chest> chest;
+	private Array<Key> key;
 	
 	private PauseOverlay pauseOverlay;
 	private ShapeRenderer shapeRenderer;
@@ -145,7 +148,9 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
 				player.swingWeapon();
 			}
-			
+			if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+				player.openChest();
+			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 				player.jump();
 			} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
@@ -159,6 +164,9 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	public boolean isAllEnemiesKilled() {
 		for (Character character : enemies)
 			if (!character.isKilled())
+				return false;
+		for (Chest c : chest)
+			if (!c.isKilled())
 				return false;
 		for (Treasure diamond : dia)
 			if (!diamond.isKilled())
@@ -213,6 +221,17 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 					else
 						bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM + 13f, x.getBody().getPosition().y * Constants.PPM, true));
 				}
+			}
+			for (Chest x : chest) {
+				x.update(delta);
+				if (x.isKilled()) {
+					dia.add(new RedDiamond(assets , world, x.getBody().getPosition().x * Constants.PPM, x.getBody().getPosition().y * Constants.PPM + 10));
+					chest.removeValue(x, true);
+				}
+			}
+			for (Key x : key) {
+				x.update(delta);
+				if (x.isKilled()) key.removeValue(x, true);
 			}
 			for (Treasure x : dia) {
 				x.update(delta);
@@ -276,6 +295,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		bullets.forEach((Bullet x) -> x.draw(getBatch()));
 		boxes.forEach((Container x) -> x.draw(getBatch()));
 		potions.forEach((Potion x) -> x.draw(getBatch()));
+		chest.forEach((Chest x) -> x.draw(getBatch()));
+		key.forEach((Key x) -> x.draw(getBatch()));
 		dia.forEach((Treasure x) -> x.draw(getBatch()));
 		coin.forEach((Treasure x) -> x.draw(getBatch()));
 		enemies.forEach((Character x) -> x.draw(getBatch()));		
@@ -322,6 +343,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		bullets.forEach((Bullet x) -> x.dispose());
 		boxes.forEach((Container x) -> x.dispose());
 		potions.forEach((Potion x) -> x.dispose());
+		chest.forEach((Chest x) -> x.dispose());
+		key.forEach((Key x) -> x.dispose());
 		dia.forEach((Treasure x) -> x.dispose());
 		coin.forEach((Treasure x) -> x.dispose());
 		enemies.forEach((Character x) -> x.dispose());
@@ -380,6 +403,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		objs = currentMap.spawnGameObjects();
 		dia = currentMap.spawnDiamonds();
 		coin = currentMap.spawnCoin();
+		key = currentMap.spawnKey();
+		chest = currentMap.spawnChest();
 	}
 	
 	public void addBullet(Bullet b) {
