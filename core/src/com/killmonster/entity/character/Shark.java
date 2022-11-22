@@ -75,9 +75,9 @@ public class Shark extends Enemy {
 			isAttacking = true;
 			isInflictDmg = false;
 			if (facingRight)
-				body.applyLinearImpulse(new Vector2(5f, 0f), body.getWorldCenter(), false);
+				body.applyLinearImpulse(new Vector2(2f, 0f), body.getWorldCenter(), false);
 			else 
-				body.applyLinearImpulse(new Vector2(-5f, 0f), body.getWorldCenter(), false);
+				body.applyLinearImpulse(new Vector2(-2f, 0f), body.getWorldCenter(), false);
 			for (Entity entity : inRangeTarget) {
 				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) {
 					this.lockedOnTarget.addAll(inRangeTarget);

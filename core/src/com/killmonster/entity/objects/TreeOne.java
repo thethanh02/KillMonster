@@ -8,7 +8,7 @@ import com.killmonster.util.Utils;
 
 public class TreeOne extends GameObject {
 	
-	private static final String TEXTURE_FILE = "objects/tree_one_atlas.png";
+	private static final String TEXTURE_FILE = "objects/tree/tree_one_atlas.png";
 
 	public TreeOne(GameWorldManager gameWorldManager, float x, float y, boolean facingRight) {
 		super(gameWorldManager.getAssets().get(TEXTURE_FILE), gameWorldManager.getWorld(), x, y);

@@ -4,6 +4,13 @@ import com.killmonster.*;
 import com.killmonster.entity.character.*;
 import com.killmonster.entity.character.Character;
 import com.killmonster.entity.objects.*;
+import com.killmonster.entity.objects.container.Barrel;
+import com.killmonster.entity.objects.container.Box;
+import com.killmonster.entity.objects.container.Container;
+import com.killmonster.entity.objects.diamond.BlueDiamond;
+import com.killmonster.entity.objects.diamond.Diamond;
+import com.killmonster.entity.objects.diamond.GreenDiamond;
+import com.killmonster.entity.objects.diamond.RedDiamond;
 import com.killmonster.entity.shooter.*;
 import com.killmonster.util.box2d.TiledObjectUtils;
 import com.badlogic.gdx.audio.Music;
@@ -80,12 +87,18 @@ public class GameMap implements Disposable {
 		return npcs;
 	}
 	
-	public Array<Box> spawnBoxes() {
-		Array<Box> box = new Array<>();
+	public Array<Container> spawnBoxes() {
+		Array<Container> box = new Array<>();
 		
 		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.BOX.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
 			Rectangle rect = ((RectangleMapObject) object).getRectangle();
 			Box x = new Box(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
+			box.add(x);
+		}
+		
+		for (MapObject object : tiledMap.getLayers().get(GameMapLayer.BARREL.ordinal()).getObjects().getByType(RectangleMapObject.class)) {
+			Rectangle rect = ((RectangleMapObject) object).getRectangle();
+			Barrel x = new Barrel(gameWorldManager, rect.getX() + rect.getWidth()/2, rect.getY() + rect.getHeight()/2);
 			box.add(x);
 		}
         

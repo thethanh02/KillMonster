@@ -1,4 +1,4 @@
-package com.killmonster.entity.objects;
+package com.killmonster.entity.objects.diamond;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.physics.box2d.World;

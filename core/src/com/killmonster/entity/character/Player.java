@@ -14,9 +14,10 @@ import com.badlogic.gdx.utils.Timer.Task;
 
 public class Player extends Character {
     
-	private static final String TEXTURE_FILE = "character/player/Player.png";
+	private static final String TEXTURE_FILE = "character/player/CaptainClownNose.png";
 	
 	private GameWorldManager gameWorldManager;
+	private int score;
 	
 	public Player(GameWorldManager gameWorldManager, float x, float y) {
 		super(gameWorldManager.getAssets().get(TEXTURE_FILE), gameWorldManager.getWorld(), x, y);
@@ -38,6 +39,8 @@ public class Player extends Character {
 		
 		startHitTime = 0f;
 		endHitTime = 0.18f * 3f;
+		startHitTime2 = .0f;
+		endHitTime2 = .12f * 6f; 
 		
 		typeMeleeShape = "Player";
 		
@@ -50,6 +53,7 @@ public class Player extends Character {
 		animation.put(State.ATTACKING,  Utils.createAnimation(getTexture(), 18f / Constants.PPM, 0, 2, 4 * 40, 64, 40));
 		animation.put(State.HIT, 		Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 3, 5 * 40, 64, 40));
 		animation.put(State.KILLED, 	Utils.createAnimation(getTexture(), 24f / Constants.PPM, 0, 7, 6 * 40, 64, 40));
+		animation.put(State.ATTACK2, 	Utils.createAnimation(getTexture(), 12f / Constants.PPM, 0, 5, 7 * 40, 64, 40));
 		
 		// Sounds.
 		deathSound = gameWorldManager.getAssets().get("sound/die.wav");
@@ -62,13 +66,56 @@ public class Player extends Character {
 		setBounds(0, 0, 64 / Constants.PPM, 40 / Constants.PPM);
 		setRegion(animation.get(State.IDLE).getKeyFrame(stateTimer, true));
 	}
+	
+	@Override
+	public void update(float delta) {
+		if (!isDestroyed) {
+			// If the character's health has reached zero but hasn't die yet,
+			// it means that the killedAnimation is not fully played.
+			// So here we'll play it until it's finished.
+			if (setToDestroy) {
+				setRegion(getFrame(delta));
+				// Set killed to true to prevent further rendering updates.
+				if (animation.get(State.KILLED).isAnimationFinished(stateTimer)) {
+					currentWorld.destroyBody(body);
+					isDestroyed = true;
+				}
+			} else if (isHitted) {
+				setRegion(getFrame(delta));
+				
+				// Set isHitted back to false, implying hit has complete.
+				if (animation.get(State.HIT).isAnimationFinished(stateTimer)) {
+					isHitted = false;
+					stateTimer = 0;
+				}
+			} else {
+				setRegion(getFrame(delta));
+				if (isAttacking) {
+					if (animation.get(State.ATTACKING).isAnimationFinished(stateTimer)) {
+						isAttacking = false;
+						stateTimer = 0;
+					}
+				} else if (isAttacking2) {
+					if (animation.get(State.ATTACK2).isAnimationFinished(stateTimer)) {
+						isAttacking2 = false;
+						isInvincible = false;
+						stateTimer = 0;
+					}
+				} 
+			} 
+
+			float textureX = body.getPosition().x - offsetX;
+			float textureY = body.getPosition().y - offsetY;
+			setPosition(textureX, textureY);
+		}
+	}
 
 	public void defineBody() {
 		short bodyCategoryBits = CategoryBits.PLAYER;
 		short bodyMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM | CategoryBits.WALL | CategoryBits.ENEMY | CategoryBits.MELEE_WEAPON
 				| CategoryBits.POTION | CategoryBits.DEATHPLACE | CategoryBits.BULLET| CategoryBits.DIAMOND;
 		short feetMaskBits = CategoryBits.GROUND | CategoryBits.PLATFORM;
-		short weaponMaskBits = CategoryBits.ENEMY | CategoryBits.BOX;
+		short weaponMaskBits = CategoryBits.ENEMY | CategoryBits.CONTAINER;
 		
 		super.defineBody(BodyDef.BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits, feetMaskBits, weaponMaskBits);
 	}
@@ -90,9 +137,17 @@ public class Player extends Character {
 		
 		super.inflictDamage(c, damage);
 		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
-//		if (c instanceof Enemy && c.isSetToKill()) {
-//			gameWorldManager.getMessageArea().show(String.format("You earned 10 exp."));
-//		}
+	}
+	
+	@Override
+	public void inflictDamage2(Entity c, int damage) {
+		if ((this.facingRight && c.isFacingRight()) || (!this.facingRight && !c.isFacingRight())) {
+			damage *= 2;
+			gameWorldManager.getMessageArea().show("Critical hit!");
+		}
+		
+		super.inflictDamage2(c, damage);
+		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
 	}
     
 	@Override
@@ -131,12 +186,12 @@ public class Player extends Character {
 		this.score = score;
 	}
 	
-	public void attackPower() {
-//		if (facingRight)
-//			body.applyLinearImpulse(new Vector2(5f, 0f), body.getWorldCenter(), true);
-//		else 
-//			body.applyLinearImpulse(new Vector2(-5f, 0f), body.getWorldCenter(), true);
-//		System.out.println(body.getLinearVelocity());
+	public int getScore() {
+		return score;
+	}
+	
+	public boolean isAttacking2() {
+		return isAttacking2;
 	}
 	
 }

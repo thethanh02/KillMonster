@@ -2,7 +2,9 @@ package com.killmonster.map;
 
 import com.killmonster.entity.character.*;
 import com.killmonster.entity.character.Character;
-import com.killmonster.entity.objects.*;
+import com.killmonster.entity.objects.container.*;
+import com.killmonster.entity.objects.diamond.*;
+import com.killmonster.entity.objects.potion.*;
 import com.killmonster.entity.shooter.Bullet;
 import com.killmonster.util.CategoryBits;
 import com.badlogic.gdx.physics.box2d.Contact;
@@ -23,7 +25,7 @@ public class WorldContactListener implements ContactListener {
 		Player player;
 		Enemy enemy;
 		Potion potion;
-		Box box;
+		Container container;
 		Bullet bullet;
 		Diamond diamond;
 		
@@ -82,10 +84,10 @@ public class WorldContactListener implements ContactListener {
 				enemy.setInRangeTarget(player);
 				break;
 			    
-			case CategoryBits.MELEE_WEAPON | CategoryBits.BOX:
+			case CategoryBits.MELEE_WEAPON | CategoryBits.CONTAINER:
 				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
-				box = (Box) getTargetFixture(CategoryBits.BOX, fixtureA, fixtureB).getUserData();
-				player.setInRangeTarget(box);
+				container = (Container) getTargetFixture(CategoryBits.CONTAINER, fixtureA, fixtureB).getUserData();
+				player.setInRangeTarget(container);
 				break;
 				
 			case CategoryBits.PLAYER | CategoryBits.POTION:
@@ -125,7 +127,7 @@ public class WorldContactListener implements ContactListener {
 		Character character;
 		Player player;
 		Enemy enemy;
-		Box box;
+		Container box;
 		
 		Fixture fixtureA = contact.getFixtureA();
 		Fixture fixtureB = contact.getFixtureB();
@@ -163,9 +165,9 @@ public class WorldContactListener implements ContactListener {
 				enemy.removeInRangeTarget(player);
 				break;
 			    
-			case CategoryBits.MELEE_WEAPON | CategoryBits.BOX:
+			case CategoryBits.MELEE_WEAPON | CategoryBits.CONTAINER:
 				player = (Player) getTargetFixture(CategoryBits.MELEE_WEAPON, fixtureA, fixtureB).getUserData();
-				box = (Box) getTargetFixture(CategoryBits.BOX, fixtureA, fixtureB).getUserData();
+				box = (Container) getTargetFixture(CategoryBits.CONTAINER, fixtureA, fixtureB).getUserData();
 
 				player.removeInRangeTarget(box);
 				break;

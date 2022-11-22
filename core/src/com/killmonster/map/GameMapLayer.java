@@ -20,5 +20,6 @@ public enum GameMapLayer {
 	BLUE_DIAMOND,	// 15: Blue Diamond
 	GREEN_DIAMOND,	// 16: Green Diamond
 	RED_DIAMOND,	// 17: Red Diamond
-	CANNON_FLIP;	// 18: Cannon flipX
+	CANNON_FLIP,	// 18: Cannon flipX
+	BARREL;			// 19: Barrel
 }

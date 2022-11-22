@@ -35,22 +35,23 @@ public class KillMonster extends Game implements GameStateManager {
 		assets.load("interface/mainmenu.jpg", Texture.class);
 		assets.load("interface/field.png", Texture.class);
 		
-		assets.load("character/player/Player.png", Texture.class);
+		assets.load("character/player/CaptainClownNose.png", Texture.class);
 		assets.load("character/crabby/Crabby.png", Texture.class);
 		assets.load("character/shark/Shark.png", Texture.class);
 		assets.load("character/pinkstar/PinkStar.png", Texture.class);
 		
 		assets.load("objects/diamond/green_diamond.png", Texture.class);
 		assets.load("objects/diamond/blue_diamond.png", Texture.class);
-		assets.load("objects/blue_potion.png", Texture.class);
-		assets.load("objects/red_potion.png", Texture.class);
-		assets.load("objects/objects_sprites.png", Texture.class);
+		assets.load("objects/potion/blue_potion.png", Texture.class);
+		assets.load("objects/potion/red_potion.png", Texture.class);
+		assets.load("objects/containers/box.png", Texture.class);
+		assets.load("objects/containers/barrel.png", Texture.class);
 		assets.load("objects/trap_atlas.png", Texture.class);
-		assets.load("objects/cannon_atlas.png", Texture.class);
-		assets.load("objects/cannon_ball.png", Texture.class);
+		assets.load("objects/shooter/cannon_atlas.png", Texture.class);
+		assets.load("objects/shooter/cannon_ball.png", Texture.class);
 		assets.load("objects/water_atlas_animation.png", Texture.class);
-		assets.load("objects/tree_one_atlas.png", Texture.class);
-		assets.load("objects/tree_two_atlas.png", Texture.class);
+		assets.load("objects/tree/tree_one_atlas.png", Texture.class);
+		assets.load("objects/tree/tree_two_atlas.png", Texture.class);
 		
 		assets.load("sound/menu.wav", Music.class);
 		assets.load("sound/lvlcompleted.wav", Music.class);

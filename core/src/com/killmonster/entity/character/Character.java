@@ -14,7 +14,7 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public abstract class Character extends Entity {
 
-	public enum State { IDLE, RUNNING, JUMPING, FALLING, HIT, ATTACKING, KILLED };
+	public enum State { IDLE, RUNNING, JUMPING, FALLING, HIT, ATTACKING, KILLED, ATTACK2 };
 	
 	protected Map<State, Animation<TextureRegion>> animation;
 	
@@ -35,8 +35,8 @@ public abstract class Character extends Entity {
 	protected boolean isJumping;
 	protected boolean isOnPlatform;
 	protected boolean isAttacking;
+	protected boolean isAttacking2;
 	
-	protected int score;
 	protected int stamina;
 	protected int magicka;
 	
@@ -48,6 +48,8 @@ public abstract class Character extends Entity {
 	
 	protected float startHitTime;
 	protected float endHitTime;
+	protected float startHitTime2;
+	protected float endHitTime2;
 	protected boolean isInflictDmg;
 	
 	protected BehavioralModel behavioralModel;
@@ -88,11 +90,10 @@ public abstract class Character extends Entity {
 				
 				// Set isAttacking back to false, implying attack has complete.
 				if (animation.get(State.ATTACKING).isAnimationFinished(stateTimer)) {
-				// if (isAttacking && stateTimer >= attackTime) {
 					isAttacking = false;
 					stateTimer = 0;
 				}
-			}
+			} 
 
 			float textureX = body.getPosition().x - offsetX;
 			float textureY = body.getPosition().y - offsetY;
@@ -122,6 +123,9 @@ public abstract class Character extends Entity {
 				break;
 			case KILLED:
 				textureRegion = animation.get(State.KILLED).getKeyFrame(stateTimer, false);
+				break;
+			case ATTACK2:
+				textureRegion = animation.get(State.ATTACK2).getKeyFrame(stateTimer, false);
 				break;
 			case IDLE:
 			default:
@@ -162,6 +166,8 @@ public abstract class Character extends Entity {
 			return State.KILLED;
 		} else if (isHitted) {
 			return State.HIT;
+		} else if (isAttacking2) {
+			return State.ATTACK2;
 		} else if (isAttacking) {
 			return State.ATTACKING;
 		} else if (isJumping && body.getLinearVelocity().y < -.01f) {
@@ -242,7 +248,7 @@ public abstract class Character extends Entity {
 			body.setTransform(body.getPosition().x, body.getPosition().y - 8f / Constants.PPM, 0);
 		}
 	}
-
+	
 	public void swingWeapon() {
 		if (!isAttacking) {
 			isAttacking = true;
@@ -253,7 +259,7 @@ public abstract class Character extends Entity {
 					entity.setLockedOnTarget(this);
 				}
 			}
-			if (attackSound != null) attackSound.play(volume);
+			if (attackSound != null && !isMute) attackSound.play(volume);
 		} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
 			for (Entity entity : inRangeTarget)
 				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) 
@@ -269,6 +275,30 @@ public abstract class Character extends Entity {
 		} else {
 			c.knockedBack(-attackForce);
 		}
+	}
+	
+	public void specialAttack() {
+		if (!isAttacking2) {
+			isInvincible = true;
+			isAttacking2 = true;
+			isInflictDmg = false;
+			for (Entity entity : inRangeTarget) {
+				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) {
+					this.lockedOnTarget.addAll(inRangeTarget);
+					entity.setLockedOnTarget(this);
+				}
+			}
+			if (attackSound != null && !isMute) attackSound.play(volume);
+		} else if (stateTimer >= startHitTime2 && stateTimer <= endHitTime2) {
+			for (Entity entity : inRangeTarget)
+				if (hasInRangeTarget() && !entity.isInvincible() && !entity.isSetToKill()) 
+					inflictDamage2(entity, attackDamage);
+			isInflictDmg = true;
+		}
+	}
+	
+	public void inflictDamage2(Entity c, int damage) {
+		c.receiveDamage(damage);
 	}
 	
 	@Override

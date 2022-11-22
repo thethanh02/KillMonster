@@ -3,6 +3,9 @@ package com.killmonster.screens;
 import com.killmonster.entity.character.Character;
 import com.killmonster.entity.character.Player;
 import com.killmonster.entity.objects.*;
+import com.killmonster.entity.objects.container.*;
+import com.killmonster.entity.objects.diamond.*;
+import com.killmonster.entity.objects.potion.*;
 import com.killmonster.entity.shooter.*;
 import com.killmonster.*;
 import com.killmonster.map.*;
@@ -42,7 +45,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	
 	private Player player;
 	private Array<Character> enemies;
-	private Array<Box> boxes;
+	private Array<Container> boxes;
 	private Array<Potion> potions;
 	private Array<Shooter> cannons;
 	private Array<Bullet> bullets;
@@ -55,7 +58,8 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	public static boolean isNextLevel;
 	private static int currentLevel = 0;
 	private String gameMapFile;
-	private int prvScorePlayer;
+	private int prvScorePlayer = 0;
+	public static int currentScore = 0;
 	
 	public MainGameScreen(GameStateManager gsm) {
 		super(gsm);
@@ -112,7 +116,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 			shade.addAction(Actions.sequence(Actions.fadeIn(.3f), new RunnableAction() {
 				@Override
 				public void run() {
-					gsm.showScreen(Screens.GAME_COMPLETED);
+					gsm.showScreen(Screens.LEVEL_COMPLETED);
 				}
 				
 			}, Actions.fadeOut(.5f)));
@@ -134,18 +138,20 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		
 		if (player.isHitted()) return;
 		if (Gdx.input.isKeyJustPressed(Input.Keys.ALT_LEFT)) {
-			player.attackPower();
+			player.specialAttack();
 		}
-		if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
-			player.swingWeapon();
-		}
-		
-		if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-			player.jump();
-		} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
-			player.moveRight();
-		} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
-			player.moveLeft();
+		if (!player.isAttacking2()) {
+			if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+				player.swingWeapon();
+			}
+			
+			if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+				player.jump();
+			} else if (Gdx.input.isKeyPressed(Input.Keys.RIGHT) || Gdx.input.isKeyPressed(Input.Keys.D)) {
+				player.moveRight();
+			} else if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
+				player.moveLeft();
+			}
 		}
 	}
     
@@ -161,24 +167,29 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 
 	public void update(float delta) {
 		if (isNextLevel) {
-			if (currentLevel < 2) currentLevel++;
-			gameMapFile = "map/level" + currentLevel + ".tmx";
-			isNextLevel = false;
-			shade.addAction(Actions.sequence(Actions.alpha(.3f), new RunnableAction() {
-				@Override
-				public void run() {
-					setGameMap(gameMapFile);
-				}
-				
-			}, Actions.fadeOut(.3f)));
+			prvScorePlayer = player.getScore();
+			
+			if (currentLevel < 4) {
+				currentLevel++;
+				gameMapFile = "map/level" + currentLevel + ".tmx";
+				isNextLevel = false;
+				shade.addAction(Actions.sequence(Actions.alpha(.3f), new RunnableAction() {
+					@Override
+					public void run() {
+						setGameMap(gameMapFile);
+					}
+				}, Actions.fadeOut(.3f)));
+			} else
+				gsm.showScreen(Screens.GAME_COMPLETED);
 		}
 		
 		handleInput(delta);
 		if (!Constants.PAUSE) {
 			world.step(1/60f, 6, 2);
 			
+			currentScore = player.getScore();
 			// entities update
-			for (Box x : boxes) {
+			for (Container x : boxes) {
 				x.update(delta);
 				if (x.isKilled()) {
 					Random generator = new Random();
@@ -197,9 +208,9 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 				x.update(delta);
 				if (x.cooldownSpawnBullet()) {
 					if (!x.isFacingRight())
-						bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM - 8.5f, x.getBody().getPosition().y * Constants.PPM, false));
+						bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM - 13f, x.getBody().getPosition().y * Constants.PPM, false));
 					else
-						bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM + 8.5f, x.getBody().getPosition().y * Constants.PPM, true));
+						bullets.add(new CannonBall(assets, world, x.getBody().getPosition().x * Constants.PPM + 13f, x.getBody().getPosition().y * Constants.PPM, true));
 				}
 			}
 			for (Diamond x : dia) {
@@ -258,7 +269,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		// entities render
 		cannons.forEach((Shooter x) -> x.draw(getBatch()));
 		bullets.forEach((Bullet x) -> x.draw(getBatch()));
-		boxes.forEach((Box x) -> x.draw(getBatch()));
+		boxes.forEach((Container x) -> x.draw(getBatch()));
 		potions.forEach((Potion x) -> x.draw(getBatch()));
 		dia.forEach((Diamond x) -> x.draw(getBatch()));
 		enemies.forEach((Character x) -> x.draw(getBatch()));		
@@ -303,7 +314,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		objs.forEach((GameObject x) -> x.dispose());
 		cannons.forEach((Shooter x) -> x.dispose());
 		bullets.forEach((Bullet x) -> x.dispose());
-		boxes.forEach((Box x) -> x.dispose());
+		boxes.forEach((Container x) -> x.dispose());
 		potions.forEach((Potion x) -> x.dispose());
 		dia.forEach((Diamond x) -> x.dispose());
 		enemies.forEach((Character x) -> x.dispose());
@@ -366,7 +377,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	public void addBullet(Bullet b) {
 		bullets.add(b);;
 	}
-
+	
 	@Override
 	public World getWorld() {
 		return world;

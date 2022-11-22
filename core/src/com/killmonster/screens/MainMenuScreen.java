@@ -18,7 +18,7 @@ public class MainMenuScreen extends AbstractScreen {
 	private static final String BACKGROUND_MUSIC_FILE = "sound/menu.wav";
 	
 	private Music backgroundMusic;
-	private Button playButton, optionsButton, quitButton;
+	private Button playButton, quitButton;
 	private Image backgroundImage;
 	
 	public MainMenuScreen(KillMonster gsm) {
@@ -31,7 +31,6 @@ public class MainMenuScreen extends AbstractScreen {
 		// Define background and button
 		backgroundImage = new Image(backgroundTexture);
 		playButton = new Button(skin, "play");
-		optionsButton = new Button(skin, "options");
 		quitButton = new Button(skin, "quit");
 		
 		Table tableBackground = new Table();
@@ -43,7 +42,6 @@ public class MainMenuScreen extends AbstractScreen {
 		Table tableButton = new Table();
 		tableButton.setFillParent(true);
 		tableButton.add(playButton).row();
-		tableButton.add(optionsButton).padTop(10f).row();
 		tableButton.add(quitButton).padTop(10f).row();
 		
 		addActor(tableButton);

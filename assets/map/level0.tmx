@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="36" nextobjectid="162">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="38" nextobjectid="163">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -116,33 +116,37 @@
  <objectgroup id="16" name="BlueDiamond">
   <object id="159" x="1119.5" y="244.5" width="14" height="12"/>
  </objectgroup>
- <objectgroup id="16" name="GreenDiamond">
+ <objectgroup id="17" name="GreenDiamond">
   <object id="160" x="489" y="186.5" width="12" height="17"/>
  </objectgroup>
- <objectgroup id="17" name="CannonFlip">
+ <objectgroup id="18" name="RedDiamond"/>
+ <objectgroup id="19" name="CannonFlip">
   <object id="161" x="1147.5" y="239.5" width="40" height="26"/>
  </objectgroup>
- <layer id="20" name="Background" width="50" height="14">
+ <objectgroup id="20" name="Barrel">
+  <object id="162" x="332" y="208" width="23" height="28.5"/>
+ </objectgroup>
+ <layer id="30" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJzt0DkSgkAQRuG50qRUKYiyCqjsgtv9T+EjJyCga5IOvmzqr35jjTFWKaXUKk9g8yDgCB8BTghxxgUR4h13EqTIBOS4okCJCjfc8UC9406DFp0DPQaMeGLCjBfe+GzcWd598XPUIfEfrm/RDjcdvXDHHzeYsXg=
   </data>
  </layer>
- <layer id="21" name="Wall" width="50" height="14">
+ <layer id="31" name="Wall" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJztzgEJAAAMA6AleP+4jzEGmsBky7UDAABMeZpwAA8=
   </data>
  </layer>
- <layer id="22" name="Ground - back" width="50" height="14">
+ <layer id="32" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJztkUEKgDAMBKOebdEn1v//oe1tXZSKtoZABuYWwiYr4jjOSA7tAJ1J2gFeYqWHRFrJzUzFGVx04zSpf+bfV9ZiAOPFLMI7sMen3u1oucn55+hOd/As98P9/Wn4YKQ7uD8r+h39zZfpGyc=
   </data>
  </layer>
- <layer id="23" name="Ground - upper" width="50" height="14">
+ <layer id="33" name="Ground - upper" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJzjY2Bg4BvFgwazArHUMMD8DMMDjPpjcIFRfwwuMOqPUTAKRsFQAQAb4Qrh
   </data>
  </layer>
- <layer id="24" name="Objects" width="50" height="14">
+ <layer id="34" name="Objects" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUjALCQGOgHUBlMFT9M1TdPQpGAb0ADxIeyiARCQ9lMFj8AQAzmwLj
   </data>

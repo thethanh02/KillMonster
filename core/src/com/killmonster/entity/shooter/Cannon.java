@@ -9,7 +9,7 @@ import com.killmonster.util.Utils;
 
 public class Cannon extends Shooter {
 
-	private static final String TEXTURE_FILE = "objects/cannon_atlas.png";
+	private static final String TEXTURE_FILE = "objects/shooter/cannon_atlas.png";
 
 	public Cannon(GameWorldManager gameWorldManager, float x, float y, boolean facingRight) {
 		super(gameWorldManager.getAssets().get(TEXTURE_FILE), gameWorldManager.getWorld(), x, y);

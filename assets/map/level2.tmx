@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="296">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="37" nextobjectid="306">
  <properties>
   <property name="backgroundMusic" value="sound/level2.wav"/>
  </properties>
@@ -8,7 +8,9 @@
  <tileset firstgid="97" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="water.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="98" source="grass_atlas.tsx"/>
+ <tileset firstgid="98" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
+  <image source="grass_atlas.png" width="64" height="32"/>
+ </tileset>
  <objectgroup id="1" name="Ground">
   <object id="229" x="32" y="384">
    <polyline points="0,0 128,0"/>
@@ -112,12 +114,12 @@
   <object id="272" x="1504" y="160">
    <polyline points="0,0 0,32"/>
   </object>
-  <object id="281" x="320" y="352">
+  <object id="281" x="327.636" y="352">
    <polyline points="1.125,0 1.125,32"/>
   </object>
  </objectgroup>
  <objectgroup id="5" name="Player">
-  <object id="199" x="65.3333" y="356" width="19" height="26"/>
+  <object id="298" x="214" y="293.333" width="19" height="26"/>
  </objectgroup>
  <objectgroup id="6" name="Box">
   <object id="189" x="552" y="206" width="25" height="18"/>
@@ -170,37 +172,49 @@
  </objectgroup>
  <objectgroup id="13" name="Crabby">
   <object id="193" x="600" y="360" width="24.6" height="23"/>
-  <object id="194" x="384" y="352.005" width="24.6" height="23"/>
   <object id="195" x="603.667" y="360.005" width="24.6" height="23"/>
   <object id="198" x="906" y="358" width="24.6" height="23"/>
   <object id="206" x="1394" y="293" width="24.6" height="23"/>
-  <object id="277" x="1390" y="295" width="24.6" height="23"/>
   <object id="245" x="1541" y="358" width="24.6" height="23"/>
   <object id="270" x="1381" y="168" width="24.6" height="23"/>
  </objectgroup>
- <objectgroup id="14" name="Shark"/>
- <objectgroup id="15" name="PinkStar"/>
- <layer id="16" name="Background" width="50" height="14">
+ <objectgroup id="14" name="Shark">
+  <object id="300" x="527.333" y="200.667" width="21" height="22"/>
+ </objectgroup>
+ <objectgroup id="15" name="PinkStar">
+  <object id="296" x="411.333" y="358" width="27" height="25"/>
+  <object id="299" x="38" y="357.333" width="27" height="25"/>
+ </objectgroup>
+ <objectgroup id="16" name="BlueDiamond">
+  <object id="304" x="1227.33" y="198.667" width="14" height="12"/>
+ </objectgroup>
+ <objectgroup id="16" name="GreenDiamond">
+  <object id="303" x="424" y="196" width="12" height="17"/>
+ </objectgroup>
+ <objectgroup id="17" name="CannonFlip">
+  <object id="301" x="1052" y="252.667" width="40" height="26"/>
+ </objectgroup>
+ <layer id="20" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJzt0MkOgkAQhOF5pQk3E0DZBHdAATf0/Z/C3zsHTKbTHubw3TqVqrbGGPtngh9od3W1VbuH53nTFgKZoYAIMZZYIUGKDDkKhzlrlKgEbLDFDnsccMQJNRqHOS3OuCjo0GPAFTfc8cAT48yc790Lb6UdEv/Q7uJ36OzohHd8AD+PsZI=
   </data>
  </layer>
- <layer id="17" name="Wall" width="50" height="14">
+ <layer id="21" name="Wall" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJztwQENAAAAwqD3T20PBxQAAPwaCvAAAQ==
   </data>
  </layer>
- <layer id="18" name="Ground - back" width="50" height="14">
+ <layer id="22" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJztk9EOgCAIRcmew3+0//+HYtnmCIsRth4423nR7SKiAEEQBP+gCHpkjsr3PquUH9yzDsr1mu1Tjub82neLwtq0m6qzolYPS471/hCu/S51ncxw3JtFnuP5f3ktqpGYyOT7Wns5b2Z80s5aqvWF2aGPdtbkBsC6GdM=
+   eJztlNEKgCAMRc2e048M8v//oAYKY8wac0bBDpwXhbt0sxAcx3G+wcFokTkrH+eUwSyOGZl37NU/YTEjHIWo5WneJN8vndvErC2XsboKavXQ5GjfGZyD3v9W18HM7De5u8LSHOt/DRZqRGIi0n2pvZyRHjdwr7lab5gNzoF7DZ7GWxuB
   </data>
  </layer>
- <layer id="19" name="Ground - upper" width="50" height="14">
+ <layer id="24" name="Ground - upper" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJzjY2Bg4BvFgxpLDUGM7gd+hqEJ0MNfemCdQzYYquGPDkb9MbjAqD8GFxj1xygYBbgBAAnFC3g=
   </data>
  </layer>
- <layer id="20" name="Objects" width="50" height="14">
+ <layer id="24" name="Objects" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AUjIJRQE2gCsRqSFidCmZq0NB8ZPOo4VZ0oEFYyYgHLAPtAAoBzP0CeNTQIl9gAzxoNClABo0GAZi7aeXeUYAdJFKI0QEAHLMKDQ==
   </data>

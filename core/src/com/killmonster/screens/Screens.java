@@ -14,7 +14,7 @@ public enum Screens {
 			return new MainGameScreen(gameStateManager);
 		}
 	},
-	GAME_COMPLETED {
+	LEVEL_COMPLETED {
 		public AbstractScreen newScreen(KillMonster gameStateManager) {
 			return new LevelCompletedScreen(gameStateManager);
 		}
@@ -22,6 +22,11 @@ public enum Screens {
 	GAME_OVER {
 		public AbstractScreen newScreen(KillMonster gameStateManager) {
 			return new GameOverScreen(gameStateManager);
+		}
+	},
+	GAME_COMPLETED {
+		public AbstractScreen newScreen(KillMonster gameStateManager) {
+			return new GameCompletedScreen(gameStateManager);
 		}
 	};
  

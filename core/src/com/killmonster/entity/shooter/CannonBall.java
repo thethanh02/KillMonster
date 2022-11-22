@@ -9,7 +9,7 @@ import com.killmonster.util.Utils;
 
 public class CannonBall extends Bullet {
 
-	private static final String TEXTURE_FILE = "objects/cannon_ball.png";
+	private static final String TEXTURE_FILE = "objects/shooter/cannon_ball.png";
 
 	public CannonBall(AssetManager assets, World world, float x, float y, boolean moveRight) {
 		super(assets.get(TEXTURE_FILE), world, x, y);

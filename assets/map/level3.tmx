@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="33" nextobjectid="429">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="36" nextobjectid="437">
  <properties>
   <property name="brightness" value="0.8"/>
  </properties>
@@ -9,6 +9,9 @@
   <image source="water.png" width="32" height="32"/>
  </tileset>
  <tileset firstgid="98" source="grass_atlas.tsx"/>
+ <tileset firstgid="100" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="0" columns="2">
+  <image source="C:/Users/admin/OneDrive/Desktop/KillMonster/assets/res/grass_atlas.png" width="64" height="32"/>
+ </tileset>
  <objectgroup id="1" name="Ground">
   <object id="388" x="0" y="224">
    <polyline points="0,0 96,0"/>
@@ -207,29 +210,43 @@
   <object id="342" x="1024.67" y="137.333" width="24.6" height="23"/>
   <object id="343" x="499.667" y="135.667" width="24.6" height="23"/>
  </objectgroup>
- <objectgroup id="14" name="Shark"/>
- <objectgroup id="15" name="PinkStar"/>
- <layer id="16" name="Background" width="50" height="14">
+ <objectgroup id="14" name="Shark">
+  <object id="432" x="964" y="136.667" width="21" height="22"/>
+  <object id="433" x="1352.67" y="233.333" width="21" height="22"/>
+ </objectgroup>
+ <objectgroup id="15" name="PinkStar">
+  <object id="431" x="912" y="324.667" width="27" height="25"/>
+ </objectgroup>
+ <objectgroup id="16" name="BlueDiamond">
+  <object id="436" x="674.667" y="192.667" width="14" height="12"/>
+ </objectgroup>
+ <objectgroup id="16" name="GreenDiamond">
+  <object id="435" x="1194" y="100" width="12" height="17"/>
+ </objectgroup>
+ <objectgroup id="17" name="CannonFlip">
+  <object id="434" x="668" y="84" width="40" height="26"/>
+ </objectgroup>
+ <layer id="20" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJzt0MkOgkAQhOF5pQk3E0DZBHdAATf0/Z/C3zsHTKbTHubw3TqVqrbGGPtngh9od3W1VbuH53nTFgKZoYAIMZZYIUGKDDkKhzlrlKgEbLDFDnsccMQJNRqHOS3OuCjo0GPAFTfc8cAT48yc790Lb6UdEv/Q7uJ36OzohHd8AD+PsZI=
   </data>
  </layer>
- <layer id="17" name="Wall" width="50" height="14">
+ <layer id="21" name="Wall" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJztwQENAAAAwqD3T20PBxQAAPwaCvAAAQ==
   </data>
  </layer>
- <layer id="18" name="Ground - back" width="50" height="14">
+ <layer id="22" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJztVNEKwCAIdNvz7B/r//9hCxyE6OZWYI0O7iFMvTwJYGJiDMTK/NSg/0VeNwlnTosuLVerUerR9P0JVg9q673FU+8Iffgj7ZI0u9ZatT2+843PbNS9Xk6uBTdfOSZIf89OMSQGkD3qySc++0ykGBbkd3rzKc8ePzI46NXg/Y4DOKkdQg==
+   eJxjYBgFo2BogGQK9SdRwX4YxiaOTR0uPej6kd2ID6MDZHFi7BrqgNg4oNQ8UgGhtEVsWqA1wOYGbGkLX5qj1F5seYUYPUM1XTMCMRMSZh5Y5xAFsIU9L1SOD4r5cagbTPGEHvYgzAeV40PC6GoGWzyBwp6PTMw/AO7FBQbaHwB7XR1S
   </data>
  </layer>
- <layer id="19" name="Ground - upper" width="50" height="14">
+ <layer id="23" name="Ground - upper" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJyTYmBgkBoGeBSMglFAHGAEYiYgZh5oh+AAxLqPF4j5gJif5i4iD+BzH8yPTFA1MDwY4wXmD5j7kDGyHDoeDPGCK5zRsSQD7rpFmu6uxgT43EfPepCPDnbQA4z6Y3ABevkDAEEcCLw=
   </data>
  </layer>
- <layer id="20" name="Objects" width="50" height="14">
+ <layer id="24" name="Objects" width="50" height="14">
   <data encoding="base64" compression="zlib">
    eJxjYBgFo2AU0BNoDLB+XEAViNXR+GpoWB2LPmzuwqYXnxnodo8C0gAsvCkNQ1qlLWoDbP6lRxpCTtf0tnsUjIKBAolUwgPtDgDQdRJD
   </data>

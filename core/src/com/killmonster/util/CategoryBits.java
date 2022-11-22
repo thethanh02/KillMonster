@@ -10,7 +10,7 @@ public class CategoryBits {
 	
 	public static final short PLAYER = 32;
 	public static final short ENEMY = 64;
-	public static final short BOX = 128;
+	public static final short CONTAINER = 128;
 	public static final short POTION = 256;
 	public static final short MELEE_WEAPON = 512;
 	public static final short DEATHPLACE = 1024;
