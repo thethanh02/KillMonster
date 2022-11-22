@@ -10,6 +10,7 @@ import java.util.HashMap;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
+import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.Timer.Task;
 
@@ -38,6 +39,7 @@ public class Player extends Character {
 		
 		attackForce = 2f;
 		attackRange = 15;
+		attackPosX = 15;
 		attackDamage = 25;
 		
 		startHitTime = 0f;
@@ -121,6 +123,19 @@ public class Player extends Character {
 		short weaponMaskBits = CategoryBits.ENEMY | CategoryBits.CONTAINER | CategoryBits.SHOOTER;
 		
 		super.defineBody(BodyDef.BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits, feetMaskBits, weaponMaskBits);
+	}
+	
+	@Override
+	protected void updateWeaponFixture() {
+		if (!facingRight && !textureRegion.isFlipX()) {
+			textureRegion.flip(true, false);
+			CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
+			shape.setPosition(new Vector2(-attackPosX / Constants.PPM, 0));
+		} else if (facingRight && textureRegion.isFlipX()) {
+			textureRegion.flip(true, false);
+			CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
+			shape.setPosition(new Vector2(attackPosX / Constants.PPM, 0));
+		} 
 	}
 
 	public void reposition(Vector2 position) {

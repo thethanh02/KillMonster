@@ -41,6 +41,7 @@ public abstract class Character extends Entity {
 	protected float attackForce;
 	protected int attackRange;
 	protected int attackDamage;
+	protected int attackPosX;
 	
 	protected float startHitTime;
 	protected float endHitTime;
@@ -130,32 +131,23 @@ public abstract class Character extends Entity {
 				break;
 		}
         
-//		fix later
-		if (typeMeleeShape.equals("Player")) {
-			if (!facingRight && !textureRegion.isFlipX()) {
-				textureRegion.flip(true, false);
-				CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
-				shape.setPosition(new Vector2(-attackRange / Constants.PPM, 0));
-			} else if (facingRight && textureRegion.isFlipX()) {
-				textureRegion.flip(true, false);
-				CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
-				shape.setPosition(new Vector2(attackRange / Constants.PPM, 0));
-			} 
-		} else if (typeMeleeShape.equals("Enemy"))  {
-			if (!facingRight && textureRegion.isFlipX()) {
-				textureRegion.flip(true, false);
-				CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
-				shape.setPosition(new Vector2(-attackRange / Constants.PPM, 0));
-			} else if (facingRight && !textureRegion.isFlipX()) {
-				textureRegion.flip(true, false);
-				CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
-				shape.setPosition(new Vector2(attackRange / Constants.PPM, 0));
-			} 
-		} else {
-		}
+		updateWeaponFixture();
         
 		stateTimer = (currentState != previousState) ? 0 : stateTimer + delta;
 		return textureRegion;
+	}
+	
+	// default is fixture most of enemy
+	protected void updateWeaponFixture() {
+		if (!facingRight && textureRegion.isFlipX()) {
+			textureRegion.flip(true, false);
+			CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
+			shape.setPosition(new Vector2(-attackPosX / Constants.PPM, 0));
+		} else if (facingRight && !textureRegion.isFlipX()) {
+			textureRegion.flip(true, false);
+			CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
+			shape.setPosition(new Vector2(attackPosX / Constants.PPM, 0));
+		} 
 	}
 	
 	protected State getState() {

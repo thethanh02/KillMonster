@@ -5,7 +5,6 @@ import java.util.HashMap;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
-import com.killmonster.entity.Entity;
 import com.killmonster.util.*;
 
 public class Shark extends Enemy {
@@ -25,8 +24,10 @@ public class Shark extends Enemy {
 		movementSpeed = .25f;
 		jumpHeight = 4.5f;
 		attackForce = 1.5f;
-		attackRange = 10;
+		attackRange = 11;
+		attackPosX = 9;
 		attackDamage = 15;
+		swingWeaponRange = .55f;
 		
 		startHitTime = .4f;
 		endHitTime = .6f;
@@ -68,24 +69,7 @@ public class Shark extends Enemy {
 				.setUserData(this)
 				.buildFixture();
 	}
-	
-	@Override
-	public void swingWeapon2() {
-		if (!isAttacking) {
-			isAttacking = true;
-			isInflictDmg = false;
-			if (facingRight)
-				body.applyLinearImpulse(new Vector2(1.4f, 0f), body.getWorldCenter(), false);
-			else 
-				body.applyLinearImpulse(new Vector2(-1.4f, 0f), body.getWorldCenter(), false);
-		} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
-			for (Entity entity : inRangeAttack)
-				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
-					inflictDamage(entity, attackDamage);
-			
-			isInflictDmg = true;
-		}
-	}
+
 	@Override
 	public void update(float delta) {
 		super.update(delta);

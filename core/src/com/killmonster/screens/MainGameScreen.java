@@ -256,12 +256,12 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 					float distanceY = player.getBody().getPosition().y - x.getBody().getPosition().y;
 					if (distanceY >= -.2f && distanceY <= .2f) {
 						if (x.isFacingRight()) {
-							if (distanceX <= .55f && distanceX >= 0) 
+							if (distanceX <= x.getSwingWeaponRange() && distanceX >= 0) 
 								x.setInRangeTarget(true);
 							else
 								x.setInRangeTarget(false);
 						} else {
-							if (distanceX >= -.55f && distanceX <= 0) 
+							if (distanceX >= -x.getSwingWeaponRange() && distanceX <= 0) 
 								x.setInRangeTarget(true);
 							else 
 								x.setInRangeTarget(false);

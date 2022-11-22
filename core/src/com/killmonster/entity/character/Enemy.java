@@ -4,11 +4,13 @@ import com.killmonster.entity.Entity;
 import com.killmonster.util.Constants;
 import com.killmonster.util.Utils;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
 
 public abstract class Enemy extends Character {
 	
 	private boolean hasInRangeTarget;
+	protected float swingWeaponRange;
 	
 	public Enemy(Texture texture, World world, float x, float y) {
 		super(texture, world, x, y);
@@ -63,14 +65,19 @@ public abstract class Enemy extends Character {
 		}
 	}
 	
-	public void swingWeapon2() {
+	protected void swingWeapon2() {
 		if (!isAttacking) {
 			isAttacking = true;
 			isInflictDmg = false;
+			if (facingRight)
+				body.applyLinearImpulse(new Vector2(1.4f, 0f), body.getWorldCenter(), false);
+			else 
+				body.applyLinearImpulse(new Vector2(-1.4f, 0f), body.getWorldCenter(), false);
 		} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
 			for (Entity entity : inRangeAttack)
 				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
 					inflictDamage(entity, attackDamage);
+			
 			isInflictDmg = true;
 		}
 	}
@@ -89,6 +96,10 @@ public abstract class Enemy extends Character {
 	public void receiveDamage(int damage) {
 		super.receiveDamage(damage);
 		isAlerted = true;
+	}
+	
+	public float getSwingWeaponRange() {
+		return swingWeaponRange;
 	}
 
 }

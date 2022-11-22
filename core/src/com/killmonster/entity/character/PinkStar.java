@@ -3,11 +3,10 @@ package com.killmonster.entity.character;
 import java.util.HashMap;
 
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
-import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.killmonster.entity.Entity;
 import com.killmonster.util.CategoryBits;
 import com.killmonster.util.Constants;
 import com.killmonster.util.Utils;
@@ -29,11 +28,13 @@ public class PinkStar extends Enemy {
 		movementSpeed = .25f;
 		jumpHeight = 4.5f;
 		attackForce = 1.5f;
-		attackRange = 14;
+		attackRange = 17;
+		attackPosX = 0;
 		attackDamage = 2;
 		facingRight = false;
+		swingWeaponRange = .75f;
 		
-		startHitTime = 0f;
+		startHitTime = .3f;
 		endHitTime = .7f;
 		
 		typeMeleeShape = "Enemy";
@@ -61,50 +62,24 @@ public class PinkStar extends Enemy {
 	}
 	
 	@Override
-	protected TextureRegion getFrame(float delta) {
-		previousState = currentState;
-		currentState = getState();
-		
-		switch (currentState) {
-			case RUNNING:
-				textureRegion = animation.get(State.RUNNING).getKeyFrame(stateTimer, true);
-				break;
-			case JUMPING:
-				textureRegion = animation.get(State.JUMPING).getKeyFrame(stateTimer, false);
-				break;
-			case FALLING:
-				textureRegion = animation.get(State.FALLING).getKeyFrame(stateTimer, true);
-				break;
-			case ATTACKING:
-				textureRegion = animation.get(State.ATTACKING).getKeyFrame(stateTimer, true);
-				break;
-			case HIT:
-				textureRegion = animation.get(State.HIT).getKeyFrame(stateTimer, false);
-				break;
-			case KILLED:
-				textureRegion = animation.get(State.KILLED).getKeyFrame(stateTimer, false);
-				break;
-			case IDLE:
-			default:
-				textureRegion = animation.get(State.IDLE).getKeyFrame(stateTimer, true);
-				break;
-		}
-		if (!facingRight && textureRegion.isFlipX()) {
-			textureRegion.flip(true, false);
-			CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
-			shape.setPosition(new Vector2(-attackRange / Constants.PPM, 0));
-		} else if (facingRight && !textureRegion.isFlipX()) {
-			textureRegion.flip(true, false);
-			CircleShape shape = (CircleShape) meleeWeaponFixture.getShape();
-			shape.setPosition(new Vector2(attackRange / Constants.PPM, 0));
-		} 
-		stateTimer = (currentState != previousState) ? 0 : stateTimer + delta;
-		return textureRegion;
-	}
-	
-	@Override
 	public void update(float delta) {
 		super.update(delta);
 		super.AIBehavior2(delta);
+	}
+	
+	protected void swingWeapon2() {
+		if (!isAttacking) {
+			isAttacking = true;
+			isInflictDmg = false;
+		} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
+			for (Entity entity : inRangeAttack)
+				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
+					inflictDamage(entity, attackDamage);
+			if (facingRight)
+				body.setLinearVelocity(new Vector2(2.7f, 0));
+			else 
+				body.setLinearVelocity(new Vector2(-2.7f, 0));
+			isInflictDmg = true;
+		}
 	}
 }
