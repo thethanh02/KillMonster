@@ -4,11 +4,10 @@
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
  <tileset firstgid="1" source="outside_sprites.tsx"/>
- <tileset firstgid="49" source="playing_bg_img.tsx"/>
- <tileset firstgid="97" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+ <tileset firstgid="49" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="water.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="98" name="lvl1" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+ <tileset firstgid="50" name="lvl1" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
   <image source="lvl1.jpg" width="1920" height="1080"/>
  </tileset>
  <objectgroup id="1" name="Ground">
@@ -230,7 +229,7 @@
  <objectgroup id="42" name="SeashellFlip"/>
  <layer id="20" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <layer id="21" name="Wall" width="50" height="14">
@@ -250,7 +249,7 @@
  </layer>
  <layer id="24" name="Objects" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2DoA1UgVkPC6gPrHKoCDSxi6P4lxe/4worYcMRm/3AKcxDAFu4wQEp6o0XaxOe2wQhIDQNc6Xu4pTEQQPbrQPpvOIU5Dxo9CmgPEocABgAHzBlO
+   eJxjYBgFo2DoA1UgVkPC6gPrHKoCDSxi6P4lxe/4worYcMRm/3AKcxDAFu4wQEp6o0XaxOe2wQhIDQNc6Xu4pTEQQPbrQPpvOIU5Dxo9CmgPDIcABgCB3xGe
   </data>
  </layer>
 </map>
