@@ -1,16 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="36" nextobjectid="418">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="36" nextobjectid="421">
  <properties>
-  <property name="brightness" value="0.8"/>
+  <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
  <tileset firstgid="1" source="outside_sprites.tsx"/>
  <tileset firstgid="49" source="playing_bg_img.tsx"/>
  <tileset firstgid="97" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="water.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="98" source="grass_atlas.tsx"/>
- <tileset firstgid="100" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="0" columns="2">
-  <image source="C:/Users/admin/OneDrive/Desktop/KillMonster/assets/res/grass_atlas.png" width="64" height="32"/>
+ <tileset firstgid="98" name="background2" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+  <image source="../interface/background2.jpg" width="1920" height="1080"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="229" x="32" y="384">
@@ -52,22 +51,15 @@
   <object id="394" x="1440" y="192">
    <polyline points="0,0 160,0"/>
   </object>
- </objectgroup>
- <objectgroup id="2" name="Platform">
-  <object id="369" x="96" y="160" width="160" height="32"/>
-  <object id="370" x="320" y="160" width="160" height="32"/>
-  <object id="371" x="320" y="256" width="160" height="32"/>
-  <object id="372" x="512" y="224" width="32" height="32"/>
-  <object id="373" x="480" y="320" width="224" height="32"/>
-  <object id="374" x="640" y="160" width="192" height="32"/>
-  <object id="375" x="864" y="192" width="32" height="32"/>
-  <object id="376" x="704" y="256" width="224" height="32"/>
-  <object id="377" x="896" y="96" width="160" height="32"/>
-  <object id="378" x="1056" y="128" width="32" height="32"/>
-  <object id="379" x="1088" y="192" width="160" height="32"/>
-  <object id="380" x="992" y="288" width="128" height="32"/>
-  <object id="381" x="1216" y="128" width="256" height="32"/>
-  <object id="382" x="1440" y="192" width="160" height="32"/>
+  <object id="418" x="512" y="224">
+   <polyline points="0,0 32,0"/>
+  </object>
+  <object id="419" x="864" y="192">
+   <polyline points="0,0 32,0"/>
+  </object>
+  <object id="420" x="1056" y="128">
+   <polyline points="0,0 32,0"/>
+  </object>
  </objectgroup>
  <objectgroup id="3" name="Wall">
   <object id="365" x="32" y="32">
@@ -231,7 +223,7 @@
  </objectgroup>
  <layer id="20" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJzt0MsOgjAUhOG+UsPORBFUUFAQ5eYNfP+n4HdvIsQ2h0UX3+o0k5lqpZSeGW8C6a6mtkr3cBznu4WFzKUFK/hYI0CIDbbYITKYE2OPgwUJUhxxQoYcZxS4GMy5okQloEaDFjfc8cATL3Qjcz7veryFdtj4D+kubofMjvrHXf25YwAqT7E9
+   eJwN04OSGAYAQMHr3cW2bdu22SSNbdtuY7SxzcaNbdu2bbM78/YT3r2AgID7POAhj3jME57yjOe84CWveM0b3vKO93zgI5/4zBe+8o3v/OAnvwj4TQQSRDAhCEkoQhOGsIQjPBGISCQiE4WoRCM6iUhMEpKSjOSkICWpSE0a0pKO9GQgI5nITBayko3s5CAnuchNHvKSj/wUoCCFKEwRilKM4pSgJKUoTRnKUo7yVKAilahMHepSj/o0oCGNaEwTmtKM5rSgJa1oTRva0o72dKAjnehMF7rSje70oCe96E0f+tKP/gxgIIMYzJ/8xRCGMozhjGAkoxjNFKYyjenMYCazmM0c5jKP+SxgIYtYzBKW8i/LWM4KVrKK1azhP9ayjvVsYCOb2MwWtrKN7exgJ7vYzR72so/9HOAghzjMOc5zgYtc4jJXuMo1rnODm9ziNne4yz3u84CHPOIxT3jKM57zgpe84jVveMs73vOBj3ziM1/4yje+84Of/CIg0F8EEkQwkYhMFKISjejEICaxiE0c4hKP+CQgIYlITBKSkozkpCAlqUhNGtKSjvRkICOZyEwWspKN7OQgJ7nITR7yko/8FKAghShMOcpTgYpUojJVqMrvVKM6NfiDmtSiNnWoSz3q04CGNKIxTWhKM5rTgpa0ojVtaEs72tOBjnSiM13oSje604Oe9KI3fejLMIYzgpGMYjRjGMvf/MM4xjOBiUxiMlOYyjSmM4OZzGI2c5jLPOazgIUsYjFLWMq/LGM5K1jJKlazhv9YyzrWs4GNbGIz+9jPAQ5yiMMc4SjHOM4JTnKK05zhLOc4zwUuconLXOEq17jODW5yi9vc4S73uM8DHvKIxzzhKc94zgte8orXvOEt73jPLwKCfEMgQQQTgpCEIjRhCEs4whOBiEQiMlGISjSiE4OYxCI2cYhLPOKTgIQkIjFJSEoykpOClKQiNWlISzrSk4GMZCIz+chPAQpSiMIUoSjFKE4JSlKK0pShLOUoTwUqUonKVKEqv1ON6tTgD2pSi9rUoS71qE8DGtKIxjShKc1oTgta0orWtKEtPehJL3rTh770oz8DGMggBvMnfzGEoQxjOCMYyShGM4ax/M0/jGM8E5jIJCYzhalMYzozmMksZjOHucxjPgtYyCIWs4SlrGM9G9jIJjazha1sYzs72MkudrOHvexjPwc4yCEOc4SjHOM4JzjJKU5zhrOc4zwXuMglLnOFq1zjOje4yS1uc4e73OM+r3jNG97yjvd84COf+MwXvvKN7/zgJ78ICPYXgQQRTAhCEorQhCEs4QhPBCISichEISrRiE4MYhKL2MQhLvGITwISkojE/A9s9l+q
   </data>
  </layer>
  <layer id="21" name="Wall" width="50" height="14">
@@ -241,7 +233,7 @@
  </layer>
  <layer id="22" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJzVlUEOgCAMBCuexbvPA///BiXRhNQCralIJ9kLFNJdIAAAbAJRSNZrKmct9GaN3j4CUlTat7ePnRijvMSGMLkPnFVgzkGjTivzGj3Po+Q9wcn8Ta1GbyPCvVc3krttHUkuX+5PveeRMp9OuUvzz71w8fDMdbnGk6z896lXh+TBpo+arPg4AH4bIgc=
+   eJxjYGBgkCIBYwOk6KcmRgb8ONw21AC9/cGDBVMDDIQ/iBUjhJEBPwG9xMgRYz+tAT3jA59/SPE7LcKJHmFNTUBqGBCbrocDoLUfKc3TgyXMGYGYCYqZB9gtxAI+Bsyw5IWKg/BQqe9BbmVCw3wMQ9Mf+PBQ8QcA6ksJLg==
   </data>
  </layer>
  <layer id="23" name="Ground - upper" width="50" height="14">

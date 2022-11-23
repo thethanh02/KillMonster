@@ -17,7 +17,7 @@ public class HUD extends Stage {
 	
 	private static final String SKIN_FILE = "interface/skin/font_skin.json";
 	private static int healthLength = 150; // pixel
-	private static int powerLength = 104; // pixel
+	private static int staminaLength = 104; // pixel
     
 	private Player player;
 	
@@ -48,7 +48,7 @@ public class HUD extends Stage {
 		healthBarImage = new Image(healthBar);
 		staminaBarImage = new Image(staminaBar);
 		healthBarImage.setScaleX(healthLength);
-		staminaBarImage.setScaleX(powerLength);
+		staminaBarImage.setScaleX(staminaLength);
 		
 		scoreLabel = new Label("Score: 0", skin);
 		scoreLabel.setFontScale(1.2f);
@@ -81,6 +81,7 @@ public class HUD extends Stage {
 	public void update(float delta) {
 		scoreLabel.setText("Score: "+MainGameScreen.currentScore);
 		healthBarImage.setScaleX(healthLength * player.getHealth() / 100f); // 100 is only temporary (player's full heatlh is 100)
+		staminaBarImage.setScaleX(staminaLength * player.getStamina() / 100f);
 	}
 
 }

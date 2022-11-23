@@ -108,6 +108,11 @@ public class WorldContactListener implements ContactListener {
 				bullet.SetToDestroy();
 				break;
 				
+			case CategoryBits.CLIFF_MARKER | CategoryBits.BULLET:
+				bullet = (Bullet) getTargetFixture(CategoryBits.BULLET, fixtureA, fixtureB).getUserData();
+				bullet.SetToDestroy();
+				break;
+				
 			case CategoryBits.PLAYER | CategoryBits.DIAMOND:
 				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
 				diamond = (Treasure) getTargetFixture(CategoryBits.DIAMOND, fixtureA, fixtureB).getUserData();

@@ -22,6 +22,11 @@ public class Player extends Character {
 	private int score;
 	private int key;
 	private Chest chestTarget;
+	// special attack
+	private float hitTime1;
+	private float hitTime2;
+	private boolean isInflictDmg1;
+	private float staminaRegenTime;
 	
 	public Player(GameWorldManager gameWorldManager, float x, float y) {
 		super(gameWorldManager.getAssets().get(TEXTURE_FILE), gameWorldManager.getWorld(), x, y);
@@ -34,6 +39,7 @@ public class Player extends Character {
 		offsetY = .228f;
 		
 		health = 100;
+		stamina = 100;
 		movementSpeed = .55f;
 		jumpHeight = 4f;
 		
@@ -44,8 +50,8 @@ public class Player extends Character {
 		
 		startHitTime = 0f;
 		endHitTime = .18f * 3f;
-		startHitTime2 = 0f;
-		endHitTime2 = .12f * 6f; 
+		hitTime1 = .0f;
+		hitTime2 = .48f; 
 		
 		key = 0;
 		typeMeleeShape = "Player";
@@ -76,6 +82,12 @@ public class Player extends Character {
 	@Override
 	public void update(float delta) {
 		if (!isDestroyed) {
+			// stamina + 5 each 4s
+			staminaRegenTime += delta;
+			if (staminaRegenTime >= 4) {
+				stamina = stamina + 5 > 100 ? 100 : stamina + 5;
+				staminaRegenTime = 0;
+			}
 			// If the character's health has reached zero but hasn't die yet,
 			// it means that the killedAnimation is not fully played.
 			// So here we'll play it until it's finished.
@@ -95,18 +107,33 @@ public class Player extends Character {
 				}
 			} else {
 				if (isAttacking2) {
+					
 					if (animation.get(State.ATTACK2).isAnimationFinished(stateTimer)) {
 						isAttacking2 = false;
 						isInvincible = false;
 						stateTimer = 0;
+					} else if (!isInflictDmg && stateTimer >= hitTime1 && stateTimer <= hitTime1 + .12f) {
+						for (Entity entity : inRangeAttack)
+							if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
+								inflictDamage2(entity, attackDamage);
+						isInflictDmg = true;
+					} else if (!isInflictDmg1 && stateTimer >= hitTime2 && stateTimer <= hitTime2 + .12f) {
+						for (Entity entity : inRangeAttack)
+							if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
+								inflictDamage2(entity, attackDamage);
+						isInflictDmg1 = true;
 					}
 				} else if (isAttacking) {
 					if (animation.get(State.ATTACKING).isAnimationFinished(stateTimer)) {
 						isAttacking = false;
 						stateTimer = 0;
+					} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
+						for (Entity entity : inRangeAttack)
+							if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
+								inflictDamage(entity, attackDamage);
+						isInflictDmg = true;
 					}
-				} 
-				
+				}
 			} 
 
 			float textureX = body.getPosition().x - offsetX;
@@ -145,7 +172,24 @@ public class Player extends Character {
 	public void reposition(float x, float y) {
 		body.setTransform(x, y, 0);
 	}
-
+	
+	public void specialAttack() {
+		if (stamina >= 25 && !isAttacking2) {
+			stamina -= 25;
+			isInvincible = true;
+			isAttacking2 = true;
+			isInflictDmg = false;
+			isInflictDmg1 = false;
+			for (Entity entity : inRangeAttack) {
+				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) {
+					this.lockedOnTarget.addAll(inRangeAttack);
+					entity.setLockedOnTarget(this);
+				}
+			}
+			if (attackSound != null && !isMute) attackSound.play(volume);
+		} 
+	}
+	
 	@Override
 	public void inflictDamage(Entity c, int damage) {
 		if ((this.facingRight && c.isFacingRight()) || (!this.facingRight && !c.isFacingRight())) {
@@ -156,15 +200,13 @@ public class Player extends Character {
 		super.inflictDamage(c, damage);
 		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
 	}
-	
-	@Override
+
 	public void inflictDamage2(Entity c, int damage) {
 		if ((this.facingRight && c.isFacingRight()) || (!this.facingRight && !c.isFacingRight())) {
 			damage *= 2;
 			gameWorldManager.getMessageArea().show("Critical hit!");
 		}
-		
-		super.inflictDamage2(c, damage);
+		c.receiveDamage(damage);
 		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
 	}
     
@@ -188,10 +230,14 @@ public class Player extends Character {
 		}
 	}
 
-	public void healed(int health) {
+	public void healed(int health, int stamina) {
 		this.health = this.health + health > 100 ? 100 : this.health + health;
 		gameWorldManager.getDamageIndicator().show(this, "+"+health, Color.GREEN);
 		gameWorldManager.getMessageArea().show(String.format("You are healed %d HP", health));
+		
+		this.stamina = this.stamina + stamina > 100 ? 100 : this.stamina + stamina;
+		if (stamina != 0) 
+			gameWorldManager.getDamageIndicator().show(this, "+"+health, Color.BLUE);
 	}
 	
 	public void receiveScore(int scorePoint) {
@@ -228,6 +274,10 @@ public class Player extends Character {
 	public void addKey() {
 		key += 1;
 		gameWorldManager.getMessageArea().show(String.format("Key: %d", key));
+	}
+	
+	public int getStamina() {
+		return stamina;
 	}
 	
 }

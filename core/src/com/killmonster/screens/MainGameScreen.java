@@ -61,7 +61,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private ShapeRenderer shapeRenderer;
 	
 	public static boolean isNextLevel;
-	private static int currentLevel = 1;
+	private static int currentLevel = 0;
 	private String gameMapFile;
 	private int prvScorePlayer = 0;
 	public static int currentScore = 0;
@@ -142,7 +142,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		}
 		
 		if (player.isHitted()) return;
-		if (Gdx.input.isKeyJustPressed(Input.Keys.ALT_LEFT)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
 			player.specialAttack();
 		}
 		if (!player.isAttacking2()) {
@@ -254,7 +254,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 				else if(!player.isKilled())  {
 					float distanceX = player.getBody().getPosition().x - x.getBody().getPosition().x;
 					float distanceY = player.getBody().getPosition().y - x.getBody().getPosition().y;
-					if (distanceY >= -.2f && distanceY <= .2f) {
+					if (distanceY >= -.15f && distanceY <= .15f) {
 						if (x.isFacingRight()) {
 							if (distanceX <= x.getSwingWeaponRange() && distanceX >= 0) 
 								x.setInRangeTarget(true);

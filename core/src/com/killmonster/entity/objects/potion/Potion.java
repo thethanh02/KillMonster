@@ -14,6 +14,7 @@ import com.killmonster.util.Utils;
 public abstract class Potion extends GameObject {
 
 	protected int healthRegen;
+	protected int staminaRegen;
 
 	public Potion(Texture texture, World currentWorld, float x, float y) {
 		super(texture, currentWorld, x, y);
@@ -41,7 +42,7 @@ public abstract class Potion extends GameObject {
 	}
 
 	public void healing(Player c) {
-		c.healed(healthRegen);
+		c.healed(healthRegen, staminaRegen);
 	}
 
 }

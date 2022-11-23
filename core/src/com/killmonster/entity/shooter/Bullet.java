@@ -103,7 +103,7 @@ public abstract class Bullet extends Entity {
 	
 	protected void createBodyandFixtureBullet() {
 		short bodyCategoryBits = CategoryBits.BULLET;
-		short bodyMaskBits = CategoryBits.PLAYER | CategoryBits.WALL;
+		short bodyMaskBits = CategoryBits.PLAYER | CategoryBits.WALL | CategoryBits.CLIFF_MARKER;
 		defineBody(BodyType.DynamicBody, bodyCategoryBits, bodyMaskBits);
 		
 		body.setGravityScale(0);

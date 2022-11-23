@@ -2,7 +2,7 @@ package com.killmonster.util;
 
 public final class Constants {
     
-	public static boolean DEBUG = true;
+	public static boolean DEBUG = false;
 	public static boolean PAUSE = false;
 	// Graphics constants
 	public static final float PPM = 100;

@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="37" nextobjectid="306">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="37" nextobjectid="323">
  <properties>
   <property name="backgroundMusic" value="sound/level2.wav"/>
  </properties>
  <tileset firstgid="1" source="outside_sprites.tsx"/>
- <tileset firstgid="49" source="playing_bg_img.tsx"/>
- <tileset firstgid="97" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+ <tileset firstgid="49" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
   <image source="water.png" width="32" height="32"/>
  </tileset>
- <tileset firstgid="98" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
+ <tileset firstgid="50" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
   <image source="grass_atlas.png" width="64" height="32"/>
+ </tileset>
+ <tileset firstgid="52" name="background2" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+  <image source="../interface/background2.jpg" width="1920" height="1080"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="229" x="32" y="384">
@@ -42,17 +44,21 @@
   <object id="239" x="1472" y="384">
    <polyline points="0,0 128,0"/>
   </object>
- </objectgroup>
- <objectgroup id="2" name="Platform">
-  <object id="218" x="320" y="256" width="32" height="32"/>
-  <object id="219" x="416" y="224" width="32" height="32"/>
-  <object id="220" x="512" y="224" width="160" height="32"/>
-  <object id="226" x="1280" y="320" width="160" height="32"/>
-  <object id="227" x="1344" y="192" width="160" height="32"/>
-  <object id="247" x="1056" y="288" width="32" height="96"/>
-  <object id="248" x="992" y="320" width="32" height="64"/>
-  <object id="273" x="1152" y="352" width="96" height="32"/>
-  <object id="278" x="1152" y="224" width="128" height="32"/>
+  <object id="306" x="1056" y="288">
+   <polyline points="0,0 32,0"/>
+  </object>
+  <object id="307" x="992" y="320">
+   <polyline points="0,0 32,0"/>
+  </object>
+  <object id="308" x="1152" y="352">
+   <polyline points="0,0 96,0"/>
+  </object>
+  <object id="309" x="320" y="256">
+   <polyline points="0,0 32,0"/>
+  </object>
+  <object id="310" x="416" y="224">
+   <polyline points="0,0 32,0"/>
+  </object>
  </objectgroup>
  <objectgroup id="3" name="Wall">
   <object id="209" x="32" y="160">
@@ -117,6 +123,27 @@
   <object id="281" x="327.636" y="352">
    <polyline points="1.125,0 1.125,32"/>
   </object>
+  <object id="316" x="1152" y="192">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="317" x="1280" y="192">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="318" x="1152" y="320">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="319" x="1248" y="320">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="320" x="512" y="192">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="321" x="672" y="192">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="322" x="736" y="288">
+   <polyline points="0,0 0,32"/>
+  </object>
  </objectgroup>
  <objectgroup id="5" name="Player">
   <object id="298" x="214" y="293.333" width="19" height="26"/>
@@ -137,22 +164,22 @@
   <object id="182" x="1463" y="164" width="40" height="26"/>
  </objectgroup>
  <objectgroup id="9" name="Water">
-  <object id="249" x="960" y="384" width="32" height="32"/>
-  <object id="250" x="992" y="384" width="32" height="32"/>
-  <object id="251" x="1024" y="384" width="32" height="32"/>
-  <object id="252" x="1056" y="384" width="32" height="32"/>
-  <object id="253" x="1088" y="384" width="32" height="32"/>
-  <object id="254" x="1120" y="384" width="32" height="32"/>
-  <object id="255" x="1152" y="384" width="32" height="32"/>
-  <object id="256" x="1184" y="384" width="32" height="32"/>
-  <object id="257" x="1216" y="384" width="32" height="32"/>
-  <object id="261" x="1312" y="384" width="32" height="32"/>
-  <object id="262" x="1344" y="384" width="32" height="32"/>
-  <object id="263" x="1376" y="384" width="32" height="32"/>
-  <object id="264" x="1408" y="384" width="32" height="32"/>
-  <object id="265" x="1440" y="384" width="32" height="32"/>
-  <object id="267" x="1248" y="384" width="32" height="32"/>
-  <object id="280" x="1280" y="384" width="32" height="32"/>
+  <object id="249" x="960" y="416" width="32" height="32"/>
+  <object id="250" x="992" y="416" width="32" height="32"/>
+  <object id="251" x="1024" y="416" width="32" height="32"/>
+  <object id="252" x="1056" y="416" width="32" height="32"/>
+  <object id="253" x="1088" y="416" width="32" height="32"/>
+  <object id="254" x="1120" y="416" width="32" height="32"/>
+  <object id="255" x="1152" y="416" width="32" height="32"/>
+  <object id="256" x="1184" y="416" width="32" height="32"/>
+  <object id="257" x="1216" y="416" width="32" height="32"/>
+  <object id="261" x="1312" y="416" width="32" height="32"/>
+  <object id="262" x="1344" y="416" width="32" height="32"/>
+  <object id="263" x="1376" y="416" width="32" height="32"/>
+  <object id="264" x="1408" y="416" width="32" height="32"/>
+  <object id="265" x="1440" y="416" width="32" height="32"/>
+  <object id="267" x="1248" y="416" width="32" height="32"/>
+  <object id="280" x="1280" y="416" width="32" height="32"/>
  </objectgroup>
  <objectgroup id="10" name="TreeOne">
   <object id="284" x="396" y="317.333" width="39" height="92"/>
@@ -196,7 +223,7 @@
  </objectgroup>
  <layer id="20" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJzt0MkOgkAQhOF5pQk3E0DZBHdAATf0/Z/C3zsHTKbTHubw3TqVqrbGGPtngh9od3W1VbuH53nTFgKZoYAIMZZYIUGKDDkKhzlrlKgEbLDFDnsccMQJNRqHOS3OuCjo0GPAFTfc8cAT48yc790Lb6UdEv/Q7uJ36OzohHd8AD+PsZI=
+   eJwN0wObEAYAgOHb5ZZrtWwv227Z5pZtc2vLba22bNt2XXZdl3l1l22393m+9yd8mwICAjazha1sYzs72MkudrOHvewjiP0c4CCHOMwRjnKM45zgJKc4zRnOEsw5QjjPBS5yictc4SrXuM4NbnKLUG5zhzDCucsLXvKK17zhLe94zwc+8onPfOEr3wj4TgQSgYhEIjJRiEo0ovM9MYhJLGITh7jEIz4J+IGEJOJHEpOEpCQjOSlISSpSk4ZsZCcHOclFbvKQl3zkpwAFKURhilCUYhSnBCUpRWnKUJZylOdnKlCRSlSmClWpRnVqUJNa1KYOdalHfRrQkEY0pglNaUZ7OtCRTnSmC13pRnd60JNe9KYPfelHfwYwkEEMZghD+Y3fGcYf/MlwRjCSUYxmDGMZx1/8zXj+YQIT+Zf/mMRkpjCVaUxnEYtZwlKWsZwVrGQVq1nDWtaxng1sZBOb2cJWtrGdHexkF7vZw172EcR+DnCQQxzmCEc5xnFOcJJTnOYMZwnmHCGc5wKh3OYOYYRzl3vc5wEPecRjnvCUZzznBS95xWve8JZ3vOcDH/nEZ77wlW8EBPqLQCIQkUhEJgpRiUZ0vicGMYlFbOIQl3gkJwUpSUVq0pCWdKQnAxnJRGaykJWfyEZ2cpCTXOQmD3nJR34KUJBCFKYIRSlGcUpQklKUpgxlKUd5fqYCFalEZapQlWo0pBGNaUJTmtGcX/iVFrSkFa1pQ1va0Z4OdKQTnelCV7rRnR70pBe96UNf+tGfAQxkEIMZwlB+43eG8Qd/MpwRjGQUoxnDJCYzhalMYzozmMksZjOHucxjPgtYyCIWs4SlLGM5K1jJKlazhrWsYz0b2MgmNrOFrWxjOzvYyS52s4e97COI/RzgIIc4SzDnCOE8F7jIJS5zhatc4zo3uMktQrnNHcII5y73uM8DHvKIxzzhKc94zgte8orXvOEt73jPBz7yic984SvfCIjgLwKJSSxiE4e4xCM+CfiBhCTiRxKThKQkIzkpSEkqUpOGtKQjPRnISCYyk4Ws/EQ2spODnOQiN3nISz7yU4CCFKIwRShKMYpTkUpUpgpVqUZ1alCTWtSmDnWpR30a0JBGNKYJTWlGc37hV1rQkla0pg1taUd7OtCRTnSmC13pRnd60JNe9KYPfelHfwYwnBGMZBSjGcNYxvEXfzOef5jARP7lPyYxmSlMZRrTmcFMZjGbOcxlHvNZwEIWsZglLGUZy1nBSlaxmjWsZR3r2cBGNrGZfQSxnwMc5BCHOcJRjnGcE5zkFKc5w1mCOUcI57nARS5xmStc5RrXucFNbhHKbe4QRjh3ucd9HvCQRzzmCU95xnNe8JL/AchweEs=
   </data>
  </layer>
  <layer id="21" name="Wall" width="50" height="14">
@@ -206,7 +233,7 @@
  </layer>
  <layer id="22" name="Ground - back" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJztlNEKgCAMRc2e048M8v//oAYKY8wac0bBDpwXhbt0sxAcx3G+wcFokTkrH+eUwSyOGZl37NU/YTEjHIWo5WneJN8vndvErC2XsboKavXQ5GjfGZyD3v9W18HM7De5u8LSHOt/DRZqRGIi0n2pvZyRHjdwr7lab5gNzoF7DZ7GWxuB
+   eJztktEKwCAIRV173exj9v//tgkOwrmQstjAA+cl4VopQBAEwTfYFEdkeuV731XLn8nB/omRf+8x29rOWbOte4vK2XKZ2NV2ZZWWnNb/Q3i+d+dzMit1q7WcXmQv6pGEKJR1q285PTO+KWet9ZphdnhHOWvyBAFMBo8=
   </data>
  </layer>
  <layer id="24" name="Ground - upper" width="50" height="14">
@@ -216,7 +243,7 @@
  </layer>
  <layer id="24" name="Objects" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   eJxjYBgFo2AUjIJRQE2gCsRqSFidCmZq0NB8ZPOo4VZ0oEFYyYgHLAPtAAoBzP0CeNTQIl9gAzxoNClABo0GAZi7aeXeUYAdJFKI0QEAHLMKDQ==
+   eJxjYBgFo2AUjILBAYyxYEqBEQHzeSgwG5dbVYFYDQmrk2k+sts1aGA+NvMoNQsb0CCshGxAjTSCDkBpwggJU2IHIXNgYiwU2DEYAMz9AnjUkJJuCYWbERZsjIWNLobLHJicDBqN7G5CeYPaZddIBzwUYnQAAJjcDs8=
   </data>
  </layer>
 </map>

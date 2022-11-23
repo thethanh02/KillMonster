@@ -12,6 +12,7 @@ public class BluePotion extends Potion {
 
 		name = "Blue Potion";
 		healthRegen = 10;
+		staminaRegen = 0;
 		
 		bodyWidth = 8f;
 		bodyHeight = 14f;

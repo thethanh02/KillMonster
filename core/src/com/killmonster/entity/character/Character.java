@@ -45,8 +45,6 @@ public abstract class Character extends Entity {
 	
 	protected float startHitTime;
 	protected float endHitTime;
-	protected float startHitTime2;
-	protected float endHitTime2;
 	protected boolean isInflictDmg;
 	protected int stamina;
 	
@@ -68,28 +66,29 @@ public abstract class Character extends Entity {
 			// If the character's health has reached zero but hasn't die yet,
 			// it means that the killedAnimation is not fully played.
 			// So here we'll play it until it's finished.
+			setRegion(getFrame(delta));
 			if (setToDestroy) {
-				setRegion(getFrame(delta));
 				// Set killed to true to prevent further rendering updates.
 				if (animation.get(State.KILLED).isAnimationFinished(stateTimer)) {
 					currentWorld.destroyBody(body);
 					isDestroyed = true;
 				}
 			} else if (isHitted) {
-				setRegion(getFrame(delta));
-				
 				// Set isHitted back to false, implying hit has complete.
 				if (animation.get(State.HIT).isAnimationFinished(stateTimer)) {
 					isHitted = false;
 					stateTimer = 0;
 				}
 			} else {
-				setRegion(getFrame(delta));
-				
 				// Set isAttacking back to false, implying attack has complete.
 				if (animation.get(State.ATTACKING).isAnimationFinished(stateTimer)) {
 					isAttacking = false;
 					stateTimer = 0;
+				} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
+					for (Entity entity : inRangeAttack)
+						if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
+							inflictDamage(entity, attackDamage);
+					isInflictDmg = true;
 				}
 			} 
 
@@ -113,6 +112,9 @@ public abstract class Character extends Entity {
 			case FALLING:
 				textureRegion = animation.get(State.FALLING).getKeyFrame(stateTimer, true);
 				break;
+			case ATTACK2:
+				textureRegion = animation.get(State.ATTACK2).getKeyFrame(stateTimer, false);
+				break;
 			case ATTACKING:
 				textureRegion = animation.get(State.ATTACKING).getKeyFrame(stateTimer, false);
 				break;
@@ -121,9 +123,6 @@ public abstract class Character extends Entity {
 				break;
 			case KILLED:
 				textureRegion = animation.get(State.KILLED).getKeyFrame(stateTimer, false);
-				break;
-			case ATTACK2:
-				textureRegion = animation.get(State.ATTACK2).getKeyFrame(stateTimer, false);
 				break;
 			case IDLE:
 			default:
@@ -242,11 +241,6 @@ public abstract class Character extends Entity {
 				}
 			}
 			if (attackSound != null && !isMute) attackSound.play(volume);
-		} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
-			for (Entity entity : inRangeAttack)
-				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
-					inflictDamage(entity, attackDamage);
-			isInflictDmg = true;
 		}
 	}
 
@@ -257,30 +251,6 @@ public abstract class Character extends Entity {
 		} else {
 			c.knockedBack(-attackForce);
 		}
-	}
-	
-	public void specialAttack() {
-		if (!isAttacking2) {
-			isInvincible = true;
-			isAttacking2 = true;
-			isInflictDmg = false;
-			for (Entity entity : inRangeAttack) {
-				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) {
-					this.lockedOnTarget.addAll(inRangeAttack);
-					entity.setLockedOnTarget(this);
-				}
-			}
-			if (attackSound != null && !isMute) attackSound.play(volume);
-		} else if (stateTimer >= startHitTime2 && stateTimer <= endHitTime2) {
-			for (Entity entity : inRangeAttack)
-				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
-					inflictDamage2(entity, attackDamage);
-			isInflictDmg = true;
-		}
-	}
-	
-	public void inflictDamage2(Entity c, int damage) {
-		c.receiveDamage(damage);
 	}
 	
 	@Override

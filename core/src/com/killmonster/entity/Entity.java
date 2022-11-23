@@ -148,10 +148,6 @@ public abstract class Entity extends Sprite implements Disposable {
 		inRangeAttack.removeValue(enemy, false);
 	}
 	
-	public void flipXTextureRegion() {
-		textureRegion.flip(true, false);
-	}
-	
 	public Queue<Actor> getDamageIndicators() {
 		return damageIndicators;
 	}
