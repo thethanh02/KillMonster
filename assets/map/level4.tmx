@@ -10,11 +10,8 @@
  <tileset firstgid="50" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
   <image source="grass_atlas.png" width="64" height="32"/>
  </tileset>
- <tileset firstgid="52" name="FatLujRUIAA15IF" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
-  <image source="../interface/FatLujRUIAA15IF.png" width="1920" height="1080"/>
- </tileset>
- <tileset firstgid="2032" name="citypurple" tilewidth="32" tileheight="32" tilecount="8040" columns="120">
-  <image source="../interface/citypurple.png" width="3840" height="2162"/>
+ <tileset firstgid="52" name="lvl4" tilewidth="32" tileheight="32" tilecount="8040" columns="120">
+  <image source="lvl4.png" width="3840" height="2162"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="362" x="32" y="256">
@@ -306,7 +303,7 @@
  <objectgroup id="44" name="SeasellFlip"/>
  <layer id="30" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <layer id="31" name="Wall" width="50" height="14">

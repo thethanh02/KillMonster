@@ -10,8 +10,8 @@
  <tileset firstgid="50" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
   <image source="grass_atlas.png" width="64" height="32"/>
  </tileset>
- <tileset firstgid="52" name="background2" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
-  <image source="../interface/background2.jpg" width="1920" height="1080"/>
+ <tileset firstgid="52" name="lvl1" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+  <image source="lvl1.jpg" width="1920" height="1080"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="250" x="32" y="352">
@@ -69,56 +69,7 @@
    <polyline points="0,0 64,0"/>
   </object>
  </objectgroup>
- <objectgroup id="3" name="Wall">
-  <object id="241" x="32" y="32">
-   <polyline points="0,0 0,320"/>
-  </object>
-  <object id="242" x="288" y="352">
-   <polyline points="0,0 0,96"/>
-  </object>
-  <object id="243" x="512" y="320">
-   <polyline points="0,0 0,128"/>
-  </object>
-  <object id="244" x="1120" y="320">
-   <polyline points="0,0 0,128"/>
-  </object>
-  <object id="245" x="1216" y="352">
-   <polyline points="0,0 0,96"/>
-  </object>
-  <object id="247" x="1344" y="288">
-   <polyline points="0,0 0,64"/>
-  </object>
-  <object id="248" x="1536" y="288">
-   <polyline points="0,0 0,64"/>
-  </object>
-  <object id="249" x="1600" y="32">
-   <polyline points="0,0 0,320"/>
-  </object>
-  <object id="266" x="1024" y="320">
-   <polyline points="0,0 0,32"/>
-  </object>
-  <object id="274" x="640" y="320">
-   <polyline points="0,0 0,32"/>
-  </object>
-  <object id="282" x="480" y="288">
-   <polyline points="0,0 0,32"/>
-  </object>
-  <object id="284" x="1216" y="160">
-   <polyline points="0,0 192,0"/>
-  </object>
-  <object id="285" x="1440" y="224">
-   <polyline points="0,0 128,0"/>
-  </object>
-  <object id="286" x="512" y="224">
-   <polyline points="0,0 288,0"/>
-  </object>
-  <object id="287" x="864" y="352">
-   <polyline points="0,0 0,32"/>
-  </object>
-  <object id="288" x="800" y="352">
-   <polyline points="0,0 0,32"/>
-  </object>
- </objectgroup>
+ <objectgroup id="3" name="Wall"/>
  <objectgroup id="4" name="CliffMarker">
   <object id="224" x="288" y="320">
    <polyline points="0,0 0,32"/>
@@ -260,7 +211,7 @@
  <objectgroup id="44" name="SeasellFlip"/>
  <layer id="30" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <layer id="31" name="Wall" width="50" height="14">
