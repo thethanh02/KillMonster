@@ -9,6 +9,11 @@ public enum Screens {
 			return new MainMenuScreen(gameStateManager);
 		}
 	},
+	TUTORIAL {
+		public AbstractScreen newScreen(KillMonster gameStateManager) {
+			return new TutorialScreen(gameStateManager);
+		}
+	},
 	GAME {
 		public AbstractScreen newScreen(KillMonster gameStateManager) {
 			return new MainGameScreen(gameStateManager);

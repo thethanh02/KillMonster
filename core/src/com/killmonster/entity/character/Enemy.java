@@ -38,7 +38,7 @@ public abstract class Enemy extends Character {
 			} else {
 				// If the target isn't within melee attack range, move toward it until it can be attacked.
 				for (Entity entity : lockedOnTarget) {
-					if (Utils.getDistance(body.getPosition().x, entity.getBody().getPosition().x) >= attackRange * 2 / Constants.PPM) {
+					if (Utils.getDistance(body.getPosition().x, entity.getBody().getPosition().x) >= attackRange * 3.2f / Constants.PPM) {
 						behavioralModel.moveTowardTarget((Character) entity);
 	
 						// Jump if it gets stucked while moving toward the lockedOnTarget.

@@ -73,9 +73,9 @@ public class PinkStar extends Enemy {
 			isInflictDmg = false;
 		} else if (!isInflictDmg) {
 			if (facingRight)
-				body.setLinearVelocity(new Vector2(1.7f, 0));
+				body.setLinearVelocity(new Vector2(1.5f, 0));
 			else 
-				body.setLinearVelocity(new Vector2(-1.7f, 0));
+				body.setLinearVelocity(new Vector2(-1.5f, 0));
 		}
 	}
 }

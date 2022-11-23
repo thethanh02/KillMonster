@@ -65,7 +65,7 @@ public class MainMenuScreen extends AbstractScreen {
 			@Override
 			public void clicked(InputEvent event, float x, float y) {
 				backgroundMusic.stop();
-				gsm.showScreen(Screens.GAME);
+				gsm.showScreen(Screens.TUTORIAL);
 			}
 		});
         

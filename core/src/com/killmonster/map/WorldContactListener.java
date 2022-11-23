@@ -54,7 +54,10 @@ public class WorldContactListener implements ContactListener {
 			case CategoryBits.PLAYER | CategoryBits.ENEMY:
 				player = (Player) getTargetFixture(CategoryBits.PLAYER, fixtureA, fixtureB).getUserData();
 				enemy = (Enemy) getTargetFixture(CategoryBits.ENEMY, fixtureA, fixtureB).getUserData();
-				if (!enemy.isSetToKill()) enemy.inflictDamage(player, 10);
+				if (!enemy.isSetToKill()) {
+					enemy.inflictDamage(player, 10);
+					enemy.setInRangeAttack(player);
+				}
 				break;
 			
 			// When an NPC hits a cliff marker, reverse the NPC's current direction.

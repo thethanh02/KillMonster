@@ -174,8 +174,8 @@ public class Player extends Character {
 	}
 	
 	public void specialAttack() {
-		if (stamina >= 25 && !isAttacking2) {
-			stamina -= 25;
+		if (stamina >= 20 && !isAttacking2) {
+			stamina -= 20;
 			isInvincible = true;
 			isAttacking2 = true;
 			isInflictDmg = false;

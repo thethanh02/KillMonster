@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="45" nextobjectid="289">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="45" nextobjectid="299">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -69,7 +69,38 @@
    <polyline points="0,0 64,0"/>
   </object>
  </objectgroup>
- <objectgroup id="3" name="Wall"/>
+ <objectgroup id="3" name="Wall">
+  <object id="289" x="32" y="352">
+   <polyline points="0,0 0,-320"/>
+  </object>
+  <object id="290" x="288" y="352">
+   <polyline points="0,0 0,96"/>
+  </object>
+  <object id="291" x="512" y="448">
+   <polyline points="0,0 0,-128"/>
+  </object>
+  <object id="292" x="640" y="320">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="293" x="800" y="352">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="294" x="864" y="352">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="295" x="1024" y="320">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="296" x="1120" y="320">
+   <polyline points="0,0 0,128"/>
+  </object>
+  <object id="297" x="1216" y="352">
+   <polyline points="0,0 0,96"/>
+  </object>
+  <object id="298" x="1344" y="288">
+   <polyline points="0,0 0,64"/>
+  </object>
+ </objectgroup>
  <objectgroup id="4" name="CliffMarker">
   <object id="224" x="288" y="320">
    <polyline points="0,0 0,32"/>
