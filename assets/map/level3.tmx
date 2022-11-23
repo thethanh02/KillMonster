@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="45" nextobjectid="447">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="45" nextobjectid="456">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -28,9 +28,6 @@
   </object>
   <object id="366" x="672" y="224">
    <polyline points="0,0 160,0"/>
-  </object>
-  <object id="367" x="800" y="96">
-   <polyline points="0,0 64,0"/>
   </object>
   <object id="369" x="832" y="192">
    <polyline points="0,0 192,0"/>
@@ -61,6 +58,9 @@
   </object>
   <object id="427" x="192" y="320">
    <polyline points="0,0 128,0"/>
+  </object>
+  <object id="455" x="800" y="96">
+   <polyline points="0,0 32,0"/>
   </object>
  </objectgroup>
  <objectgroup id="3" name="Wall">
@@ -106,20 +106,11 @@
   <object id="397" x="191.418" y="191.418">
    <polyline points="0,0 0,32.0169"/>
   </object>
-  <object id="399" x="31.3333" y="287.469">
-   <polyline points="0,0 128.067,0 128.067,-32.0169"/>
-  </object>
   <object id="428" x="192" y="320">
    <polyline points="0,0 0,64"/>
   </object>
   <object id="429" x="320" y="320">
    <polyline points="0,0 0,64"/>
-  </object>
-  <object id="430" x="160" y="256">
-   <polyline points="0,0 0,32"/>
-  </object>
-  <object id="442" x="32" y="192">
-   <polyline points="0,0 96,0"/>
   </object>
   <object id="445" x="1600" y="384">
    <polyline points="0,0 0,-352"/>
