@@ -30,7 +30,7 @@ public class PinkStar extends Enemy {
 		attackForce = 1.5f;
 		attackRange = 17;
 		attackPosX = 0;
-		attackDamage = 2;
+		attackDamage = 10;
 		facingRight = false;
 		swingWeaponRange = .75f;
 		

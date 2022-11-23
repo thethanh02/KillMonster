@@ -26,7 +26,7 @@ public class Shark extends Enemy {
 		attackForce = 1.5f;
 		attackRange = 11;
 		attackPosX = 9;
-		attackDamage = 15;
+		attackDamage = 20;
 		swingWeaponRange = .55f;
 		
 		startHitTime = .4f;
