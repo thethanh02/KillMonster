@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="45" nextobjectid="394">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="45" nextobjectid="392">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -10,11 +10,8 @@
  <tileset firstgid="50" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
   <image source="grass_atlas.png" width="64" height="32"/>
  </tileset>
- <tileset firstgid="52" name="FatLujRUIAA15IF" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
-  <image source="../interface/FatLujRUIAA15IF.png" width="1920" height="1080"/>
- </tileset>
- <tileset firstgid="2032" name="citypurple" tilewidth="32" tileheight="32" tilecount="8040" columns="120">
-  <image source="../interface/citypurple.png" width="3840" height="2162"/>
+ <tileset firstgid="52" name="background2" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+  <image source="../interface/background2.jpg" width="1920" height="1080"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="362" x="32" y="256">
@@ -227,7 +224,9 @@
   <object id="319" x="1184" y="384" width="32" height="32"/>
   <object id="320" x="1216" y="384" width="32" height="32"/>
   <object id="321" x="1248" y="384" width="32" height="32"/>
+  <object id="322" x="1280" y="384" height="32"/>
   <object id="324" x="1280" y="384" width="32" height="32"/>
+  <object id="325" x="1344" y="384"/>
   <object id="326" x="1312" y="384" width="32" height="32"/>
   <object id="327" x="1344" y="384" width="32" height="32"/>
   <object id="328" x="1376" y="384" width="32" height="32"/>
@@ -245,11 +244,11 @@
   <object id="198" x="1161" y="162" width="62" height="54"/>
   <object id="297" x="617" y="67" width="62" height="54"/>
   <object id="299" x="262" y="231" width="62" height="54"/>
-  <object id="393" x="1422" y="290" width="62" height="54"/>
  </objectgroup>
  <objectgroup id="12" name="TreeThree">
   <object id="196" x="830" y="99" width="62" height="54"/>
   <object id="197" x="63" y="101" width="62" height="54"/>
+  <object id="384" x="1422" y="290" width="62" height="54"/>
  </objectgroup>
  <objectgroup id="13" name="Crabby">
   <object id="193" x="685" y="327" width="24.6" height="23"/>
@@ -293,8 +292,8 @@
   <object id="285" x="802" y="295" width="11" height="11"/>
  </objectgroup>
  <objectgroup id="40" name="Chest">
-  <object id="283" x="1392.52" y="264" width="31" height="24"/>
-  <object id="284" x="634" y="168" width="31" height="24"/>
+  <object id="283" x="1392.52" y="262.644" width="31" height="24"/>
+  <object id="284" x="634" y="166" width="31" height="24"/>
  </objectgroup>
  <objectgroup id="41" name="Key">
   <object id="175" x="1546.62" y="100.521" width="8" height="15"/>
@@ -306,7 +305,7 @@
  <objectgroup id="44" name="SeasellFlip"/>
  <layer id="30" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <layer id="31" name="Wall" width="50" height="14">

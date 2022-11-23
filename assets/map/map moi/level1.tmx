@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="45" nextobjectid="289">
+<map version="1.9" tiledversion="1.9.2" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="45" nextobjectid="287">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -112,12 +112,6 @@
   <object id="286" x="512" y="224">
    <polyline points="0,0 288,0"/>
   </object>
-  <object id="287" x="864" y="352">
-   <polyline points="0,0 0,32"/>
-  </object>
-  <object id="288" x="800" y="352">
-   <polyline points="0,0 0,32"/>
-  </object>
  </objectgroup>
  <objectgroup id="4" name="CliffMarker">
   <object id="224" x="288" y="320">
@@ -130,6 +124,9 @@
    <polyline points="0,0 0,32"/>
   </object>
   <object id="230" x="96" y="96">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="232" x="1024" y="288">
    <polyline points="0,0 0,32"/>
   </object>
   <object id="233" x="1120" y="288">
@@ -176,18 +173,18 @@
   <object id="223" x="552" y="283" width="19" height="26"/>
  </objectgroup>
  <objectgroup id="6" name="Box">
-  <object id="219" x="908" y="334" width="25" height="18"/>
-  <object id="220" x="665" y="174" width="25" height="18"/>
-  <object id="222" x="923" y="110" width="27" height="18"/>
+  <object id="219" x="908" y="332" width="25" height="18"/>
+  <object id="220" x="665" y="167" width="25" height="18"/>
+  <object id="222" x="923" y="108" width="27" height="18"/>
  </objectgroup>
  <objectgroup id="7" name="Spike">
-  <object id="215" x="800" y="368" width="32" height="16"/>
-  <object id="216" x="832" y="368" width="32" height="16"/>
-  <object id="217" x="32" y="336" width="32" height="16"/>
+  <object id="215" x="799" y="370" width="32" height="16"/>
+  <object id="216" x="832" y="370" width="32" height="16"/>
+  <object id="217" x="33" y="336" width="32" height="16"/>
  </objectgroup>
  <objectgroup id="8" name="Cannon">
   <object id="213" x="1364" y="101" width="40" height="26"/>
-  <object id="214" x="1077.73" y="293.273" width="40" height="26"/>
+  <object id="214" x="1077" y="292" width="40" height="26"/>
  </objectgroup>
  <objectgroup id="9" name="Water">
   <object id="202" x="288" y="384" width="32" height="32"/>
@@ -237,7 +234,7 @@
   <object id="187" x="866" y="100" width="40" height="26"/>
  </objectgroup>
  <objectgroup id="20" name="Barrel">
-  <object id="185" x="69.125" y="323" width="23" height="28.5"/>
+  <object id="185" x="69" y="322" width="23" height="28.5"/>
  </objectgroup>
  <objectgroup id="38" name="SilverCoin">
   <object id="184" x="390" y="77" width="11" height="11"/>
@@ -248,14 +245,14 @@
   <object id="181" x="736" y="276" width="11" height="11"/>
  </objectgroup>
  <objectgroup id="40" name="Chest">
-  <object id="177" x="1405" y="264" width="31" height="24"/>
+  <object id="177" x="1405" y="260" width="31" height="24"/>
  </objectgroup>
  <objectgroup id="41" name="Key">
   <object id="175" x="111" y="106" width="8" height="15"/>
   <object id="176" x="1302" y="325" width="8" height="15"/>
  </objectgroup>
  <objectgroup id="42" name="Seashell">
-  <object id="174" x="767" y="170.375" width="32" height="21"/>
+  <object id="174" x="767" y="169" width="32" height="21"/>
  </objectgroup>
  <objectgroup id="44" name="SeasellFlip"/>
  <layer id="30" name="Background" width="50" height="14">

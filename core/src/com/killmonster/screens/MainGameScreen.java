@@ -61,7 +61,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 	private ShapeRenderer shapeRenderer;
 	
 	public static boolean isNextLevel;
-	private static int currentLevel = 0;
+	private static int currentLevel = 4;
 	private String gameMapFile;
 	private int prvScorePlayer = 0;
 	public static int currentScore = 0;
@@ -142,11 +142,11 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		}
 		
 		if (player.isHitted()) return;
-		if (Gdx.input.isKeyPressed(Input.Keys.ALT_LEFT)) {
+		if (Gdx.input.isKeyPressed(Input.Keys.K)) {
 			player.specialAttack();
 		}
 		if (!player.isAttacking2()) {
-			if (Gdx.input.isKeyPressed(Input.Keys.CONTROL_LEFT)) {
+			if (Gdx.input.isKeyPressed(Input.Keys.J)) {
 				player.swingWeapon();
 			}
 			if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
@@ -179,7 +179,7 @@ public class MainGameScreen extends AbstractScreen implements GameWorldManager {
 		if (isNextLevel) {
 			prvScorePlayer = player.getScore();
 			
-			if (currentLevel < 4) {
+			if (currentLevel < 7) {
 				currentLevel++;
 				gameMapFile = "map/level" + currentLevel + ".tmx";
 				isNextLevel = false;

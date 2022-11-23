@@ -82,10 +82,10 @@ public class Player extends Character {
 	@Override
 	public void update(float delta) {
 		if (!isDestroyed) {
-			// stamina + 5 each 4s
+			// stamina + 5 each 3.5s
 			staminaRegenTime += delta;
-			if (staminaRegenTime >= 4) {
-				stamina = stamina + 5 > 100 ? 100 : stamina + 5;
+			if (staminaRegenTime >= .7f) {
+				stamina = stamina + 1 > 100 ? 100 : stamina + 1;
 				staminaRegenTime = 0;
 			}
 			// If the character's health has reached zero but hasn't die yet,
@@ -198,7 +198,7 @@ public class Player extends Character {
 		}
 		
 		super.inflictDamage(c, damage);
-		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
+		gameWorldManager.getMessageArea().show(String.format("You dealt %d dmg to %s", damage, c.getName()));
 	}
 
 	public void inflictDamage2(Entity c, int damage) {
@@ -207,7 +207,7 @@ public class Player extends Character {
 			gameWorldManager.getMessageArea().show("Critical hit!");
 		}
 		c.receiveDamage(damage);
-		gameWorldManager.getMessageArea().show(String.format("You dealt %d pts damage to %s", damage, c.getName()));
+		gameWorldManager.getMessageArea().show(String.format("You dealt %d dmg to %s", damage, c.getName()));
 	}
     
 	@Override

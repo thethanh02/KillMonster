@@ -70,7 +70,7 @@ public class HUD extends Stage {
 		scoreTable = new Table();
 		scoreTable.center().top();
 		scoreTable.setFillParent(true);
-		scoreTable.add(scoreLabel).expandX();
+		scoreTable.add(scoreLabel).expandX().padTop(10f);
 		
 		addActor(hudTable);
 		addActor(barTable);

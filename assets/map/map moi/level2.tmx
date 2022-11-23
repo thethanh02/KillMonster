@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="43" nextobjectid="452">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="36" nextobjectid="449">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -10,8 +10,8 @@
  <tileset firstgid="50" name="grass_atlas" tilewidth="32" tileheight="32" tilecount="2" columns="2">
   <image source="grass_atlas.png" width="64" height="32"/>
  </tileset>
- <tileset firstgid="52" name="1" tilewidth="32" tileheight="32" tilecount="3600" columns="80">
-  <image source="../interface/1.png" width="2560" height="1440"/>
+ <tileset firstgid="52" name="background2" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+  <image source="../interface/background2.jpg" width="1920" height="1080"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="388" x="0" y="224">
@@ -115,6 +115,9 @@
   <object id="372" x="1600" y="32">
    <polyline points="0,0 0,192"/>
   </object>
+  <object id="405" x="608" y="128">
+   <polyline points="0,0 0,32"/>
+  </object>
  </objectgroup>
  <objectgroup id="4" name="CliffMarker">
   <object id="346" x="416" y="128">
@@ -141,17 +144,11 @@
   <object id="414" x="1599.33" y="192.667">
    <polyline points="0,0 0.666667,31.3333"/>
   </object>
-  <object id="448" x="1152" y="128">
+  <object id="447" x="800" y="256">
    <polyline points="0,0 0,32"/>
   </object>
-  <object id="449" x="256" y="224">
-   <polyline points="0,0 0,-32"/>
-  </object>
-  <object id="450" x="320" y="288">
-   <polyline points="0,0 0,-32"/>
-  </object>
-  <object id="451" x="448" y="288">
-   <polyline points="0,0 0,-32"/>
+  <object id="448" x="1152" y="128">
+   <polyline points="0,0 0,32"/>
   </object>
  </objectgroup>
  <objectgroup id="5" name="Player">
@@ -159,13 +156,13 @@
  </objectgroup>
  <objectgroup id="6" name="Box">
   <object id="337" x="774" y="268" width="25" height="18"/>
-  <object id="408" x="454.375" y="141.625" width="25" height="18"/>
+  <object id="408" x="454" y="140" width="25" height="18"/>
   <object id="411" x="924" y="333" width="25" height="18"/>
   <object id="413" x="985" y="141" width="25" height="18"/>
  </objectgroup>
  <objectgroup id="7" name="Spike">
-  <object id="325" x="320" y="272" width="32" height="16"/>
-  <object id="332" x="1344" y="240" width="32" height="16"/>
+  <object id="325" x="321" y="274" width="32" height="16"/>
+  <object id="332" x="1343.67" y="240.333" width="32" height="16"/>
  </objectgroup>
  <objectgroup id="8" name="Cannon">
   <object id="318" x="566" y="133" width="40" height="26"/>
@@ -247,16 +244,9 @@
  <objectgroup id="17" name="CannonFlip">
   <object id="434" x="668" y="84" width="40" height="26"/>
  </objectgroup>
- <objectgroup id="36" name="Barrel"/>
- <objectgroup id="37" name="SilverCoin"/>
- <objectgroup id="38" name="GoldCoin"/>
- <objectgroup id="39" name="Chest"/>
- <objectgroup id="40" name="Key"/>
- <objectgroup id="41" name="Seashell"/>
- <objectgroup id="42" name="SeashellFlip"/>
  <layer id="20" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <layer id="21" name="Wall" width="50" height="14">

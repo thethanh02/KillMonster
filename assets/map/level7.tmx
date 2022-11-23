@@ -1,0 +1,256 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="43" nextobjectid="421">
+ <properties>
+  <property name="backgroundMusic" value="sound/level1.wav"/>
+ </properties>
+ <tileset firstgid="1" source="outside_sprites.tsx"/>
+ <tileset firstgid="49" source="playing_bg_img.tsx"/>
+ <tileset firstgid="97" name="water" tilewidth="32" tileheight="32" tilecount="1" columns="1">
+  <image source="water.png" width="32" height="32"/>
+ </tileset>
+ <tileset firstgid="98" name="background2" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
+  <image source="../interface/background2.jpg" width="1920" height="1080"/>
+ </tileset>
+ <objectgroup id="1" name="Ground">
+  <object id="229" x="32" y="384">
+   <polyline points="0,0 128,0"/>
+  </object>
+  <object id="383" x="160" y="320">
+   <polyline points="0,0 128,0"/>
+  </object>
+  <object id="384" x="96" y="160">
+   <polyline points="0,0 160,0"/>
+  </object>
+  <object id="385" x="320" y="160">
+   <polyline points="0,0 160,0"/>
+  </object>
+  <object id="386" x="320" y="256">
+   <polyline points="0,0 160,0"/>
+  </object>
+  <object id="387" x="480" y="320">
+   <polyline points="0,0 224,0"/>
+  </object>
+  <object id="388" x="640" y="160">
+   <polyline points="0,0 192,0"/>
+  </object>
+  <object id="389" x="704" y="256">
+   <polyline points="0,0 224,0"/>
+  </object>
+  <object id="390" x="896" y="96">
+   <polyline points="0,0 160,0"/>
+  </object>
+  <object id="391" x="992" y="288">
+   <polyline points="0,0 128,0"/>
+  </object>
+  <object id="392" x="1088" y="192">
+   <polyline points="0,0 160,0"/>
+  </object>
+  <object id="393" x="1216" y="128">
+   <polyline points="0,0 256,0"/>
+  </object>
+  <object id="394" x="1440" y="192">
+   <polyline points="0,0 160,0"/>
+  </object>
+  <object id="418" x="512" y="224">
+   <polyline points="0,0 32,0"/>
+  </object>
+  <object id="419" x="864" y="192">
+   <polyline points="0,0 32,0"/>
+  </object>
+  <object id="420" x="1056" y="128">
+   <polyline points="0,0 32,0"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="3" name="Wall">
+  <object id="365" x="32" y="32">
+   <polyline points="0,0 0,352"/>
+  </object>
+  <object id="366" x="160" y="320">
+   <polyline points="0,0 0,64"/>
+  </object>
+  <object id="367" x="288" y="320">
+   <polyline points="0,0 0,128"/>
+  </object>
+  <object id="368" x="1600" y="32">
+   <polyline points="0,0 0,128"/>
+  </object>
+  <object id="396" x="512" y="64">
+   <polyline points="0,0 0,32"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="4" name="CliffMarker">
+  <object id="201" x="736" y="288">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="351" x="96" y="128">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="352" x="256" y="128">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="353" x="320" y="128">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="355" x="480" y="288">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="356" x="704" y="288">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="357" x="704" y="224">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="358" x="928" y="256">
+   <polyline points="0,0 0,-32"/>
+  </object>
+  <object id="359" x="1216" y="96">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="360" x="1472" y="96">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="361" x="1600" y="160">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="363" x="1056" y="64">
+   <polyline points="0,0 0,32"/>
+  </object>
+  <object id="364" x="896" y="64">
+   <polyline points="0,0 0,32"/>
+  </object>
+ </objectgroup>
+ <objectgroup id="5" name="Player">
+  <object id="349" x="190" y="287" width="19" height="26"/>
+ </objectgroup>
+ <objectgroup id="6" name="Box">
+  <object id="338" x="102" y="139" width="25" height="18"/>
+  <object id="339" x="522" y="300" width="25" height="18"/>
+  <object id="340" x="899" y="75" width="25" height="18"/>
+  <object id="341" x="1276" y="109" width="25" height="18"/>
+ </objectgroup>
+ <objectgroup id="7" name="Spike">
+  <object id="334" x="127" y="366" width="32" height="16"/>
+  <object id="335" x="1441" y="174" width="32" height="16"/>
+  <object id="336" x="1216" y="174" width="32" height="16"/>
+  <object id="337" x="1089" y="272" width="32" height="16"/>
+ </objectgroup>
+ <objectgroup id="8" name="Cannon">
+  <object id="329" x="665" y="292" width="40" height="26"/>
+  <object id="331" x="788" y="132" width="40" height="26"/>
+  <object id="332" x="1430" y="101" width="40" height="26"/>
+ </objectgroup>
+ <objectgroup id="9" name="Water">
+  <object id="287" x="288" y="384" width="32" height="32"/>
+  <object id="288" x="320" y="384" width="32" height="32"/>
+  <object id="289" x="352" y="384" width="32" height="32"/>
+  <object id="290" x="384" y="384" width="32" height="32"/>
+  <object id="291" x="416" y="384" width="32" height="32"/>
+  <object id="292" x="448" y="384" width="32" height="32"/>
+  <object id="293" x="480" y="384" width="32" height="32"/>
+  <object id="294" x="512" y="384" width="32" height="32"/>
+  <object id="295" x="544" y="384" width="32" height="32"/>
+  <object id="296" x="576" y="384" width="32" height="32"/>
+  <object id="297" x="608" y="384" width="32" height="32"/>
+  <object id="298" x="640" y="384" width="32" height="32"/>
+  <object id="299" x="672" y="384" width="32" height="32"/>
+  <object id="300" x="704" y="384" width="32" height="32"/>
+  <object id="301" x="736" y="384" width="32" height="32"/>
+  <object id="302" x="768" y="384" width="32" height="32"/>
+  <object id="303" x="800" y="384" width="32" height="32"/>
+  <object id="304" x="832" y="384" width="32" height="32"/>
+  <object id="305" x="864" y="384" width="32" height="32"/>
+  <object id="306" x="896" y="384" width="32" height="32"/>
+  <object id="307" x="928" y="384" width="32" height="32"/>
+  <object id="308" x="960" y="384" width="32" height="32"/>
+  <object id="309" x="992" y="384" width="32" height="32"/>
+  <object id="310" x="1024" y="384" width="32" height="32"/>
+  <object id="311" x="1056" y="384" width="32" height="32"/>
+  <object id="312" x="1088" y="384" width="32" height="32"/>
+  <object id="313" x="1120" y="384" width="32" height="32"/>
+  <object id="314" x="1152" y="384" width="32" height="32"/>
+  <object id="315" x="1184" y="384" width="32" height="32"/>
+  <object id="316" x="1216" y="384" width="32" height="32"/>
+  <object id="317" x="1248" y="384" width="32" height="32"/>
+  <object id="318" x="1280" y="384" width="32" height="32"/>
+  <object id="319" x="1312" y="384" width="32" height="32"/>
+  <object id="320" x="1344" y="384" width="32" height="32"/>
+  <object id="321" x="1376" y="384" width="32" height="32"/>
+  <object id="323" x="1408" y="384" width="32" height="32"/>
+  <object id="324" x="1440" y="384" width="32" height="32"/>
+  <object id="325" x="1472" y="384" width="32" height="32"/>
+  <object id="326" x="1504" y="384" width="32" height="32"/>
+  <object id="327" x="1536" y="384" width="32" height="32"/>
+  <object id="328" x="1568" y="384" width="32" height="32"/>
+ </objectgroup>
+ <objectgroup id="10" name="TreeOne">
+  <object id="402" x="40" y="315" width="39" height="92"/>
+  <object id="406" x="1288" y="62" width="39" height="92"/>
+  <object id="407" x="569" y="257" width="39" height="92"/>
+ </objectgroup>
+ <objectgroup id="11" name="TreeTwo">
+  <object id="399" x="232" y="130" width="62" height="54"/>
+  <object id="400" x="806" y="127" width="62" height="54"/>
+ </objectgroup>
+ <objectgroup id="12" name="TreeThree">
+  <object id="397" x="604" y="129" width="62" height="54"/>
+  <object id="398" x="957" y="258" width="62" height="54"/>
+  <object id="401" x="1180" y="95" width="62" height="54"/>
+  <object id="408" x="861" y="67" width="62" height="54"/>
+ </objectgroup>
+ <objectgroup id="13" name="Crabby">
+  <object id="342" x="545" y="296" width="24.6" height="23"/>
+  <object id="343" x="751" y="231" width="24.6" height="23"/>
+  <object id="344" x="1272" y="103" width="24.6" height="23"/>
+  <object id="345" x="156" y="133" width="24.6" height="23"/>
+  <object id="346" x="763" y="232" width="24.6" height="23"/>
+  <object id="348" x="1506" y="160" width="24.6" height="29"/>
+ </objectgroup>
+ <objectgroup id="14" name="Shark">
+  <object id="411" x="405" y="232" width="21" height="22"/>
+ </objectgroup>
+ <objectgroup id="15" name="PinkStar">
+  <object id="409" x="1328" y="101" width="27" height="25"/>
+  <object id="410" x="566" y="292" width="27" height="25"/>
+ </objectgroup>
+ <objectgroup id="16" name="BlueDiamond">
+  <object id="417" x="699" y="118" width="14" height="12"/>
+ </objectgroup>
+ <objectgroup id="16" name="GreenDiamond">
+  <object id="414" x="876" y="154" width="12" height="17"/>
+ </objectgroup>
+ <objectgroup id="17" name="CannonFlip">
+  <object id="413" x="143" y="109" width="40" height="26"/>
+ </objectgroup>
+ <objectgroup id="36" name="Barrel"/>
+ <objectgroup id="37" name="SilverCoin"/>
+ <objectgroup id="38" name="GoldCoin"/>
+ <objectgroup id="39" name="Chest"/>
+ <objectgroup id="40" name="Key"/>
+ <objectgroup id="41" name="Seashell"/>
+ <objectgroup id="42" name="SeashellFlip"/>
+ <layer id="20" name="Background" width="50" height="14">
+  <data encoding="base64" compression="zlib">
+   eJwN04OSGAYAQMHr3cW2bdu22SSNbdtuY7SxzcaNbdu2bbM78/YT3r2AgID7POAhj3jME57yjOe84CWveM0b3vKO93zgI5/4zBe+8o3v/OAnvwj4TQQSRDAhCEkoQhOGsIQjPBGISCQiE4WoRCM6iUhMEpKSjOSkICWpSE0a0pKO9GQgI5nITBayko3s5CAnuchNHvKSj/wUoCCFKEwRilKM4pSgJKUoTRnKUo7yVKAilahMHepSj/o0oCGNaEwTmtKM5rSgJa1oTRva0o72dKAjnehMF7rSje70oCe96E0f+tKP/gxgIIMYzJ/8xRCGMozhjGAkoxjNFKYyjenMYCazmM0c5jKP+SxgIYtYzBKW8i/LWM4KVrKK1azhP9ayjvVsYCOb2MwWtrKN7exgJ7vYzR72so/9HOAghzjMOc5zgYtc4jJXuMo1rnODm9ziNne4yz3u84CHPOIxT3jKM57zgpe84jVveMs73vOBj3ziM1/4yje+84Of/CIg0F8EEkQwkYhMFKISjejEICaxiE0c4hKP+CQgIYlITBKSkozkpCAlqUhNGtKSjvRkICOZyEwWspKN7OQgJ7nITR7yko/8FKAghShMOcpTgYpUojJVqMrvVKM6NfiDmtSiNnWoSz3q04CGNKIxTWhKM5rTgpa0ojVtaEs72tOBjnSiM13oSje604Oe9KI3fejLMIYzgpGMYjRjGMvf/MM4xjOBiUxiMlOYyjSmM4OZzGI2c5jLPOazgIUsYjFLWMq/LGM5K1jJKlazhv9YyzrWs4GNbGIz+9jPAQ5yiMMc4SjHOM4JTnKK05zhLOc4zwUuconLXOEq17jODW5yi9vc4S73uM8DHvKIxzzhKc94zgte8orXvOEt73jPLwKCfEMgQQQTgpCEIjRhCEs4whOBiEQiMlGISjSiE4OYxCI2cYhLPOKTgIQkIjFJSEoykpOClKQiNWlISzrSk4GMZCIz+chPAQpSiMIUoSjFKE4JSlKK0pShLOUoTwUqUonKVKEqv1ON6tTgD2pSi9rUoS71qE8DGtKIxjShKc1oTgta0orWtKEtPehJL3rTh770oz8DGMggBvMnfzGEoQxjOCMYyShGM4ax/M0/jGM8E5jIJCYzhalMYzozmMksZjOHucxjPgtYyCIWs4SlrGM9G9jIJjazha1sYzs72MkudrOHvexjPwc4yCEOc4SjHOM4JzjJKU5zhrOc4zwXuMglLnOFq1zjOje4yS1uc4e73OM+r3jNG97yjvd84COf+MwXvvKN7/zgJ78ICPYXgQQRTAhCEorQhCEs4QhPBCISichEISrRiE4MYhKL2MQhLvGITwISkojE/A9s9l+q
+  </data>
+ </layer>
+ <layer id="21" name="Wall" width="50" height="14">
+  <data encoding="base64" compression="zlib">
+   eJztwQENAAAAwqD3T20PBxQAAPwaCvAAAQ==
+  </data>
+ </layer>
+ <layer id="22" name="Ground - back" width="50" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYGBgkCIBYwOk6KcmRgb8ONw21AC9/cGDBVMDDIQ/iBUjhJEBPwG9xMgRYz+tAT3jA59/SPE7LcKJHmFNTUBqGBCbrocDoLUfKc3TgyXMGYGYCYqZB9gtxAI+Bsyw5IWKg/BQqe9BbmVCw3wMQ9Mf+PBQ8QcA6ksJLg==
+  </data>
+ </layer>
+ <layer id="23" name="Ground - upper" width="50" height="14">
+  <data encoding="base64" compression="zlib">
+   eJzjY2BgkBoGmJ9heIBRfwwuMOqPwQVG/TG4wKg/BhcY9ccoGAW4AQArXwWu
+  </data>
+ </layer>
+ <layer id="24" name="Objects" width="50" height="14">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFo2DoA1UgVkPC6gPrHKoCDSxi6P4lxe/4worYcMRm/3AKcxDAFu4wQEp6o0XaxOe2wQhIDQNc6Xu4pTEQQPbrQPpvOIU5Dxo9CmgPEocABgAHzBlO
+  </data>
+ </layer>
+</map>
