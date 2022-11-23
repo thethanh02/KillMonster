@@ -22,7 +22,7 @@ public class CannonBall extends Bullet {
 		facingRight = moveRight;
 		
 		health = 1;
-		attackDamage = 15;
+		attackDamage = 10;
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();

@@ -21,7 +21,7 @@ public class Pearl extends Bullet {
 		facingRight = moveRight;
 		
 		health = 1;
-		attackDamage = 10;
+		attackDamage = 15;
 		
 		// Create animations by extracting frames from the spritesheet.
 		animation = new HashMap<>();
