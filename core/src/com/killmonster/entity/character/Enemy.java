@@ -73,12 +73,6 @@ public abstract class Enemy extends Character {
 				body.applyLinearImpulse(new Vector2(1.4f, 0f), body.getWorldCenter(), false);
 			else 
 				body.applyLinearImpulse(new Vector2(-1.4f, 0f), body.getWorldCenter(), false);
-		} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
-			for (Entity entity : inRangeAttack)
-				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
-					inflictDamage(entity, attackDamage);
-			
-			isInflictDmg = true;
 		}
 	}
 	

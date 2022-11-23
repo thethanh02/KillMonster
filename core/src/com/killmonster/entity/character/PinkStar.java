@@ -6,7 +6,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
-import com.killmonster.entity.Entity;
 import com.killmonster.util.CategoryBits;
 import com.killmonster.util.Constants;
 import com.killmonster.util.Utils;
@@ -67,19 +66,16 @@ public class PinkStar extends Enemy {
 		super.AIBehavior2(delta);
 	}
 	
+	@Override
 	protected void swingWeapon2() {
 		if (!isAttacking) {
 			isAttacking = true;
 			isInflictDmg = false;
-		} else if (!isInflictDmg && stateTimer >= startHitTime && stateTimer <= endHitTime) {
-			for (Entity entity : inRangeAttack)
-				if (hasInRangeAttack() && !entity.isInvincible() && !entity.isSetToKill()) 
-					inflictDamage(entity, attackDamage);
+		} else if (!isInflictDmg) {
 			if (facingRight)
-				body.setLinearVelocity(new Vector2(2.7f, 0));
+				body.setLinearVelocity(new Vector2(1.7f, 0));
 			else 
-				body.setLinearVelocity(new Vector2(-2.7f, 0));
-			isInflictDmg = true;
+				body.setLinearVelocity(new Vector2(-1.7f, 0));
 		}
 	}
 }
