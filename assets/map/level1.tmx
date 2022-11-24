@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="45" nextobjectid="301">
+<map version="1.9" tiledversion="1.9.1" orientation="orthogonal" renderorder="right-down" width="50" height="14" tilewidth="32" tileheight="32" infinite="0" nextlayerid="45" nextobjectid="302">
  <properties>
   <property name="backgroundMusic" value="sound/level1.wav"/>
  </properties>
@@ -12,6 +12,9 @@
  </tileset>
  <tileset firstgid="52" name="lvl1" tilewidth="32" tileheight="32" tilecount="1980" columns="60">
   <image source="lvl1.jpg" width="1920" height="1080"/>
+ </tileset>
+ <tileset firstgid="2032" name="mainmenu" tilewidth="32" tileheight="32" tilecount="8040" columns="120">
+  <image source="../interface/mainmenu.jpg" width="3840" height="2160"/>
  </tileset>
  <objectgroup id="1" name="Ground">
   <object id="250" x="32" y="352">
@@ -159,6 +162,9 @@
   <object id="281" x="288" y="96">
    <polyline points="0,0 0,32"/>
   </object>
+  <object id="301" x="79.3333" y="320.667">
+   <polyline points="0,0 0,32"/>
+  </object>
  </objectgroup>
  <objectgroup id="5" name="Player">
   <object id="223" x="552" y="283" width="19" height="26"/>
@@ -248,7 +254,7 @@
  <objectgroup id="44" name="SeasellFlip"/>
  <layer id="30" name="Background" width="50" height="14">
   <data encoding="base64" compression="zlib">
-   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
+   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
   </data>
  </layer>
  <layer id="31" name="Wall" width="50" height="14">
